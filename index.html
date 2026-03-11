@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFD700">
+  <meta name="description" content="Faith, Health, Music & Brain Games for Kids">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kids Hub">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <title>Kids Learning Hub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== PLAYER SELECT ===== -->
+  <div id="player-screen" class="screen active">
+    <div class="particles" id="particles-main"></div>
+    <div class="player-bg">
+      <h1 class="player-title">Kids Learning Hub</h1>
+      <p class="player-subtitle">Who's playing?</p>
+      <div class="player-slots" id="player-slots"></div>
+    </div>
+  </div>
+
+  <!-- ===== PLAYER SETUP ===== -->
+  <div id="setup-screen" class="screen">
+    <div class="setup-box">
+      <h2>Create Your Profile</h2>
+      <label class="setup-label">What's your name?</label>
+      <input type="text" id="setup-name" class="setup-input" maxlength="12" placeholder="Type your name..." />
+      <label class="setup-label">Pick your avatar!</label>
+      <div class="avatar-grid" id="avatar-grid"></div>
+      <button class="action-btn primary big" onclick="saveNewPlayer()">Let's Go!</button>
+    </div>
+  </div>
+
+  <!-- ===== MAIN HUB ===== -->
+  <div id="hub-screen" class="screen">
+    <div class="particles" id="particles-hub"></div>
+    <div class="hub-header">
+      <div class="hub-player" id="hub-player-info"></div>
+      <h1 class="hub-title">Kids Learning Hub</h1>
+      <button class="switch-btn" onclick="openScreen('player-screen')">Switch Player</button>
+    </div>
+    <div class="hub-sections">
+      <button class="section-card faith-card" onclick="openScreen('faith-hub')">
+        <div class="section-icon">&#9884;</div>
+        <div class="section-name">Our Faith</div>
+        <div class="section-desc">Saints' Stories &amp; Prayers</div>
+      </button>
+      <button class="section-card health-card" onclick="openScreen('health-hub')">
+        <div class="section-icon">&#129382;</div>
+        <div class="section-name">Healthy Living</div>
+        <div class="section-desc">Food, Body &amp; Good Habits</div>
+      </button>
+      <button class="section-card music-card" onclick="openScreen('music-hub')">
+        <div class="section-icon">&#127925;</div>
+        <div class="section-name">Music</div>
+        <div class="section-desc">Instruments &amp; Sounds</div>
+      </button>
+      <button class="section-card brain-card" onclick="openScreen('brain-hub')">
+        <div class="section-icon">&#129504;</div>
+        <div class="section-name">Brain Gym</div>
+        <div class="section-desc">Puzzles &amp; Challenges</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== FAITH SUB-HUB ===== -->
+  <div id="faith-hub" class="screen faith-theme">
+    <div class="particles" id="particles-faith"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('hub-screen')">&#9664; Back</button>
+      <h2>&#9884; Our Faith</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="openScreen('story-select-screen');">
+        <div class="card-emoji">&#128214;</div>
+        <div class="card-title">Saints' Stories</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('faith-memory-screen'); startFaithMemory();">
+        <div class="card-emoji">&#129504;</div>
+        <div class="card-title">Faith Memory Match</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('faith-wordsearch-screen'); startWordSearch();">
+        <div class="card-emoji">&#128269;</div>
+        <div class="card-title">Word Search</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('faith-quiz-select');">
+        <div class="card-emoji">&#129300;</div>
+        <div class="card-title">Faith Quizzes</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('prayer-screen'); initPrayer();">
+        <div class="card-emoji">&#128367;</div>
+        <div class="card-title">Prayer Corner</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== STORY SELECTOR ===== -->
+  <div id="story-select-screen" class="screen faith-theme">
+    <div class="particles" id="particles-stories"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-hub')">&#9664; Back</button>
+      <h2>&#128214; Saints' Stories</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="story-select-grid">
+      <button class="story-card" onclick="openScreen('story-screen'); startStory('charbel');">
+        <div class="story-card-icon">&#127473;&#127463;</div>
+        <div class="story-card-name">St. Charbel</div>
+        <div class="story-card-desc">The Hermit of Lebanon</div>
+      </button>
+      <button class="story-card" onclick="openScreen('story-screen'); startStory('francis');">
+        <div class="story-card-icon">&#128038;</div>
+        <div class="story-card-name">St. Francis</div>
+        <div class="story-card-desc">Friend of All Creatures</div>
+      </button>
+      <button class="story-card" onclick="openScreen('story-screen'); startStory('clare');">
+        <div class="story-card-icon">&#127775;</div>
+        <div class="story-card-name">St. Clare</div>
+        <div class="story-card-desc">Light of Assisi</div>
+      </button>
+      <button class="story-card" onclick="openScreen('story-screen'); startStory('michael');">
+        <div class="story-card-icon">&#9876;&#65039;</div>
+        <div class="story-card-name">St. Michael</div>
+        <div class="story-card-desc">God's Mighty Warrior</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== STORYBOOK (Immersive Spread) ===== -->
+  <div id="story-screen" class="screen faith-theme">
+    <div class="particles" id="particles-story"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('story-select-screen'); stopAllAudio();">&#9664; Back</button>
+      <h2 id="story-title">&#128214; St. Charbel's Story</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="book-container">
+      <div class="book" id="storybook">
+        <div class="book-left" id="book-illustration">
+        </div>
+        <div class="book-right">
+          <div class="page-chapter" id="page-chapter"></div>
+          <div class="page-text" id="page-text"></div>
+          <div class="page-number" id="page-number"></div>
+        </div>
+      </div>
+      <div class="book-controls">
+        <button class="book-btn" id="prev-page" onclick="turnPage(-1)">&#9664; Previous</button>
+        <div class="page-dots" id="page-dots"></div>
+        <button class="book-btn" id="next-page" onclick="turnPage(1)">Next &#9654;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FAITH MEMORY MATCH (Improved) ===== -->
+  <div id="faith-memory-screen" class="screen faith-theme">
+    <div class="particles" id="particles-fmem"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-hub')">&#9664; Back</button>
+      <h2>&#129504; Faith Memory Match</h2>
+      <div class="game-score">Moves: <span id="fm-moves">0</span> | Pairs: <span id="fm-pairs">0</span>/<span id="fm-total-pairs">6</span></div>
+    </div>
+    <div class="game-body">
+      <div class="memory-grid" id="fm-grid" style="grid-template-columns: repeat(4, 1fr); max-width:700px;"></div>
+      <div id="fm-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== WORD SEARCH ===== -->
+  <div id="faith-wordsearch-screen" class="screen faith-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-hub')">&#9664; Back</button>
+      <h2>&#128269; Word Search</h2>
+      <div class="game-score">Found: <span id="ws-found">0</span>/<span id="ws-total">8</span></div>
+    </div>
+    <div class="game-body wordsearch-layout">
+      <div class="ws-grid-container"><div class="ws-grid" id="ws-grid"></div></div>
+      <div class="ws-wordlist" id="ws-wordlist"></div>
+    </div>
+  </div>
+
+  <!-- ===== FAITH QUIZ SELECTOR ===== -->
+  <div id="faith-quiz-select" class="screen faith-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-hub')">&#9664; Back</button>
+      <h2>&#129300; Faith Quizzes</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="startFaithQuizFor('charbel')">
+        <div class="card-emoji">&#9884;</div>
+        <div class="card-title">St. Charbel Quiz</div>
+      </button>
+      <button class="hub-card" onclick="startFaithQuizFor('francis')">
+        <div class="card-emoji">&#128038;</div>
+        <div class="card-title">St. Francis Quiz</div>
+      </button>
+      <button class="hub-card" onclick="startFaithQuizFor('clare')">
+        <div class="card-emoji">&#10024;</div>
+        <div class="card-title">St. Clare Quiz</div>
+      </button>
+      <button class="hub-card" onclick="startFaithQuizFor('michael')">
+        <div class="card-emoji">&#9876;&#65039;</div>
+        <div class="card-title">St. Michael Quiz</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== FAITH QUIZ ===== -->
+  <div id="faith-quiz-screen" class="screen faith-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-quiz-select')">&#9664; Back</button>
+      <h2 id="fq-title">&#129300; Faith Quiz</h2>
+      <div class="game-score">Score: <span id="fq-score">0</span>/<span id="fq-total">10</span></div>
+    </div>
+    <div class="game-body">
+      <div class="quiz-progress" id="fq-progress"></div>
+      <div class="quiz-question" id="fq-question"></div>
+      <div class="choices-grid" id="fq-choices"></div>
+      <div id="fq-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== PRAYER CORNER ===== -->
+  <div id="prayer-screen" class="screen faith-theme prayer-bg">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('faith-hub'); stopAllAudio();">&#9664; Back</button>
+      <h2>&#128367; Prayer Corner</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="game-body prayer-body">
+      <div class="candle-container">
+        <div class="candle">
+          <div class="flame"><div class="flame-inner"></div></div>
+          <div class="flame-glow"></div>
+          <div class="candle-body"></div>
+        </div>
+      </div>
+      <div class="prayer-selector">
+        <button class="prayer-tab active" onclick="selectPrayer(0, this)">Our Father</button>
+        <button class="prayer-tab" onclick="selectPrayer(1, this)">Hail Mary</button>
+        <button class="prayer-tab" onclick="selectPrayer(2, this)">Glory Be</button>
+        <button class="prayer-tab" onclick="selectPrayer(3, this)">St. Michael</button>
+        <button class="prayer-tab" onclick="selectPrayer(4, this)">Guardian Angel</button>
+        <button class="prayer-tab" onclick="selectPrayer(5, this)">St. Francis</button>
+        <button class="prayer-tab" onclick="selectPrayer(6, this)">St. Clare</button>
+        <button class="prayer-tab" onclick="selectPrayer(7, this)">Memorare</button>
+      </div>
+      <div class="prayer-layout">
+        <div class="prayer-left">
+          <div class="prayer-text" id="prayer-text"></div>
+          <button class="action-btn primary" onclick="readPrayer()">&#128264; Read to Me</button>
+        </div>
+        <div class="prayer-right">
+          <div id="prayer-illust"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEALTHY LIVING SUB-HUB ===== -->
+  <div id="health-hub" class="screen health-theme">
+    <div class="particles" id="particles-health"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('hub-screen')">&#9664; Back</button>
+      <h2>&#129382; Healthy Living</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="openScreen('food-explore-screen'); initFoodExplorer();">
+        <div class="card-emoji">&#127813;</div>
+        <div class="card-title">Food Groups</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('body-tour-screen'); startBodyTour();">
+        <div class="card-emoji">&#129728;</div>
+        <div class="card-title">Food Journey</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('plate-screen'); startBuildPlate();">
+        <div class="card-emoji">&#127869;</div>
+        <div class="card-title">Build a Plate</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('habits-screen'); startHabits();">
+        <div class="card-emoji">&#128588;</div>
+        <div class="card-title">Good Habits</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('nutri-quiz-screen'); startNutriQuiz();">
+        <div class="card-emoji">&#129504;</div>
+        <div class="card-title">Nutrition Quiz</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('food-sort-screen'); startFoodSort();">
+        <div class="card-emoji">&#129361;</div>
+        <div class="card-title">Food Sort</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== FOOD GROUPS EXPLORER ===== -->
+  <div id="food-explore-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub'); stopAllAudio();">&#9664; Back</button>
+      <h2>&#127813; Food Groups Explorer</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="game-body">
+      <div class="food-wheel" id="food-wheel"></div>
+      <div class="food-detail hidden" id="food-detail">
+        <div class="fg-scene-container" id="fg-scene"></div>
+        <h3 id="food-group-name"></h3>
+        <p class="food-benefit" id="food-benefit"></p>
+        <p class="food-fact" id="food-fact"></p>
+        <button class="action-btn" onclick="closeFoodDetail()">&#9664; Back to Groups</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BODY TOUR (Food Journey Adventure) ===== -->
+  <div id="body-tour-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub'); stopAllAudio();">&#9664; Back</button>
+      <h2>&#129728; Food Journey Adventure</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="game-body body-tour-layout">
+      <!-- Character selector (shown first) -->
+      <div id="food-char-select">
+        <div class="food-char-title">Pick Your Food Friend!</div>
+        <div class="food-char-subtitle">Choose who will travel through the body</div>
+        <div class="food-char-grid">
+          <button class="food-char-btn" onclick="pickFoodChar('apple')">
+            <div class="food-char apple"><div class="food-char-stem"></div><div class="food-char-leaf"></div><div class="food-char-body"><div class="food-char-eyes"></div><div class="food-char-smile"></div></div></div>
+            <div class="food-char-label">Apple</div>
+          </button>
+          <button class="food-char-btn" onclick="pickFoodChar('banana')">
+            <div class="food-char banana"><div class="food-char-body"><div class="food-char-eyes"></div><div class="food-char-smile"></div></div></div>
+            <div class="food-char-label">Banana</div>
+          </button>
+          <button class="food-char-btn" onclick="pickFoodChar('carrot')">
+            <div class="food-char carrot"><div class="food-char-top"></div><div class="food-char-body"><div class="food-char-eyes"></div><div class="food-char-smile"></div></div></div>
+            <div class="food-char-label">Carrot</div>
+          </button>
+          <button class="food-char-btn" onclick="pickFoodChar('bread')">
+            <div class="food-char bread"><div class="food-char-body"><div class="food-char-crust"></div><div class="food-char-eyes"></div><div class="food-char-smile"></div></div></div>
+            <div class="food-char-label">Bread</div>
+          </button>
+        </div>
+      </div>
+      <!-- Tour content (hidden until character picked) -->
+      <div id="body-tour-content" class="hidden">
+        <div class="body-tour-scene" id="body-tour-scene"></div>
+        <button class="tap-btn" id="body-tap-btn">TAP TO CHEW!</button>
+        <div class="body-tour-info">
+          <div class="body-stage-title" id="body-stage-title"></div>
+          <div class="body-stage-text" id="body-stage-text"></div>
+        </div>
+        <div class="book-controls">
+          <button class="book-btn" id="body-prev" onclick="bodyTourNav(-1)">&#9664; Previous</button>
+          <div class="page-dots" id="body-dots"></div>
+          <button class="book-btn" id="body-next" onclick="bodyTourNav(1)">Next &#9654;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BUILD A PLATE (Picnic Scene) ===== -->
+  <div id="plate-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub')">&#9664; Back</button>
+      <h2>&#127869; Picnic Plate Builder</h2>
+      <div class="game-score">Items: <span id="plate-count">0</span>/6</div>
+    </div>
+    <div class="game-body plate-layout">
+      <div class="picnic-scene">
+        <div class="picnic-sun"></div>
+        <div class="picnic-cloud picnic-cloud-1"></div>
+        <div class="picnic-cloud picnic-cloud-2"></div>
+        <div class="picnic-tree" style="left:5%"><div class="picnic-tree-canopy"></div><div class="picnic-tree-trunk"></div></div>
+        <div class="picnic-tree" style="right:5%"><div class="picnic-tree-canopy"></div><div class="picnic-tree-trunk"></div></div>
+        <div class="picnic-blanket" id="plate-circle">
+          <div class="plate-items" id="plate-items"></div>
+          <div class="plate-label">Your Picnic!</div>
+        </div>
+      </div>
+      <div class="food-picker">
+        <div class="food-category-label" id="food-cat-label">Pick foods for your picnic!</div>
+        <div class="food-options" id="food-options"></div>
+      </div>
+      <button class="action-btn primary big" id="plate-check" onclick="checkPlate()" style="display:none">Check My Picnic!</button>
+      <div id="plate-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== GOOD HABITS ===== -->
+  <div id="habits-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub'); stopAllAudio();">&#9664; Back</button>
+      <h2>&#128588; Good Habits &amp; Table Manners</h2>
+      <div class="game-score">Score: <span id="habits-score">0</span>/<span id="habits-total">8</span></div>
+    </div>
+    <div class="game-body">
+      <div class="quiz-scene" id="habit-scene-bg"></div>
+      <div class="habit-question" id="habit-question"></div>
+      <div class="choices-grid" id="habit-choices"></div>
+      <div id="habit-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== NUTRITION QUIZ ===== -->
+  <div id="nutri-quiz-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub')">&#9664; Back</button>
+      <h2>&#129504; Nutrition Quiz</h2>
+      <div class="game-score">Score: <span id="nq-score">0</span>/<span id="nq-total">10</span></div>
+    </div>
+    <div class="game-body">
+      <div class="quiz-scene" id="nq-scene-bg"></div>
+      <div class="quiz-progress" id="nq-progress"></div>
+      <div class="quiz-question" id="nq-question"></div>
+      <div class="choices-grid" id="nq-choices"></div>
+      <div id="nq-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== FOOD SORT (Factory) ===== -->
+  <div id="food-sort-screen" class="screen health-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('health-hub')">&#9664; Back</button>
+      <h2>&#129361; Food Factory</h2>
+      <div class="game-score">Score: <span id="fs-score">0</span> | Left: <span id="fs-left">15</span></div>
+    </div>
+    <div class="game-body food-sort-layout">
+      <div class="factory-scene">
+        <div class="factory-pipes"></div>
+        <div class="factory-gear factory-gear-1"></div>
+        <div class="factory-gear factory-gear-2"></div>
+        <div class="factory-sign">FOOD FACTORY</div>
+        <div class="conveyor-belt">
+          <div class="conveyor-food" id="sort-food">&#127828;</div>
+        </div>
+        <div class="conveyor-food-name" id="sort-food-name">Loading...</div>
+      </div>
+      <div class="factory-bins" id="sort-bins">
+        <button class="factory-bin bin-protein" onclick="sortFood('protein')">
+          <div class="bin-emoji">&#127831;</div><div class="bin-label">Protein</div>
+        </button>
+        <button class="factory-bin bin-carbs" onclick="sortFood('carbs')">
+          <div class="bin-emoji">&#127838;</div><div class="bin-label">Carbs</div>
+        </button>
+        <button class="factory-bin bin-fruitsveggies" onclick="sortFood('fruitsveggies')">
+          <div class="bin-emoji">&#129382;</div><div class="bin-label">Fruits &amp; Veggies</div>
+        </button>
+        <button class="factory-bin bin-fats" onclick="sortFood('fats')">
+          <div class="bin-emoji">&#129361;</div><div class="bin-label">Healthy Fats</div>
+        </button>
+      </div>
+      <div id="fs-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== MUSIC SUB-HUB ===== -->
+  <div id="music-hub" class="screen music-theme">
+    <div class="particles" id="particles-music"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('hub-screen')">&#9664; Back</button>
+      <h2>&#127925; Music &amp; Instruments</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="openScreen('music-explorer-screen'); initMusicExplorer();">
+        <div class="card-emoji">&#127928;</div>
+        <div class="card-title">Instrument Explorer</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('music-sound-quiz-screen'); startSoundQuiz();">
+        <div class="card-emoji">&#128266;</div>
+        <div class="card-title">What's That Sound?</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('music-families-screen'); startMusicFamilies();">
+        <div class="card-emoji">&#128230;</div>
+        <div class="card-title">Instrument Families</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('music-play-screen'); initPlayMusic();">
+        <div class="card-emoji">&#127929;</div>
+        <div class="card-title">Play Music</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('music-orchestra-screen'); initAnimalOrchestra();">
+        <div class="card-emoji">&#128062;</div>
+        <div class="card-title">Animal Orchestra</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== INSTRUMENT EXPLORER ===== -->
+  <div id="music-explorer-screen" class="screen music-theme">
+    <div class="particles" id="particles-mexplore"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('music-hub')">&#9664; Back</button>
+      <h2>&#127928; Instrument Explorer</h2>
+      <div class="game-score">Explored: <span id="me-count">0</span>/8</div>
+    </div>
+    <div class="game-body">
+      <div class="instrument-grid" id="me-grid"></div>
+      <div class="instrument-detail" id="me-detail" style="display:none"></div>
+      <div id="me-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== WHAT'S THAT SOUND? ===== -->
+  <div id="music-sound-quiz-screen" class="screen music-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('music-hub'); stopAllAudio();">&#9664; Back</button>
+      <h2>&#128266; What's That Sound?</h2>
+      <div class="game-score">Score: <span id="sq-score">0</span>/8</div>
+    </div>
+    <div class="game-body">
+      <div class="quiz-progress" id="sq-progress"></div>
+      <div class="quiz-question" id="sq-question">Listen carefully...</div>
+      <button class="action-btn primary" id="sq-play-btn" onclick="playSoundQuizSound()" style="display:none">&#128264; Play Sound Again</button>
+      <div class="choices-grid" id="sq-choices"></div>
+      <div id="sq-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== INSTRUMENT FAMILIES ===== -->
+  <div id="music-families-screen" class="screen music-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('music-hub')">&#9664; Back</button>
+      <h2>&#128230; Instrument Families</h2>
+      <div class="game-score">Sorted: <span id="mf-count">0</span>/8</div>
+    </div>
+    <div class="game-body">
+      <div id="mf-current" style="font-size:4rem; text-align:center;"></div>
+      <div class="sort-bins" id="mf-bins"></div>
+      <div id="mf-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== PLAY MUSIC (Piano, Drums, Xylophone, Guitar) ===== -->
+  <div id="music-play-screen" class="screen music-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('music-hub')">&#9664; Back</button>
+      <h2>&#127929; Play Music</h2>
+      <div class="game-score"></div>
+    </div>
+    <div class="game-body">
+      <div class="play-inst-tabs" id="play-inst-tabs">
+        <button class="play-inst-tab active" onclick="switchPlayInst('piano',this)">&#127929; Piano</button>
+        <button class="play-inst-tab" onclick="switchPlayInst('drums',this)">&#129345; Drums</button>
+        <button class="play-inst-tab" onclick="switchPlayInst('xylo',this)">&#127926; Xylophone</button>
+        <button class="play-inst-tab" onclick="switchPlayInst('guitar',this)">&#127928; Guitar</button>
+      </div>
+      <div id="play-inst-area"></div>
+      <div id="play-inst-feedback" class="feedback" style="font-size:1.6rem; margin-top:15px;"></div>
+    </div>
+  </div>
+
+  <!-- ===== ANIMAL ORCHESTRA ===== -->
+  <div id="music-orchestra-screen" class="screen music-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('music-hub')">&#9664; Back</button>
+      <h2>&#128062; Animal Orchestra</h2>
+      <div class="game-score">&#127925; <span id="ao-count">0</span>/8</div>
+    </div>
+    <div class="game-body">
+      <div class="animal-grid" id="animal-grid"></div>
+      <div id="ao-feedback" class="feedback" style="font-size:1.4rem; margin-top:12px;"></div>
+    </div>
+  </div>
+
+  <!-- ===== BRAIN GYM SUB-HUB ===== -->
+  <div id="brain-hub" class="screen brain-theme">
+    <div class="particles" id="particles-brain"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('hub-screen')">&#9664; Back</button>
+      <h2>&#129504; Brain Gym</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="openScreen('brain-tf-screen'); startTFBlitz();">
+        <div class="card-emoji">&#9889;</div>
+        <div class="card-title">True or False</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-wcn-screen'); startWCN();">
+        <div class="card-emoji">&#128290;</div>
+        <div class="card-title">What Comes Next?</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-ooo-screen'); startOOO();">
+        <div class="card-emoji">&#128269;</div>
+        <div class="card-title">Odd One Out</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-ss-screen'); startShapeSorter();">
+        <div class="card-emoji">&#128311;</div>
+        <div class="card-title">Shape Sorter</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-riddle-screen'); startRiddles();">
+        <div class="card-emoji">&#129417;</div>
+        <div class="card-title">Riddle Time</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-std-screen'); startSpotDiff();">
+        <div class="card-emoji">&#128270;</div>
+        <div class="card-title">Spot the Difference</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-maze-screen'); startMaze();">
+        <div class="card-emoji">&#127984;</div>
+        <div class="card-title">Maze Adventure</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== TRUE OR FALSE BLITZ ===== -->
+  <div id="brain-tf-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub'); clearTFTimer();">&#9664; Back</button>
+      <h2>&#9889; True or False Blitz</h2>
+      <div class="game-score">Score: <span id="tf-score">0</span> | Round: <span id="tf-round">1</span>/15</div>
+    </div>
+    <div class="game-body tf-layout">
+      <div class="tf-card" id="tf-card">
+        <div class="tf-statement" id="tf-statement">Loading...</div>
+        <div class="tf-timer-track"><div class="tf-timer-bar" id="tf-timer-bar"></div></div>
+      </div>
+      <div class="tf-buttons">
+        <button class="tf-btn tf-btn-true" id="tf-btn-true" onclick="answerTF(true)">&#9989; TRUE</button>
+        <button class="tf-btn tf-btn-false" id="tf-btn-false" onclick="answerTF(false)">&#10060; FALSE</button>
+      </div>
+      <div id="tf-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== WHAT COMES NEXT ===== -->
+  <div id="brain-wcn-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
+      <h2>&#128290; What Comes Next?</h2>
+      <div class="game-score">Score: <span id="wcn-score">0</span> | Round: <span id="wcn-round">1</span>/10</div>
+    </div>
+    <div class="game-body wcn-layout">
+      <div class="wcn-seq" id="wcn-seq"></div>
+      <div class="wcn-choices" id="wcn-choices"></div>
+      <div id="wcn-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== ODD ONE OUT ===== -->
+  <div id="brain-ooo-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
+      <h2>&#128269; Odd One Out</h2>
+      <div class="game-score">Score: <span id="ooo-score">0</span> | Round: <span id="ooo-round">1</span>/12</div>
+    </div>
+    <div class="game-body ooo-layout">
+      <div class="ooo-prompt">Which one doesn't belong?</div>
+      <div class="ooo-grid" id="ooo-grid"></div>
+      <div id="ooo-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== SHAPE SORTER ===== -->
+  <div id="brain-ss-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
+      <h2>&#128311; Shape Sorter</h2>
+      <div class="game-score">Score: <span id="ss-score">0</span> | Left: <span id="ss-left">15</span></div>
+    </div>
+    <div class="game-body ss-layout">
+      <div class="ss-rule-banner" id="ss-rule">Sort by SHAPE!</div>
+      <div class="ss-display" id="ss-display"></div>
+      <div class="ss-bins" id="ss-bins"></div>
+      <div id="ss-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== RIDDLE TIME ===== -->
+  <div id="brain-riddle-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
+      <h2>&#129417; Riddle Time</h2>
+      <div class="game-score">Score: <span id="rd-score">0</span> | Riddle: <span id="rd-round">1</span>/8</div>
+    </div>
+    <div class="game-body rd-layout">
+      <div class="riddle-owl" id="riddle-owl">
+        <div class="owl-eyes"><div class="owl-eye"><div class="owl-pupil"></div></div><div class="owl-eye"><div class="owl-pupil"></div></div></div>
+        <div class="owl-beak"></div>
+        <div class="owl-feet"></div>
+      </div>
+      <div class="rd-bubble" id="rd-bubble">Loading...</div>
+      <div class="rd-hint-area">
+        <button class="action-btn" id="rd-hint-btn" onclick="useRiddleHint()">&#128161; Need a Hint?</button>
+        <div class="rd-hint-text" id="rd-hint-text"></div>
+      </div>
+      <div class="rd-choices" id="rd-choices"></div>
+      <div id="rd-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== SPOT THE DIFFERENCE ===== -->
+  <div id="brain-std-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
+      <h2>&#128270; Spot the Difference</h2>
+      <div class="game-score">Found: <span id="std-found">0</span>/<span id="std-total">3</span> | Level: <span id="std-level">1</span></div>
+    </div>
+    <div class="game-body std-layout">
+      <div class="std-instruction">Tap the differences in the right picture!</div>
+      <div class="std-pair" id="std-pair"></div>
+      <div id="std-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== MAZE ADVENTURE ===== -->
+  <div id="brain-maze-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub'); stopMazeKeys();">&#9664; Back</button>
+      <h2>&#127984; Maze Adventure</h2>
+      <div class="game-score">&#11088; <span id="maze-stars">0</span> | Moves: <span id="maze-moves">0</span></div>
+    </div>
+    <div class="game-body maze-layout">
+      <div class="maze-info">Use arrow keys to move! Collect &#11088; and reach &#127937;</div>
+      <div class="maze-container" id="maze-container"></div>
+      <div id="maze-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== CELEBRATION OVERLAY ===== -->
+  <div id="celebration" class="celebration hidden">
+    <div class="confetti-container" id="confetti-container"></div>
+    <div class="celebration-content">
+      <div class="celebration-text" id="celebration-text"></div>
+      <div class="celebration-stars" id="celebration-stars"></div>
+      <button class="action-btn primary big" onclick="closeCelebration()">Continue</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

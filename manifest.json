@@ -1,0 +1,24 @@
+{
+  "name": "Kids Learning Hub",
+  "short_name": "Kids Hub",
+  "description": "Faith, Health, Music & Brain Games for Kids",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f0f2e",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
