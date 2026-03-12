@@ -66,6 +66,11 @@
         <div class="section-name">Brain Gym</div>
         <div class="section-desc">Puzzles &amp; Challenges</div>
       </button>
+      <button class="section-card exercise-card" onclick="openScreen('exercise-hub')">
+        <div class="section-icon">&#127939;</div>
+        <div class="section-name">Exercise</div>
+        <div class="section-desc">Move, Play &amp; Get Fit!</div>
+      </button>
     </div>
   </div>
 
@@ -723,6 +728,195 @@
       <div class="maze-info">Use arrow keys to move! Collect &#11088; and reach &#127937;</div>
       <div class="maze-container" id="maze-container"></div>
       <div id="maze-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== EXERCISE SUB-HUB ===== -->
+  <div id="exercise-hub" class="screen exercise-theme">
+    <div class="particles" id="particles-exercise"></div>
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('hub-screen')">&#9664; Back</button>
+      <h2>&#127939; Exercise</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="sub-hub-grid">
+      <button class="hub-card" onclick="openScreen('exercise-videos-screen'); initExerciseVideos();">
+        <div class="card-emoji">&#127909;</div>
+        <div class="card-title">Exercise Videos</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-timer-screen');">
+        <div class="card-emoji">&#9201;</div>
+        <div class="card-title">Exercise Timer</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-simon-screen'); initSimonSays();">
+        <div class="card-emoji">&#128075;</div>
+        <div class="card-title">Simon Says</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-daily-screen'); initDailyWorkout();">
+        <div class="card-emoji">&#128170;</div>
+        <div class="card-title">Daily Workout</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-freeze-screen'); initFreezeDance();">
+        <div class="card-emoji">&#129336;</div>
+        <div class="card-title">Freeze Dance</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-animals-screen'); initAnimalMoves();">
+        <div class="card-emoji">&#128018;</div>
+        <div class="card-title">Animal Moves</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('exercise-challenge-screen'); initBodyChallenge();">
+        <div class="card-emoji">&#127942;</div>
+        <div class="card-title">Body Challenge</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== EXERCISE VIDEOS ===== -->
+  <div id="exercise-videos-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); cleanupVideoIframes();">&#9664; Back</button>
+      <h2>&#127909; Exercise Videos</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="game-body exercise-video-layout">
+      <div class="video-category-tabs" id="video-cat-tabs"></div>
+      <div class="video-grid" id="video-grid"></div>
+      <div class="video-player-area hidden" id="video-player-area">
+        <div id="video-player-container"></div>
+        <button class="action-btn" onclick="closeVideoPlayer()">&#9664; Back to Videos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EXERCISE TIMER ===== -->
+  <div id="exercise-timer-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearExerciseTimer();">&#9664; Back</button>
+      <h2>&#9201; Exercise Timer</h2>
+      <div class="game-score">Exercise: <span id="et-current">0</span>/<span id="et-total">0</span></div>
+    </div>
+    <div class="game-body et-layout">
+      <div id="et-level-select">
+        <div class="et-title">Pick Your Workout!</div>
+        <div class="et-levels">
+          <button class="hub-card" onclick="startExerciseTimer(1)">
+            <div class="card-emoji">&#127775;</div><div class="card-title">Easy<br>(5 exercises)</div>
+          </button>
+          <button class="hub-card" onclick="startExerciseTimer(2)">
+            <div class="card-emoji">&#128293;</div><div class="card-title">Medium<br>(7 exercises)</div>
+          </button>
+          <button class="hub-card" onclick="startExerciseTimer(3)">
+            <div class="card-emoji">&#9889;</div><div class="card-title">Hard<br>(10 exercises)</div>
+          </button>
+        </div>
+      </div>
+      <div id="et-workout" class="hidden">
+        <div class="et-exercise-emoji" id="et-emoji"></div>
+        <div class="et-exercise-name" id="et-name"></div>
+        <div class="et-exercise-desc" id="et-desc"></div>
+        <div class="et-countdown" id="et-countdown"></div>
+        <div class="et-timer-track"><div class="et-timer-bar" id="et-timer-bar"></div></div>
+        <div class="et-status" id="et-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SIMON SAYS ===== -->
+  <div id="exercise-simon-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearSimonTimer();">&#9664; Back</button>
+      <h2>&#128075; Simon Says</h2>
+      <div class="game-score">Score: <span id="ss-ex-score">0</span> | &#10084;&#65039; <span id="ss-ex-lives">3</span></div>
+    </div>
+    <div class="game-body simon-layout">
+      <div class="simon-character" id="simon-char">&#129489;</div>
+      <div class="simon-speech" id="simon-speech">Get ready!</div>
+      <div class="simon-timer-track"><div class="simon-timer-bar" id="simon-timer-bar"></div></div>
+      <div class="simon-buttons">
+        <button class="simon-btn simon-go" id="simon-go-btn" onclick="simonAction(true)" disabled>&#9989; DO IT!</button>
+        <button class="simon-btn simon-stay" id="simon-stay-btn" onclick="simonAction(false)" disabled>&#128721; DON'T MOVE!</button>
+      </div>
+      <div id="simon-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== DAILY WORKOUT ===== -->
+  <div id="exercise-daily-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearExerciseTimer();">&#9664; Back</button>
+      <h2>&#128170; Daily Workout</h2>
+      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
+    </div>
+    <div class="game-body daily-layout">
+      <div id="daily-intro">
+        <div class="daily-streak" id="daily-streak"></div>
+        <div class="daily-calendar" id="daily-calendar"></div>
+        <div class="daily-preview" id="daily-preview"></div>
+        <button class="action-btn primary big" id="daily-start-btn" onclick="startDailyWorkout()">&#128170; Start Today's Workout!</button>
+      </div>
+      <div id="daily-active" class="hidden">
+        <div class="et-exercise-emoji" id="daily-emoji"></div>
+        <div class="et-exercise-name" id="daily-name"></div>
+        <div class="et-exercise-desc" id="daily-desc"></div>
+        <div class="et-countdown" id="daily-countdown"></div>
+        <div class="et-timer-track"><div class="et-timer-bar" id="daily-timer-bar"></div></div>
+        <div class="et-status" id="daily-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FREEZE DANCE ===== -->
+  <div id="exercise-freeze-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearFreezeTimer();">&#9664; Back</button>
+      <h2>&#129336; Freeze Dance</h2>
+      <div class="game-score">Score: <span id="freeze-score">0</span> | Round: <span id="freeze-round">0</span>/10</div>
+    </div>
+    <div class="game-body freeze-layout">
+      <div class="freeze-character" id="freeze-char">&#128131;</div>
+      <div class="freeze-status" id="freeze-status">Get Ready to Dance!</div>
+      <button class="freeze-btn" id="freeze-btn" onclick="freezeAction()" disabled>&#10052; FREEZE!</button>
+      <div id="freeze-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== ANIMAL MOVES ===== -->
+  <div id="exercise-animals-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearAnimalTimer();">&#9664; Back</button>
+      <h2>&#128018; Animal Moves</h2>
+      <div class="game-score">Animal: <span id="animal-current">0</span>/8</div>
+    </div>
+    <div class="game-body animal-layout">
+      <div class="animal-emoji" id="animal-emoji">&#128018;</div>
+      <div class="animal-name" id="animal-name">Get Ready!</div>
+      <div class="animal-move" id="animal-move"></div>
+      <div class="et-timer-track"><div class="et-timer-bar" id="animal-timer-bar"></div></div>
+      <div class="et-status" id="animal-status"></div>
+      <div id="animal-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== BODY CHALLENGE ===== -->
+  <div id="exercise-challenge-screen" class="screen exercise-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('exercise-hub'); clearBCTimer();">&#9664; Back</button>
+      <h2>&#127942; Body Challenge</h2>
+      <div class="game-score">Score: <span id="bc-score">0</span>/<span id="bc-total">10</span></div>
+    </div>
+    <div class="game-body bc-layout">
+      <div id="bc-quiz-area">
+        <div class="bc-question" id="bc-question"></div>
+        <div class="choices-grid" id="bc-choices"></div>
+      </div>
+      <div id="bc-exercise-area" class="hidden">
+        <div class="bc-exercise-display">
+          <div class="bc-exercise-emoji" id="bc-ex-emoji"></div>
+          <div class="bc-exercise-text" id="bc-ex-text"></div>
+          <div class="et-timer-track"><div class="et-timer-bar" id="bc-timer-bar"></div></div>
+        </div>
+      </div>
+      <div id="bc-feedback" class="feedback"></div>
     </div>
   </div>
 

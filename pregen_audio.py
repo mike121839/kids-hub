@@ -309,6 +309,109 @@ gen("Level 3! Find all 10 pairs!")
 gen("Level 4! Find all 12 pairs!")
 gen("Level 5! Find all 15 pairs!")
 
+print('\n=== Exercise Section ===')
+# Exercise Timer announcements
+exercise_list = [
+    ("Do 10 Star Jumps!", "Jump up and spread your arms and legs like a star!"),
+    ("Do 10 High Knees!", "Run on the spot lifting your knees high!"),
+    ("Do 10 Arm Circles!", "Stretch your arms out and spin them in circles!"),
+    ("Do 8 Frog Jumps!", "Squat low like a frog and jump forward!"),
+    ("Do 10 Bunny Hops!", "Hop on both feet like a little bunny!"),
+    ("Do 8 Toe Touches!", "Bend down and try to touch your toes!"),
+    ("Run On The Spot!", "Run as fast as you can without moving!"),
+    ("Bear Walk!", "Walk on your hands and feet like a bear!"),
+    ("Crab Walk!", "Sit down, put hands behind, lift up and walk!"),
+    ("Do 8 Windmills!", "Stand wide and touch opposite toes!"),
+    ("Sit and Reach!", "Sit on the floor and reach for your toes!"),
+    ("Do 10 Mountain Climbers!", "In push up position, run your knees to your chest!"),
+    ("Superhero Pose!", "Stand tall with fists on hips like a superhero!"),
+    ("Do 6 Tuck Jumps!", "Jump up and pull your knees to your chest!"),
+    ("Side Shuffles!", "Shuffle side to side like a basketball player!"),
+    ("Do 5 Burpees!", "Jump up, drop down, push up, jump back!"),
+    ("Do 8 Squat Jumps!", "Squat down low and jump up high!"),
+    ("Penguin Walk!", "Walk with feet together swaying side to side!"),
+]
+for announcement, desc in exercise_list:
+    gen(announcement)
+    gen(desc)
+
+# Countdown and prompts
+for n in ["3", "2", "1"]:
+    gen(n)
+gen("GO!")
+gen("Rest! Catch your breath!")
+gen("Keep going!")
+gen("Great job!")
+gen("Workout Complete!")
+
+# Simon Says
+gen("Simon says...")
+for cmd in [
+    "Jump!", "Clap your hands!", "Touch your toes!", "Spin around!",
+    "Flap your arms!", "Wiggle your fingers!", "Stomp your feet!",
+    "Hop on one foot!", "Touch your nose!", "Wave hello!",
+    "Do a star jump!", "March on the spot!", "Pat your head!",
+    "Rub your tummy!", "Reach for the sky!", "Do a squat!",
+    "Shake your body!", "Balance on one foot!", "Do tiny jumps!",
+    "Run on the spot!", "Blow a kiss!", "Give yourself a hug!",
+    "Make a funny face!", "Pretend to fly!", "Roar like a lion!",
+]:
+    gen(f"Simon says... {cmd}")
+    gen(cmd)
+
+# Daily Workout
+gen("Here's your daily workout! Let's go!")
+gen("Workout complete! You earned a gold star!")
+
+# Freeze Dance
+gen("Dance! Move your body!")
+gen("Freeze! Don't move!")
+
+# Animal Moves
+for animal, move in [
+    ("Bear", "Walk on hands and feet!"),
+    ("Frog", "Squat low and leap forward!"),
+    ("Crab", "Walk sideways on hands and feet!"),
+    ("Snake", "Slither on the floor!"),
+    ("Penguin", "Waddle with arms at your sides!"),
+    ("Lion", "Crawl and roar loudly!"),
+    ("Bunny", "Hop hop hop on both feet!"),
+    ("Eagle", "Spread your wings and soar!"),
+    ("Monkey", "Swing your arms and jump!"),
+    ("Flamingo", "Stand on one leg!"),
+    ("Crocodile", "Snap your jaws and army crawl!"),
+    ("Horse", "Gallop around the room!"),
+]:
+    gen(f"Move like a {animal}! {move}")
+
+# Body Challenge
+for q in [
+    "Which body part helps you breathe?",
+    "What makes your body move?",
+    "What pumps blood around your body?",
+    "How many bones do kids have? About...",
+    "What part of your body controls everything?",
+    "What do your legs help you do?",
+    "Where does food go after you swallow?",
+    "What helps you balance?",
+    "What protects your brain?",
+    "What do your hands help you do?",
+]:
+    gen(q)
+for move in [
+    "Take 5 deep breaths! Breathe in... and out!",
+    "Flex your muscles! Do 5 arm curls!",
+    "Get your heart pumping! 10 jumping jacks!",
+    "Stretch those bones! Touch your toes 5 times!",
+    "Brain break! Do 5 star jumps!",
+    "Use those legs! Run on the spot for 10 seconds!",
+    "Rub your tummy in circles 5 times!",
+    "Test your balance! Stand on one foot for 10 seconds!",
+    "Pat your head gently 10 times!",
+    "Clap your hands 15 times as fast as you can!",
+]:
+    gen(move)
+
 print('\n=== Done! ===')
 cache_count = len([f for f in os.listdir(CACHE_DIR) if f.endswith('.mp3')])
 named_count = len([f for f in os.listdir(AUDIO_DIR) if f.endswith('.mp3')])

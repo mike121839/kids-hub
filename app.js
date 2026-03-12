@@ -128,6 +128,47 @@ const SFX = {
       osc.connect(gain); gain.connect(ctx.destination);
       osc.start(ctx.currentTime + i * 0.12); osc.stop(ctx.currentTime + i * 0.12 + 0.5);
     });
+  },
+  // Exercise sounds
+  exerciseCorrect() {
+    const ctx = getAudioCtx();
+    [440, 554, 659].forEach((freq, i) => {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.12, ctx.currentTime + i * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.4);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + i * 0.08); osc.stop(ctx.currentTime + i * 0.08 + 0.4);
+    });
+  },
+  exerciseWrong() {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = 'square'; osc.frequency.value = 180;
+    osc.frequency.linearRampToValueAtTime(100, ctx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.25);
+  },
+  whistle() {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = 1200;
+    osc.frequency.linearRampToValueAtTime(800, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.4);
+  },
+  countdown() {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.15);
   }
 };
 
@@ -369,6 +410,7 @@ const FAITH_PARTICLES = ['✝️', '⭐', '🕯️', '✨', '🌟', '💫', '�
 const HEALTH_PARTICLES = ['🍎', '🥦', '🍊', '🌿', '🌻', '💚', '🥕'];
 const MUSIC_PARTICLES = ['🎵', '🎶', '🎸', '🥁', '🎹', '🎺', '🎻'];
 const BRAIN_PARTICLES = ['🧠', '💡', '⚡', '🔮', '✨', '🎯', '🧩'];
+const EXERCISE_PARTICLES = ['🏃', '💪', '⭐', '🔥', '🦘', '🤸', '🏆'];
 const MAIN_PARTICLES = ['⭐', '✨', '🌟', '💫', '🎵'];
 
 function spawnParticles(containerId, items) {
@@ -417,6 +459,7 @@ function openScreen(id) {
   if (id === 'music-hub') spawnParticles('particles-music', MUSIC_PARTICLES);
   if (id === 'music-explorer-screen') spawnParticles('particles-mexplore', MUSIC_PARTICLES);
   if (id === 'brain-hub') spawnParticles('particles-brain', BRAIN_PARTICLES);
+  if (id === 'exercise-hub') spawnParticles('particles-exercise', EXERCISE_PARTICLES);
 }
 
 function updateStarsDisplays() {
@@ -4014,19 +4057,36 @@ function renderMazeLevel() {
   document.getElementById('maze-stars').textContent = '0';
   document.getElementById('maze-moves').textContent = '0';
   document.getElementById('maze-feedback').textContent = `Maze ${mazeLevel + 1} of ${mazeLevels.length}`;
-  // Place stars on random path cells
+  // Place stars along the solution path so player collects them before reaching the flag
   mazeStarPositions = [];
-  const pathCells = [];
-  for (let r = 1; r < mazeRows - 1; r++) {
-    for (let c = 1; c < mazeCols - 1; c++) {
-      if (mazeGrid[r][c] === 0 && !(r === 1 && c === 1) && !(r === mazeEndPos.r && c === mazeEndPos.c)) {
-        pathCells.push({ r, c });
+  // BFS to find solution path from start to end
+  const solQueue = [{ r: 1, c: 1, path: [] }];
+  const solVisited = new Set();
+  solVisited.add('1,1');
+  let solutionPath = [];
+  while (solQueue.length > 0) {
+    const cur = solQueue.shift();
+    if (cur.r === mazeEndPos.r && cur.c === mazeEndPos.c) {
+      solutionPath = cur.path;
+      break;
+    }
+    for (const [dr, dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
+      const nr = cur.r + dr, nc = cur.c + dc;
+      const key = nr + ',' + nc;
+      if (nr >= 0 && nr < mazeRows && nc >= 0 && nc < mazeCols && mazeGrid[nr][nc] === 0 && !solVisited.has(key)) {
+        solVisited.add(key);
+        solQueue.push({ r: nr, c: nc, path: [...cur.path, { r: nr, c: nc }] });
       }
     }
   }
-  pathCells.sort(() => Math.random() - 0.5);
-  for (let i = 0; i < Math.min(lvl.starCount, pathCells.length); i++) {
-    mazeStarPositions.push(pathCells[i]);
+  // Remove start and end from path, then spread stars evenly along it
+  const starCandidates = solutionPath.filter(p => !(p.r === mazeEndPos.r && p.c === mazeEndPos.c));
+  if (starCandidates.length > 0 && lvl.starCount > 0) {
+    const count = Math.min(lvl.starCount, starCandidates.length);
+    const spacing = Math.floor(starCandidates.length / (count + 1));
+    for (let i = 0; i < count; i++) {
+      mazeStarPositions.push(starCandidates[spacing * (i + 1)]);
+    }
   }
   renderMazeGrid();
   setupMazeKeys();
@@ -4161,6 +4221,888 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+// ============ SECTION: EXERCISE ============
+
+// ---- Exercise Data ----
+const EXERCISES = [
+  { name: 'Star Jumps', emoji: '⭐', reps: 10, duration: 15, desc: 'Jump up and spread your arms and legs like a star!' },
+  { name: 'High Knees', emoji: '🦵', reps: 10, duration: 15, desc: 'Run on the spot lifting your knees high!' },
+  { name: 'Arm Circles', emoji: '💪', reps: 10, duration: 12, desc: 'Stretch your arms out and spin them in circles!' },
+  { name: 'Frog Jumps', emoji: '🐸', reps: 8, duration: 15, desc: 'Squat low like a frog and jump forward!' },
+  { name: 'Bunny Hops', emoji: '🐰', reps: 10, duration: 12, desc: 'Hop on both feet like a little bunny!' },
+  { name: 'Toe Touches', emoji: '🦶', reps: 8, duration: 12, desc: 'Bend down and try to touch your toes!' },
+  { name: 'Run On The Spot', emoji: '🏃', reps: null, duration: 15, desc: 'Run as fast as you can without moving!' },
+  { name: 'Bear Walk', emoji: '🐻', reps: null, duration: 15, desc: 'Walk on your hands and feet like a bear!' },
+  { name: 'Crab Walk', emoji: '🦀', reps: null, duration: 15, desc: 'Sit down, put hands behind, lift up and walk!' },
+  { name: 'Windmills', emoji: '🌀', reps: 8, duration: 12, desc: 'Stand wide and touch opposite toes!' },
+  { name: 'Sit and Reach', emoji: '🧘', reps: null, duration: 12, desc: 'Sit on the floor and reach for your toes!' },
+  { name: 'Mountain Climbers', emoji: '⛰️', reps: 10, duration: 15, desc: 'In push-up position, run your knees to your chest!' },
+  { name: 'Superhero Pose', emoji: '🦸', reps: null, duration: 10, desc: 'Stand tall with fists on hips like a superhero!' },
+  { name: 'Tuck Jumps', emoji: '🚀', reps: 6, duration: 12, desc: 'Jump up and pull your knees to your chest!' },
+  { name: 'Side Shuffles', emoji: '↔️', reps: null, duration: 15, desc: 'Shuffle side to side like a basketball player!' },
+  { name: 'Burpees', emoji: '💥', reps: 5, duration: 15, desc: 'Jump up, drop down, push up, jump back!' },
+  { name: 'Squat Jumps', emoji: '🦘', reps: 8, duration: 15, desc: 'Squat down low and jump up high!' },
+  { name: 'Penguin Walk', emoji: '🐧', reps: null, duration: 12, desc: 'Walk with feet together swaying side to side!' },
+];
+
+const SIMON_COMMANDS = [
+  { text: 'JUMP!', emoji: '🦘' },
+  { text: 'CLAP YOUR HANDS!', emoji: '👏' },
+  { text: 'TOUCH YOUR TOES!', emoji: '🦶' },
+  { text: 'SPIN AROUND!', emoji: '🌀' },
+  { text: 'FLAP YOUR ARMS!', emoji: '🐔' },
+  { text: 'WIGGLE YOUR FINGERS!', emoji: '🖐️' },
+  { text: 'STOMP YOUR FEET!', emoji: '🦶' },
+  { text: 'HOP ON ONE FOOT!', emoji: '🦩' },
+  { text: 'TOUCH YOUR NOSE!', emoji: '👃' },
+  { text: 'WAVE HELLO!', emoji: '👋' },
+  { text: 'DO A STAR JUMP!', emoji: '⭐' },
+  { text: 'MARCH ON THE SPOT!', emoji: '🚶' },
+  { text: 'PAT YOUR HEAD!', emoji: '🤚' },
+  { text: 'RUB YOUR TUMMY!', emoji: '😋' },
+  { text: 'REACH FOR THE SKY!', emoji: '🙌' },
+  { text: 'DO A SQUAT!', emoji: '🏋️' },
+  { text: 'SHAKE YOUR BODY!', emoji: '🤸' },
+  { text: 'BALANCE ON ONE FOOT!', emoji: '🧘' },
+  { text: 'DO TINY JUMPS!', emoji: '🐇' },
+  { text: 'RUN ON THE SPOT!', emoji: '🏃' },
+  { text: 'BLOW A KISS!', emoji: '😘' },
+  { text: 'GIVE YOURSELF A HUG!', emoji: '🤗' },
+  { text: 'MAKE A FUNNY FACE!', emoji: '🤪' },
+  { text: 'PRETEND TO FLY!', emoji: '✈️' },
+  { text: 'ROAR LIKE A LION!', emoji: '🦁' },
+];
+
+const ANIMAL_MOVES = [
+  { animal: '🐻', name: 'Bear', move: 'Walk on hands and feet!', duration: 12 },
+  { animal: '🐸', name: 'Frog', move: 'Squat low and leap forward!', duration: 10 },
+  { animal: '🦀', name: 'Crab', move: 'Walk sideways on hands and feet!', duration: 12 },
+  { animal: '🐍', name: 'Snake', move: 'Slither on the floor!', duration: 10 },
+  { animal: '🐧', name: 'Penguin', move: 'Waddle with arms at your sides!', duration: 10 },
+  { animal: '🦁', name: 'Lion', move: 'Crawl and ROAR loudly!', duration: 10 },
+  { animal: '🐇', name: 'Bunny', move: 'Hop hop hop on both feet!', duration: 10 },
+  { animal: '🦅', name: 'Eagle', move: 'Spread your wings and soar!', duration: 12 },
+  { animal: '🐒', name: 'Monkey', move: 'Swing your arms and jump!', duration: 10 },
+  { animal: '🦩', name: 'Flamingo', move: 'Stand on one leg!', duration: 12 },
+  { animal: '🐊', name: 'Crocodile', move: 'Snap your jaws and army crawl!', duration: 10 },
+  { animal: '🐎', name: 'Horse', move: 'Gallop around the room!', duration: 12 },
+];
+
+const BODY_CHALLENGES = [
+  { q: 'Which body part helps you breathe?', a: ['Lungs', 'Knees', 'Ears', 'Elbows'], correct: 0,
+    move: 'Take 5 deep breaths! Breathe in... and out!', emoji: '🫁', duration: 15 },
+  { q: 'What makes your body move?', a: ['Muscles', 'Hair', 'Teeth', 'Eyebrows'], correct: 0,
+    move: 'Flex your muscles! Do 5 arm curls!', emoji: '💪', duration: 12 },
+  { q: 'What pumps blood around your body?', a: ['Heart', 'Stomach', 'Brain', 'Foot'], correct: 0,
+    move: 'Get your heart pumping! 10 jumping jacks!', emoji: '❤️', duration: 15 },
+  { q: 'How many bones do kids have? About...', a: ['300', '10', '50', '1000'], correct: 0,
+    move: 'Stretch those bones! Touch your toes 5 times!', emoji: '🦴', duration: 12 },
+  { q: 'What part of your body controls everything?', a: ['Brain', 'Tummy', 'Toes', 'Nose'], correct: 0,
+    move: 'Brain break! Do 5 star jumps!', emoji: '🧠', duration: 12 },
+  { q: 'What do your legs help you do?', a: ['Walk and run', 'Smell', 'Hear', 'Taste'], correct: 0,
+    move: 'Use those legs! Run on the spot for 10 seconds!', emoji: '🦵', duration: 12 },
+  { q: 'Where does food go after you swallow?', a: ['Stomach', 'Lungs', 'Brain', 'Feet'], correct: 0,
+    move: 'Rub your tummy in circles 5 times!', emoji: '😋', duration: 10 },
+  { q: 'What helps you balance?', a: ['Inner ear', 'Elbows', 'Hair', 'Fingers'], correct: 0,
+    move: 'Test your balance! Stand on one foot for 10 seconds!', emoji: '🧘', duration: 12 },
+  { q: 'What protects your brain?', a: ['Skull', 'Skin', 'Hair', 'Hat'], correct: 0,
+    move: 'Pat your head gently 10 times!', emoji: '💀', duration: 10 },
+  { q: 'What do your hands help you do?', a: ['Grab things', 'Hear', 'Smell', 'Walk'], correct: 0,
+    move: 'Clap your hands 15 times as fast as you can!', emoji: '👏', duration: 10 },
+];
+
+const EXERCISE_VIDEOS = {
+  warmup: {
+    label: 'Warm Up', emoji: '🔥',
+    videos: [
+      { id: 'd3LPrhI0v-w', title: 'PE with Joe - Kids Workout' },
+      { id: 'L_A_HjHZxfI', title: '5 Min Kids Warm Up' },
+      { id: 'lJSgQBBnKtc', title: 'Kids Morning Warm Up' },
+    ]
+  },
+  cardio: {
+    label: 'Cardio', emoji: '❤️',
+    videos: [
+      { id: 'pnKCGY9ZocA', title: 'Kids Cardio Workout' },
+      { id: 'ymigWt5TOV8', title: 'Jump and Move!' },
+      { id: 'oe_HDjEm1oc', title: 'Active Kids Workout' },
+    ]
+  },
+  dance: {
+    label: 'Dance', emoji: '💃',
+    videos: [
+      { id: 'FP0wgVhUC9w', title: 'Kidz Bop Dance Along' },
+      { id: 'gCzgc_RelBA', title: 'Freeze Dance for Kids' },
+      { id: '388Q44ReOWE', title: 'Fun Dance Workout' },
+    ]
+  },
+  superhero: {
+    label: 'Superhero', emoji: '🦸',
+    videos: [
+      { id: '5if4cjO5oxE', title: 'Superhero Workout for Kids' },
+      { id: 'dNL6RwymoNg', title: 'Avengers Kids Workout' },
+      { id: 'Iri_MGeJmvU', title: 'Spider-Man Workout' },
+    ]
+  },
+  cooldown: {
+    label: 'Cool Down', emoji: '🌙',
+    videos: [
+      { id: '4ZpkRAcgws4', title: 'Kids Stretch & Cool Down' },
+      { id: 'cZeM18fPbSk', title: 'Calm Down Stretches' },
+      { id: 'YNGUiSgz03Q', title: 'Bedtime Stretches' },
+    ]
+  }
+};
+
+// ---- Exercise Timer ----
+let etTimers = [];
+let etExercises = [], etIndex = 0, etLevel = 1;
+
+function clearExerciseTimer() {
+  etTimers.forEach(t => clearTimeout(t));
+  etTimers = [];
+}
+
+function startExerciseTimer(level) {
+  clearExerciseTimer();
+  etLevel = level;
+  const counts = [5, 7, 10];
+  const shuffled = [...EXERCISES].sort(() => Math.random() - 0.5);
+  etExercises = shuffled.slice(0, counts[level - 1]);
+  etIndex = 0;
+  document.getElementById('et-total').textContent = etExercises.length;
+  document.getElementById('et-level-select').classList.add('hidden');
+  document.getElementById('et-workout').classList.remove('hidden');
+  runExercise();
+}
+
+function runExercise() {
+  if (etIndex >= etExercises.length) {
+    finishExerciseTimer();
+    return;
+  }
+  const ex = etExercises[etIndex];
+  document.getElementById('et-current').textContent = etIndex + 1;
+  document.getElementById('et-emoji').textContent = ex.emoji;
+  document.getElementById('et-name').textContent = ex.reps ? `Do ${ex.reps} ${ex.name}!` : `${ex.name}!`;
+  document.getElementById('et-desc').textContent = ex.desc;
+  document.getElementById('et-countdown').textContent = '';
+  document.getElementById('et-timer-bar').style.width = '100%';
+  document.getElementById('et-status').textContent = 'Get ready...';
+  const announce = ex.reps ? `Do ${ex.reps} ${ex.name}!` : ex.name + '!';
+  playTTS(announce);
+  // 3-2-1 countdown after 2s intro
+  etTimers.push(setTimeout(() => showETCountdown(3, ex), 2000));
+}
+
+function showETCountdown(n, ex) {
+  if (n <= 0) {
+    document.getElementById('et-countdown').textContent = 'GO!';
+    document.getElementById('et-status').textContent = 'GO GO GO!';
+    SFX.whistle();
+    etTimers.push(setTimeout(() => startETActive(ex), 800));
+    return;
+  }
+  document.getElementById('et-countdown').textContent = n;
+  SFX.countdown();
+  etTimers.push(setTimeout(() => showETCountdown(n - 1, ex), 1000));
+}
+
+function startETActive(ex) {
+  document.getElementById('et-countdown').textContent = '';
+  document.getElementById('et-status').textContent = 'Keep going!';
+  const dur = ex.duration * 1000;
+  const start = Date.now();
+  const bar = document.getElementById('et-timer-bar');
+  function tick() {
+    const elapsed = Date.now() - start;
+    const pct = Math.max(0, 1 - elapsed / dur);
+    bar.style.width = (pct * 100) + '%';
+    if (elapsed < dur) {
+      etTimers.push(setTimeout(tick, 50));
+    } else {
+      SFX.exerciseCorrect();
+      document.getElementById('et-status').textContent = 'Great job!';
+      const restTime = etLevel === 1 ? 10000 : etLevel === 2 ? 8000 : 6000;
+      showETRest(restTime);
+    }
+  }
+  tick();
+}
+
+function showETRest(ms) {
+  etIndex++;
+  if (etIndex >= etExercises.length) {
+    etTimers.push(setTimeout(finishExerciseTimer, 1500));
+    return;
+  }
+  document.getElementById('et-emoji').textContent = '😤';
+  document.getElementById('et-name').textContent = 'Rest!';
+  document.getElementById('et-desc').textContent = 'Catch your breath...';
+  document.getElementById('et-timer-bar').style.width = '100%';
+  const next = etExercises[etIndex];
+  document.getElementById('et-status').textContent = `Next: ${next.emoji} ${next.name}`;
+  const start = Date.now();
+  const bar = document.getElementById('et-timer-bar');
+  function tick() {
+    const elapsed = Date.now() - start;
+    const pct = Math.max(0, 1 - elapsed / ms);
+    bar.style.width = (pct * 100) + '%';
+    if (elapsed < ms) {
+      etTimers.push(setTimeout(tick, 50));
+    } else {
+      runExercise();
+    }
+  }
+  tick();
+}
+
+function finishExerciseTimer() {
+  clearExerciseTimer();
+  const stars = etLevel;
+  celebrate(`Workout Complete!\n${etExercises.length} exercises done!`, stars);
+  document.getElementById('et-level-select').classList.remove('hidden');
+  document.getElementById('et-workout').classList.add('hidden');
+}
+
+// ---- YouTube Videos ----
+let currentVideoCategory = 'warmup';
+
+function initExerciseVideos() {
+  currentVideoCategory = 'warmup';
+  renderVideoCategoryTabs();
+  renderVideoGrid('warmup');
+}
+
+function renderVideoCategoryTabs() {
+  const c = document.getElementById('video-cat-tabs');
+  c.innerHTML = '';
+  Object.entries(EXERCISE_VIDEOS).forEach(([key, cat]) => {
+    const btn = document.createElement('button');
+    btn.className = 'video-cat-tab' + (key === currentVideoCategory ? ' active' : '');
+    btn.textContent = cat.emoji + ' ' + cat.label;
+    btn.onclick = () => {
+      currentVideoCategory = key;
+      document.querySelectorAll('.video-cat-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderVideoGrid(key);
+    };
+    c.appendChild(btn);
+  });
+}
+
+function renderVideoGrid(category) {
+  const grid = document.getElementById('video-grid');
+  grid.innerHTML = '';
+  document.getElementById('video-player-area').classList.add('hidden');
+  grid.classList.remove('hidden');
+  EXERCISE_VIDEOS[category].videos.forEach(v => {
+    const card = document.createElement('button');
+    card.className = 'video-thumb-card';
+    card.innerHTML = `
+      <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/${v.id}/hqdefault.jpg')">
+        <div class="video-play-overlay">&#9654;</div>
+      </div>
+      <div class="video-thumb-title">${v.title}</div>
+    `;
+    card.onclick = () => openVideoPlayer(v.id);
+    grid.appendChild(card);
+  });
+}
+
+function openVideoPlayer(videoId) {
+  document.getElementById('video-grid').classList.add('hidden');
+  const area = document.getElementById('video-player-area');
+  area.classList.remove('hidden');
+  document.getElementById('video-player-container').innerHTML =
+    `<iframe class="yt-iframe" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+}
+
+function closeVideoPlayer() {
+  document.getElementById('video-player-container').innerHTML = '';
+  document.getElementById('video-player-area').classList.add('hidden');
+  document.getElementById('video-grid').classList.remove('hidden');
+}
+
+function cleanupVideoIframes() {
+  document.getElementById('video-player-container').innerHTML = '';
+}
+
+// ---- Simon Says ----
+let simonTimers = [], simonRound = 0, simonScore = 0, simonLives = 3;
+let simonIsSimon = true, simonAnswered = false;
+
+function clearSimonTimer() {
+  simonTimers.forEach(t => clearTimeout(t));
+  simonTimers = [];
+}
+
+function initSimonSays() {
+  clearSimonTimer();
+  simonRound = 0; simonScore = 0; simonLives = 3; simonAnswered = false;
+  document.getElementById('ss-ex-score').textContent = '0';
+  document.getElementById('ss-ex-lives').textContent = '3';
+  document.getElementById('simon-speech').textContent = 'Get ready!';
+  document.getElementById('simon-speech').className = 'simon-speech';
+  document.getElementById('simon-go-btn').disabled = true;
+  document.getElementById('simon-stay-btn').disabled = true;
+  document.getElementById('simon-feedback').textContent = '';
+  document.getElementById('simon-timer-bar').style.width = '100%';
+  simonTimers.push(setTimeout(nextSimonRound, 1500));
+}
+
+function nextSimonRound() {
+  if (simonLives <= 0 || simonRound >= 15) { finishSimon(); return; }
+  simonRound++;
+  simonAnswered = false;
+  const cmd = SIMON_COMMANDS[Math.floor(Math.random() * SIMON_COMMANDS.length)];
+  // Trick ratio: 25% early, 50% late
+  const trickChance = simonRound <= 5 ? 0.25 : simonRound <= 10 ? 0.35 : 0.5;
+  simonIsSimon = Math.random() > trickChance;
+  const speech = document.getElementById('simon-speech');
+  const charEl = document.getElementById('simon-char');
+  charEl.textContent = cmd.emoji;
+  if (simonIsSimon) {
+    speech.textContent = `Simon says... ${cmd.text}`;
+    speech.className = 'simon-speech simon-safe';
+    playTTS(`Simon says... ${cmd.text}`);
+  } else {
+    speech.textContent = cmd.text;
+    speech.className = 'simon-speech simon-trick';
+    playTTS(cmd.text);
+  }
+  document.getElementById('simon-go-btn').disabled = false;
+  document.getElementById('simon-stay-btn').disabled = false;
+  document.getElementById('simon-feedback').textContent = '';
+  // Timer
+  const timeLimit = simonRound <= 5 ? 5000 : simonRound <= 10 ? 4000 : 3000;
+  const start = Date.now();
+  const bar = document.getElementById('simon-timer-bar');
+  function tick() {
+    if (simonAnswered) return;
+    const elapsed = Date.now() - start;
+    const pct = Math.max(0, 1 - elapsed / timeLimit);
+    bar.style.width = (pct * 100) + '%';
+    if (elapsed < timeLimit) {
+      simonTimers.push(setTimeout(tick, 50));
+    } else {
+      // Time's up
+      simonAnswered = true;
+      document.getElementById('simon-go-btn').disabled = true;
+      document.getElementById('simon-stay-btn').disabled = true;
+      if (simonIsSimon) {
+        // Should have moved — lose life
+        simonLives--;
+        document.getElementById('ss-ex-lives').textContent = simonLives;
+        document.getElementById('simon-feedback').textContent = '⏰ Too slow! Simon said to move!';
+        SFX.exerciseWrong();
+      } else {
+        // Correctly didn't move
+        simonScore += 15;
+        document.getElementById('ss-ex-score').textContent = simonScore;
+        document.getElementById('simon-feedback').textContent = '✅ Smart! Simon didn\'t say that!';
+        SFX.exerciseCorrect();
+      }
+      simonTimers.push(setTimeout(nextSimonRound, 2000));
+    }
+  }
+  tick();
+}
+
+function simonAction(didMove) {
+  if (simonAnswered) return;
+  simonAnswered = true;
+  document.getElementById('simon-go-btn').disabled = true;
+  document.getElementById('simon-stay-btn').disabled = true;
+  const fb = document.getElementById('simon-feedback');
+  if (didMove && simonIsSimon) {
+    const bonus = 10;
+    simonScore += bonus;
+    fb.textContent = `✅ Great! +${bonus} points!`;
+    SFX.exerciseCorrect();
+  } else if (!didMove && !simonIsSimon) {
+    simonScore += 15;
+    fb.textContent = '✅ Smart! Simon didn\'t say! +15 points!';
+    SFX.exerciseCorrect();
+  } else if (didMove && !simonIsSimon) {
+    simonLives--;
+    document.getElementById('ss-ex-lives').textContent = simonLives;
+    fb.textContent = '❌ Oops! Simon didn\'t say that!';
+    SFX.exerciseWrong();
+  } else {
+    simonLives--;
+    document.getElementById('ss-ex-lives').textContent = simonLives;
+    fb.textContent = '❌ Simon said to move!';
+    SFX.exerciseWrong();
+  }
+  document.getElementById('ss-ex-score').textContent = simonScore;
+  simonTimers.push(setTimeout(nextSimonRound, 2000));
+}
+
+function finishSimon() {
+  clearSimonTimer();
+  const stars = simonScore >= 150 ? 3 : simonScore >= 100 ? 2 : 1;
+  celebrate(`Simon Says Done!\nScore: ${simonScore}`, stars);
+}
+
+// ---- Daily Workout ----
+function getDailyWorkoutSeed() {
+  const d = new Date();
+  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+}
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+}
+
+function getTodayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function loadStreakData() {
+  const name = currentPlayer ? currentPlayer.name : 'default';
+  const all = JSON.parse(localStorage.getItem('klh_exercise_streaks') || '{}');
+  return all[name] || { lastCompleted: '', streak: 0, bestStreak: 0, completedDates: [] };
+}
+
+function saveStreakData(data) {
+  const name = currentPlayer ? currentPlayer.name : 'default';
+  const all = JSON.parse(localStorage.getItem('klh_exercise_streaks') || '{}');
+  all[name] = data;
+  localStorage.setItem('klh_exercise_streaks', JSON.stringify(all));
+}
+
+function initDailyWorkout() {
+  clearExerciseTimer();
+  document.getElementById('daily-intro').classList.remove('hidden');
+  document.getElementById('daily-active').classList.add('hidden');
+
+  const streak = loadStreakData();
+  const today = getTodayStr();
+  const isCompletedToday = streak.completedDates.includes(today);
+
+  // Streak display
+  const streakEl = document.getElementById('daily-streak');
+  if (streak.streak > 0) {
+    streakEl.innerHTML = `🔥 ${streak.streak} Day Streak! (Best: ${streak.bestStreak})`;
+  } else {
+    streakEl.innerHTML = '💪 Start your streak today!';
+  }
+
+  // Calendar (last 7 days)
+  const cal = document.getElementById('daily-calendar');
+  cal.innerHTML = '';
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    const isToday = i === 0;
+    const done = streak.completedDates.includes(ds);
+    const div = document.createElement('div');
+    div.className = 'daily-day' + (isToday && done ? ' today completed' : isToday ? ' today' : done ? ' completed' : ' missed');
+    div.innerHTML = `<span>${days[d.getDay()]}</span><span>${done ? '✅' : isToday ? '🎯' : '·'}</span>`;
+    cal.appendChild(div);
+  }
+
+  // Preview today's exercises
+  const rng = seededRandom(getDailyWorkoutSeed());
+  const shuffled = [...EXERCISES].sort(() => rng() - 0.5);
+  const dailyExercises = shuffled.slice(0, 7);
+  const preview = document.getElementById('daily-preview');
+  preview.innerHTML = '<div style="font-size:1.2rem;font-weight:700;margin-bottom:5px;">Today\'s Workout:</div><div class="daily-preview-list">' +
+    dailyExercises.map(e => `<div class="daily-preview-item">${e.emoji} ${e.name}</div>`).join('') + '</div>';
+
+  const btn = document.getElementById('daily-start-btn');
+  if (isCompletedToday) {
+    btn.textContent = '✅ Already Done Today!';
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+  } else {
+    btn.textContent = '💪 Start Today\'s Workout!';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  }
+}
+
+function startDailyWorkout() {
+  clearExerciseTimer();
+  const rng = seededRandom(getDailyWorkoutSeed());
+  const shuffled = [...EXERCISES].sort(() => rng() - 0.5);
+  etExercises = shuffled.slice(0, 7);
+  etIndex = 0;
+  etLevel = 2; // medium rest time
+  document.getElementById('daily-intro').classList.add('hidden');
+  document.getElementById('daily-active').classList.remove('hidden');
+  runDailyExercise();
+}
+
+function runDailyExercise() {
+  if (etIndex >= etExercises.length) {
+    finishDailyWorkout();
+    return;
+  }
+  const ex = etExercises[etIndex];
+  document.getElementById('daily-emoji').textContent = ex.emoji;
+  document.getElementById('daily-name').textContent = ex.reps ? `Do ${ex.reps} ${ex.name}!` : `${ex.name}!`;
+  document.getElementById('daily-desc').textContent = ex.desc;
+  document.getElementById('daily-countdown').textContent = '';
+  document.getElementById('daily-timer-bar').style.width = '100%';
+  document.getElementById('daily-status').textContent = `Exercise ${etIndex + 1} of ${etExercises.length}`;
+  const announce = ex.reps ? `Do ${ex.reps} ${ex.name}!` : ex.name + '!';
+  playTTS(announce);
+  etTimers.push(setTimeout(() => showDailyCountdown(3, ex), 2000));
+}
+
+function showDailyCountdown(n, ex) {
+  if (n <= 0) {
+    document.getElementById('daily-countdown').textContent = 'GO!';
+    SFX.whistle();
+    etTimers.push(setTimeout(() => startDailyActive(ex), 800));
+    return;
+  }
+  document.getElementById('daily-countdown').textContent = n;
+  SFX.countdown();
+  etTimers.push(setTimeout(() => showDailyCountdown(n - 1, ex), 1000));
+}
+
+function startDailyActive(ex) {
+  document.getElementById('daily-countdown').textContent = '';
+  document.getElementById('daily-status').textContent = 'Keep going!';
+  const dur = ex.duration * 1000;
+  const start = Date.now();
+  const bar = document.getElementById('daily-timer-bar');
+  function tick() {
+    const elapsed = Date.now() - start;
+    bar.style.width = (Math.max(0, 1 - elapsed / dur) * 100) + '%';
+    if (elapsed < dur) {
+      etTimers.push(setTimeout(tick, 50));
+    } else {
+      SFX.exerciseCorrect();
+      etIndex++;
+      if (etIndex >= etExercises.length) {
+        etTimers.push(setTimeout(finishDailyWorkout, 1500));
+      } else {
+        document.getElementById('daily-emoji').textContent = '😤';
+        document.getElementById('daily-name').textContent = 'Rest!';
+        document.getElementById('daily-desc').textContent = 'Catch your breath...';
+        document.getElementById('daily-status').textContent = `Next: ${etExercises[etIndex].emoji} ${etExercises[etIndex].name}`;
+        bar.style.width = '100%';
+        const restStart = Date.now();
+        function restTick() {
+          const e = Date.now() - restStart;
+          bar.style.width = (Math.max(0, 1 - e / 8000) * 100) + '%';
+          if (e < 8000) etTimers.push(setTimeout(restTick, 50));
+          else runDailyExercise();
+        }
+        restTick();
+      }
+    }
+  }
+  tick();
+}
+
+function finishDailyWorkout() {
+  clearExerciseTimer();
+  const streak = loadStreakData();
+  const today = getTodayStr();
+  if (!streak.completedDates.includes(today)) {
+    streak.completedDates.push(today);
+    // Calculate streak
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    const ys = yesterday.getFullYear() + '-' + String(yesterday.getMonth()+1).padStart(2,'0') + '-' + String(yesterday.getDate()).padStart(2,'0');
+    if (streak.lastCompleted === ys) {
+      streak.streak++;
+    } else if (streak.lastCompleted !== today) {
+      streak.streak = 1;
+    }
+    streak.lastCompleted = today;
+    if (streak.streak > streak.bestStreak) streak.bestStreak = streak.streak;
+    // Keep only last 30 dates
+    if (streak.completedDates.length > 30) streak.completedDates = streak.completedDates.slice(-30);
+    saveStreakData(streak);
+  }
+  celebrate(`Daily Workout Done!\n🔥 ${streak.streak} Day Streak!`, 3);
+  document.getElementById('daily-intro').classList.remove('hidden');
+  document.getElementById('daily-active').classList.add('hidden');
+  initDailyWorkout(); // refresh UI
+}
+
+// ---- Freeze Dance ----
+let freezeTimers = [], freezeRound = 0, freezeScore = 0;
+let freezeIsDancing = false, freezeAnswered = false;
+let freezeMusicOsc = null, freezeMusicGain = null;
+
+function clearFreezeTimer() {
+  freezeTimers.forEach(t => clearTimeout(t));
+  freezeTimers = [];
+  stopFreezeMusic();
+}
+
+function startFreezeMusic() {
+  try {
+    const ctx = getAudioCtx();
+    freezeMusicGain = ctx.createGain();
+    freezeMusicGain.gain.value = 0.08;
+    freezeMusicGain.connect(ctx.destination);
+    freezeMusicOsc = ctx.createOscillator();
+    freezeMusicOsc.type = 'sawtooth';
+    // Simple bouncy melody - change frequency periodically
+    freezeMusicOsc.frequency.value = 440;
+    freezeMusicOsc.connect(freezeMusicGain);
+    freezeMusicOsc.start();
+    // Modulate frequency for a fun beat
+    let noteIdx = 0;
+    const notes = [440, 523, 587, 523, 440, 392, 440, 523];
+    function changeNote() {
+      if (!freezeMusicOsc) return;
+      freezeMusicOsc.frequency.value = notes[noteIdx % notes.length];
+      noteIdx++;
+      freezeTimers.push(setTimeout(changeNote, 250));
+    }
+    changeNote();
+  } catch(e) {}
+}
+
+function stopFreezeMusic() {
+  try {
+    if (freezeMusicOsc) { freezeMusicOsc.stop(); freezeMusicOsc = null; }
+    if (freezeMusicGain) { freezeMusicGain.disconnect(); freezeMusicGain = null; }
+  } catch(e) {}
+  freezeMusicOsc = null; freezeMusicGain = null;
+}
+
+function initFreezeDance() {
+  clearFreezeTimer();
+  freezeRound = 0; freezeScore = 0; freezeAnswered = false;
+  document.getElementById('freeze-score').textContent = '0';
+  document.getElementById('freeze-round').textContent = '0';
+  document.getElementById('freeze-char').className = 'freeze-character';
+  document.getElementById('freeze-char').textContent = '💃';
+  document.getElementById('freeze-status').textContent = 'Get Ready to Dance!';
+  document.getElementById('freeze-status').className = 'freeze-status';
+  document.getElementById('freeze-btn').disabled = true;
+  document.getElementById('freeze-feedback').textContent = '';
+  freezeTimers.push(setTimeout(nextFreezeRound, 1500));
+}
+
+function nextFreezeRound() {
+  if (freezeRound >= 10) { finishFreeze(); return; }
+  freezeRound++;
+  freezeAnswered = false;
+  document.getElementById('freeze-round').textContent = freezeRound;
+  document.getElementById('freeze-feedback').textContent = '';
+
+  // Dance phase
+  freezeIsDancing = true;
+  document.getElementById('freeze-char').className = 'freeze-character dancing';
+  document.getElementById('freeze-char').textContent = ['💃', '🕺', '🤸', '🏃', '🧑‍🎤'][Math.floor(Math.random() * 5)];
+  document.getElementById('freeze-status').textContent = '🎵 DANCE! 🎵';
+  document.getElementById('freeze-status').className = 'freeze-status dance';
+  document.getElementById('freeze-btn').disabled = false;
+  document.getElementById('freeze-btn').textContent = '❄️ FREEZE!';
+  startFreezeMusic();
+
+  // Random dance duration 4-10 seconds
+  const danceTime = 4000 + Math.random() * 6000;
+  freezeTimers.push(setTimeout(() => {
+    // FREEZE!
+    stopFreezeMusic();
+    freezeIsDancing = false;
+    document.getElementById('freeze-char').className = 'freeze-character frozen';
+    document.getElementById('freeze-char').textContent = '🧊';
+    document.getElementById('freeze-status').textContent = '🧊 FREEZE! 🧊';
+    document.getElementById('freeze-status').className = 'freeze-status freeze';
+    SFX.whistle();
+
+    // Give 3 seconds to respond
+    freezeTimers.push(setTimeout(() => {
+      if (!freezeAnswered) {
+        // Missed the freeze
+        document.getElementById('freeze-feedback').textContent = '⏰ Too slow to freeze!';
+        SFX.exerciseWrong();
+        freezeTimers.push(setTimeout(nextFreezeRound, 1500));
+      }
+    }, 3000));
+  }, danceTime));
+}
+
+function freezeAction() {
+  if (freezeAnswered) return;
+  freezeAnswered = true;
+  document.getElementById('freeze-btn').disabled = true;
+  const fb = document.getElementById('freeze-feedback');
+
+  if (!freezeIsDancing) {
+    // Correctly froze!
+    freezeScore += 10;
+    fb.textContent = '✅ Perfect freeze! +10!';
+    SFX.exerciseCorrect();
+  } else {
+    // Tapped while dancing — wrong!
+    freezeScore = Math.max(0, freezeScore - 5);
+    fb.textContent = '❌ Keep dancing! Music is still playing! -5';
+    SFX.exerciseWrong();
+  }
+  document.getElementById('freeze-score').textContent = freezeScore;
+  stopFreezeMusic();
+  freezeTimers.push(setTimeout(nextFreezeRound, 1500));
+}
+
+function finishFreeze() {
+  clearFreezeTimer();
+  const stars = freezeScore >= 80 ? 3 : freezeScore >= 50 ? 2 : 1;
+  celebrate(`Freeze Dance Done!\nScore: ${freezeScore}`, stars);
+}
+
+// ---- Animal Moves ----
+let animalTimers = [], animalList = [], animalIndex = 0;
+
+function clearAnimalTimer() {
+  animalTimers.forEach(t => clearTimeout(t));
+  animalTimers = [];
+}
+
+function initAnimalMoves() {
+  clearAnimalTimer();
+  animalList = [...ANIMAL_MOVES].sort(() => Math.random() - 0.5).slice(0, 8);
+  animalIndex = 0;
+  document.getElementById('animal-current').textContent = '0';
+  document.getElementById('animal-feedback').textContent = '';
+  nextAnimalMove();
+}
+
+function nextAnimalMove() {
+  if (animalIndex >= animalList.length) { finishAnimalMoves(); return; }
+  const a = animalList[animalIndex];
+  animalIndex++;
+  document.getElementById('animal-current').textContent = animalIndex;
+  document.getElementById('animal-emoji').textContent = a.animal;
+  document.getElementById('animal-name').textContent = `Move like a ${a.name}!`;
+  document.getElementById('animal-move').textContent = a.move;
+  document.getElementById('animal-timer-bar').style.width = '100%';
+  document.getElementById('animal-status').textContent = 'Go!';
+  document.getElementById('animal-feedback').textContent = '';
+  playTTS(`Move like a ${a.name}! ${a.move}`);
+
+  const dur = a.duration * 1000;
+  const start = Date.now();
+  const bar = document.getElementById('animal-timer-bar');
+  function tick() {
+    const elapsed = Date.now() - start;
+    bar.style.width = (Math.max(0, 1 - elapsed / dur) * 100) + '%';
+    if (elapsed < dur) {
+      animalTimers.push(setTimeout(tick, 50));
+    } else {
+      SFX.exerciseCorrect();
+      document.getElementById('animal-status').textContent = 'Great!';
+      animalTimers.push(setTimeout(nextAnimalMove, 1500));
+    }
+  }
+  tick();
+}
+
+function finishAnimalMoves() {
+  clearAnimalTimer();
+  celebrate('Animal Moves Complete!\nYou moved like 8 animals!', 2);
+}
+
+// ---- Body Challenge ----
+let bcTimers = [], bcIndex = 0, bcScore = 0, bcData = [];
+
+function clearBCTimer() {
+  bcTimers.forEach(t => clearTimeout(t));
+  bcTimers = [];
+}
+
+function initBodyChallenge() {
+  clearBCTimer();
+  bcData = [...BODY_CHALLENGES].sort(() => Math.random() - 0.5).slice(0, 10);
+  bcIndex = 0; bcScore = 0;
+  document.getElementById('bc-score').textContent = '0';
+  document.getElementById('bc-total').textContent = bcData.length;
+  document.getElementById('bc-quiz-area').classList.remove('hidden');
+  document.getElementById('bc-exercise-area').classList.add('hidden');
+  document.getElementById('bc-feedback').textContent = '';
+  renderBCQuestion();
+}
+
+function renderBCQuestion() {
+  if (bcIndex >= bcData.length) { finishBodyChallenge(); return; }
+  const q = bcData[bcIndex];
+  document.getElementById('bc-quiz-area').classList.remove('hidden');
+  document.getElementById('bc-exercise-area').classList.add('hidden');
+  document.getElementById('bc-question').textContent = q.q;
+  const choices = document.getElementById('bc-choices');
+  choices.innerHTML = '';
+  // Shuffle answers but track correct
+  const indices = q.a.map((_, i) => i).sort(() => Math.random() - 0.5);
+  indices.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = q.a[i];
+    btn.onclick = () => bcAnswer(i === q.correct);
+    choices.appendChild(btn);
+  });
+  document.getElementById('bc-feedback').textContent = '';
+  playTTS(q.q);
+}
+
+function bcAnswer(correct) {
+  const fb = document.getElementById('bc-feedback');
+  document.querySelectorAll('#bc-choices .choice-btn').forEach(b => b.disabled = true);
+  if (correct) {
+    bcScore++;
+    document.getElementById('bc-score').textContent = bcScore;
+    fb.textContent = '✅ Correct! Now do the exercise!';
+    SFX.exerciseCorrect();
+    bcTimers.push(setTimeout(() => startBCExercise(), 1500));
+  } else {
+    fb.textContent = '❌ Not quite! The answer is ' + bcData[bcIndex].a[bcData[bcIndex].correct];
+    SFX.exerciseWrong();
+    bcIndex++;
+    bcTimers.push(setTimeout(renderBCQuestion, 2000));
+  }
+}
+
+function startBCExercise() {
+  const q = bcData[bcIndex];
+  document.getElementById('bc-quiz-area').classList.add('hidden');
+  document.getElementById('bc-exercise-area').classList.remove('hidden');
+  document.getElementById('bc-ex-emoji').textContent = q.emoji;
+  document.getElementById('bc-ex-text').textContent = q.move;
+  document.getElementById('bc-timer-bar').style.width = '100%';
+  document.getElementById('bc-feedback').textContent = '';
+  playTTS(q.move);
+
+  const dur = q.duration * 1000;
+  const start = Date.now();
+  const bar = document.getElementById('bc-timer-bar');
+  function tick() {
+    const elapsed = Date.now() - start;
+    bar.style.width = (Math.max(0, 1 - elapsed / dur) * 100) + '%';
+    if (elapsed < dur) {
+      bcTimers.push(setTimeout(tick, 50));
+    } else {
+      SFX.exerciseCorrect();
+      document.getElementById('bc-feedback').textContent = '💪 Awesome!';
+      bcIndex++;
+      bcTimers.push(setTimeout(renderBCQuestion, 1500));
+    }
+  }
+  tick();
+}
+
+function finishBodyChallenge() {
+  clearBCTimer();
+  const stars = bcScore >= 8 ? 3 : bcScore >= 5 ? 2 : 1;
+  celebrate(`Body Challenge Done!\nScore: ${bcScore}/${bcData.length}`, stars);
+}
 
 // ============ INIT ============
 window.addEventListener('load', () => {

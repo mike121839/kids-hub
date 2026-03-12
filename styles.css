@@ -26,6 +26,10 @@
   --brain-magenta: #D500F9;
   --brain-light: #FFF3E0;
   --brain-dark: #1A0D00;
+  --exercise-blue: #2196F3;
+  --exercise-lime: #AEEA00;
+  --exercise-cyan: #00E5FF;
+  --exercise-dark: #0D1B2A;
   --bg: #0f0f1e;
   --text: #fff;
   --radius: 20px;
@@ -254,6 +258,16 @@ button:active { transform: scale(0.95) !important; }
   animation: cardShine 4s ease-in-out infinite 3s;
 }
 .section-card:nth-child(4) { animation-delay: 3s; }
+.exercise-card {
+  background: linear-gradient(145deg, #1565C0, var(--exercise-blue), #42A5F5);
+  border: 2px solid rgba(174,234,0,0.3);
+}
+.exercise-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(45deg, transparent 40%, rgba(174,234,0,0.1) 50%, transparent 60%);
+  animation: cardShine 4s ease-in-out infinite 4s;
+}
+.section-card:nth-child(5) { animation-delay: 4s; }
 .section-icon { font-size: 5rem; margin-bottom: 15px; position: relative; z-index: 1; }
 .section-name { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; position: relative; z-index: 1; }
 .section-desc { font-size: 1.2rem; opacity: 0.8; position: relative; z-index: 1; }
@@ -311,6 +325,22 @@ button:active { transform: scale(0.95) !important; }
 .brain-theme .hub-card:hover { background: rgba(255,109,0,0.28); border-color: rgba(0,191,165,0.3); }
 .brain-theme button:focus, .brain-theme [tabindex="0"]:focus {
   box-shadow: 0 0 0 4px var(--brain-orange), 0 0 30px rgba(255,109,0,0.4);
+}
+
+.exercise-theme {
+  background: linear-gradient(180deg, #0D1B2A 0%, #0f1528 50%, #0f0f1e 100%);
+  position: relative;
+}
+.exercise-theme::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(33,150,243,0.07) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(174,234,0,0.05) 0%, transparent 60%);
+  animation: bgPulse 8s ease-in-out infinite;
+}
+.exercise-theme .hub-card { background: rgba(33,150,243,0.15); border-color: rgba(174,234,0,0.12); }
+.exercise-theme .hub-card:hover { background: rgba(33,150,243,0.28); border-color: rgba(174,234,0,0.25); }
+.exercise-theme button:focus, .exercise-theme [tabindex="0"]:focus {
+  box-shadow: 0 0 0 4px var(--exercise-blue), 0 0 30px rgba(33,150,243,0.4);
 }
 
 .prayer-bg { background: radial-gradient(ellipse at center bottom, #1a0f10 0%, #080505 100%) !important; }
@@ -2711,6 +2741,138 @@ button:active { transform: scale(0.95) !important; }
 @keyframes mazeExit { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 .maze-collected { animation: mazeCollect 0.3s ease forwards; }
 @keyframes mazeCollect { to { transform: scale(2); opacity: 0; } }
+
+/* ============================================
+   EXERCISE SECTION
+   ============================================ */
+/* Exercise Timer */
+.et-layout, .daily-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+.et-exercise-emoji { font-size: 5rem; animation: exerciseBounce 0.8s ease-in-out infinite; }
+@keyframes exerciseBounce { 0%,100% { transform: scale(1) translateY(0); } 50% { transform: scale(1.1) translateY(-10px); } }
+.et-exercise-name { font-size: 2.2rem; font-weight: 800; color: var(--exercise-lime); text-align: center; }
+.et-exercise-desc { font-size: 1.3rem; opacity: 0.9; max-width: 500px; text-align: center; }
+.et-countdown { font-size: 5rem; font-weight: 900; color: var(--exercise-cyan); animation: countdownPulse 1s ease-in-out infinite; }
+@keyframes countdownPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+.et-timer-track {
+  width: 80%; max-width: 400px; height: 16px; background: rgba(255,255,255,0.1);
+  border-radius: 8px; overflow: hidden;
+}
+.et-timer-bar {
+  height: 100%; background: linear-gradient(90deg, var(--exercise-blue), var(--exercise-lime));
+  border-radius: 8px; transition: width 0.1s linear;
+}
+.et-status { font-size: 1.4rem; font-weight: 600; color: var(--exercise-cyan); text-align: center; }
+.et-levels { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+.et-title { font-size: 2rem; font-weight: 800; color: var(--exercise-lime); text-align: center; margin-bottom: 10px; }
+
+/* Simon Says */
+.simon-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+.simon-character { font-size: 5rem; animation: exerciseBounce 1s ease-in-out infinite; }
+.simon-speech {
+  font-size: 2rem; font-weight: 800; text-align: center; min-height: 80px;
+  display: flex; align-items: center; justify-content: center; padding: 15px;
+  background: rgba(33,150,243,0.15); border-radius: 20px; max-width: 500px; width: 90%;
+}
+.simon-speech.simon-trick { color: #FF5252; }
+.simon-speech.simon-safe { color: var(--exercise-lime); }
+.simon-timer-track { width: 80%; max-width: 400px; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
+.simon-timer-bar { height: 100%; background: var(--exercise-cyan); border-radius: 5px; transition: width 0.1s linear; }
+.simon-buttons { display: flex; gap: 20px; }
+.simon-btn {
+  font-size: 1.4rem; font-weight: 800; padding: 18px 35px; border-radius: 16px;
+  border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+}
+.simon-go { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff; box-shadow: 0 4px 20px rgba(76,175,80,0.3); }
+.simon-stay { background: linear-gradient(135deg, #F44336, #C62828); color: #fff; box-shadow: 0 4px 20px rgba(244,67,54,0.3); }
+.simon-btn:hover { transform: scale(1.05); }
+.simon-btn:disabled { opacity: 0.4; transform: none; cursor: default; }
+.simon-lives { font-size: 1.4rem; }
+
+/* Video Player */
+.exercise-video-layout { display: flex; flex-direction: column; gap: 0; }
+.video-category-tabs {
+  display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto;
+  -webkit-overflow-scrolling: touch; flex-shrink: 0;
+}
+.video-cat-tab {
+  padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: 600;
+  background: rgba(255,255,255,0.08); color: #fff; white-space: nowrap;
+  border: 2px solid transparent; cursor: pointer; transition: all 0.2s;
+}
+.video-cat-tab.active { background: var(--exercise-blue); border-color: var(--exercise-lime); }
+.video-grid { display: flex; flex-wrap: wrap; gap: 15px; padding: 15px; justify-content: center; overflow-y: auto; }
+.video-thumb-card {
+  width: 280px; border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.3);
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 2px solid transparent;
+}
+.video-thumb-card:hover { transform: scale(1.03); border-color: var(--exercise-blue); box-shadow: 0 4px 20px rgba(33,150,243,0.3); }
+.video-thumb {
+  width: 100%; height: 160px; background-size: cover; background-position: center;
+  position: relative;
+}
+.video-play-overlay {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.35); font-size: 3rem; color: #fff; transition: background 0.2s;
+}
+.video-thumb-card:hover .video-play-overlay { background: rgba(33,150,243,0.4); }
+.video-thumb-title { padding: 10px; font-size: 1rem; font-weight: 600; color: #fff; }
+.video-player-area { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+.yt-iframe { width: 100%; aspect-ratio: 16/9; max-width: 800px; border-radius: 12px; border: none; }
+
+/* Daily Workout */
+.daily-streak {
+  font-size: 2rem; font-weight: 800; text-align: center; color: var(--exercise-lime);
+  display: flex; align-items: center; gap: 10px; justify-content: center;
+}
+.daily-calendar { display: flex; gap: 8px; justify-content: center; margin: 10px 0; }
+.daily-day {
+  width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; flex-direction: column; gap: 2px;
+}
+.daily-day.completed { background: rgba(76,175,80,0.3); border: 2px solid #4CAF50; color: #4CAF50; }
+.daily-day.today { background: rgba(33,150,243,0.3); border: 2px solid var(--exercise-blue); color: var(--exercise-cyan); animation: countdownPulse 2s ease-in-out infinite; }
+.daily-day.today.completed { background: rgba(174,234,0,0.3); border-color: var(--exercise-lime); color: var(--exercise-lime); }
+.daily-day.missed { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.3); }
+.daily-preview { text-align: center; margin: 10px 0; }
+.daily-preview-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px; }
+.daily-preview-item {
+  padding: 6px 14px; background: rgba(33,150,243,0.15); border-radius: 12px;
+  font-size: 0.95rem; display: flex; align-items: center; gap: 6px;
+}
+
+/* Freeze Dance */
+.freeze-layout { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; }
+.freeze-character { font-size: 6rem; transition: all 0.3s; }
+.freeze-character.dancing { animation: freezeDance 0.4s ease-in-out infinite; }
+@keyframes freezeDance { 0%,100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(10deg) scale(1.1); } }
+.freeze-character.frozen { animation: none; filter: brightness(1.5); }
+.freeze-status {
+  font-size: 2.5rem; font-weight: 900; text-align: center;
+  padding: 15px 30px; border-radius: 20px; min-width: 300px;
+}
+.freeze-status.dance { background: rgba(33,150,243,0.2); color: var(--exercise-cyan); animation: freezeDance 0.5s ease-in-out infinite; }
+.freeze-status.freeze { background: rgba(174,234,0,0.2); color: var(--exercise-lime); }
+.freeze-btn {
+  font-size: 1.6rem; font-weight: 800; padding: 20px 50px; border-radius: 20px;
+  border: none; cursor: pointer; background: linear-gradient(135deg, #00BCD4, #0097A7);
+  color: #fff; box-shadow: 0 4px 20px rgba(0,188,212,0.3); transition: transform 0.15s;
+}
+.freeze-btn:hover { transform: scale(1.05); }
+.freeze-btn:disabled { opacity: 0.4; transform: none; cursor: default; }
+
+/* Animal Moves */
+.animal-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+.animal-emoji { font-size: 6rem; animation: animalBounce 0.6s ease-in-out infinite; }
+@keyframes animalBounce { 0%,100% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-15px) rotate(-5deg); } 75% { transform: translateY(-5px) rotate(5deg); } }
+.animal-name { font-size: 2.5rem; font-weight: 800; color: var(--exercise-lime); }
+.animal-move { font-size: 1.4rem; opacity: 0.9; text-align: center; max-width: 400px; }
+
+/* Body Challenge */
+.bc-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+.bc-question { font-size: 1.6rem; font-weight: 700; text-align: center; max-width: 500px; }
+.bc-exercise-display { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.bc-exercise-emoji { font-size: 4rem; animation: exerciseBounce 0.8s ease-in-out infinite; }
+.bc-exercise-text { font-size: 1.6rem; font-weight: 700; color: var(--exercise-cyan); text-align: center; }
 
 /* ============================================
    RESPONSIVE
