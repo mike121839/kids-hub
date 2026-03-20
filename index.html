@@ -606,13 +606,17 @@
         <div class="card-emoji">&#129417;</div>
         <div class="card-title">Riddle Time</div>
       </button>
-      <button class="hub-card" onclick="openScreen('brain-std-screen'); startSpotDiff();">
-        <div class="card-emoji">&#128270;</div>
-        <div class="card-title">Spot the Difference</div>
+      <button class="hub-card" onclick="openScreen('brain-ftn-screen'); startFindNumber();">
+        <div class="card-emoji">#</div>
+        <div class="card-title">Find That Number</div>
       </button>
-      <button class="hub-card" onclick="openScreen('brain-maze-screen'); startMaze();">
-        <div class="card-emoji">&#127984;</div>
-        <div class="card-title">Maze Adventure</div>
+      <button class="hub-card" onclick="openScreen('brain-read-screen'); startLetsRead();">
+        <div class="card-emoji">A</div>
+        <div class="card-title">Let's Read</div>
+      </button>
+      <button class="hub-card" onclick="openScreen('brain-pti-screen'); startPointToIt();">
+        <div class="card-emoji">&#9758;</div>
+        <div class="card-title">Point to It</div>
       </button>
     </div>
   </div>
@@ -703,31 +707,46 @@
     </div>
   </div>
 
-  <!-- ===== SPOT THE DIFFERENCE ===== -->
-  <div id="brain-std-screen" class="screen brain-theme">
+  <!-- ===== FIND THAT NUMBER ===== -->
+  <div id="brain-ftn-screen" class="screen brain-theme">
     <div class="game-header">
-      <button class="back-btn" onclick="openScreen('brain-hub')">&#9664; Back</button>
-      <h2>&#128270; Spot the Difference</h2>
-      <div class="game-score">Found: <span id="std-found">0</span>/<span id="std-total">3</span> | Level: <span id="std-level">1</span></div>
+      <button class="back-btn" onclick="openScreen('brain-hub');">&#9664; Back</button>
+      <h2># Find That Number</h2>
+      <div class="game-score">Level: <span id="ftn-level">1</span>/10 | Score: <span id="ftn-score">0</span></div>
     </div>
-    <div class="game-body std-layout">
-      <div class="std-instruction">Tap the differences in the right picture!</div>
-      <div class="std-pair" id="std-pair"></div>
-      <div id="std-feedback" class="feedback"></div>
+    <div class="game-body ftn-layout">
+      <div class="ftn-prompt" id="ftn-prompt">Find the number...</div>
+      <div class="ftn-grid" id="ftn-grid"></div>
+      <div id="ftn-feedback" class="feedback"></div>
     </div>
   </div>
 
-  <!-- ===== MAZE ADVENTURE ===== -->
-  <div id="brain-maze-screen" class="screen brain-theme">
+  <!-- ===== LET'S READ ===== -->
+  <div id="brain-read-screen" class="screen brain-theme">
     <div class="game-header">
-      <button class="back-btn" onclick="openScreen('brain-hub'); stopMazeKeys();">&#9664; Back</button>
-      <h2>&#127984; Maze Adventure</h2>
-      <div class="game-score">&#11088; <span id="maze-stars">0</span> | Moves: <span id="maze-moves">0</span></div>
+      <button class="back-btn" onclick="openScreen('brain-hub'); clearReadTimers();">&#9664; Back</button>
+      <h2>A Let's Read</h2>
+      <div class="game-score">Word: <span id="read-progress">1</span>/<span id="read-total">20</span></div>
     </div>
-    <div class="game-body maze-layout">
-      <div class="maze-info">Use arrow keys to move! Collect &#11088; and reach &#127937;</div>
-      <div class="maze-container" id="maze-container"></div>
-      <div id="maze-feedback" class="feedback"></div>
+    <div class="game-body read-layout">
+      <div class="read-illust" id="read-illust"></div>
+      <div class="read-word" id="read-word"></div>
+      <button class="read-next-btn" id="read-next-btn" style="display:none;" onclick="nextReadWord();">Next &#9654;</button>
+      <div id="read-feedback" class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- ===== POINT TO IT ===== -->
+  <div id="brain-pti-screen" class="screen brain-theme">
+    <div class="game-header">
+      <button class="back-btn" onclick="openScreen('brain-hub');">&#9664; Back</button>
+      <h2>&#9758; Point to It</h2>
+      <div class="game-score">Round: <span id="pti-round">1</span>/10 | Score: <span id="pti-score">0</span></div>
+    </div>
+    <div class="game-body pti-layout">
+      <div class="pti-prompt" id="pti-prompt">Listen carefully...</div>
+      <div class="pti-cards" id="pti-cards"></div>
+      <div id="pti-feedback" class="feedback"></div>
     </div>
   </div>
 
@@ -740,25 +759,13 @@
       <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
     </div>
     <div class="sub-hub-grid">
-      <button class="hub-card" onclick="openScreen('exercise-videos-screen'); initExerciseVideos();">
-        <div class="card-emoji">&#127909;</div>
-        <div class="card-title">Exercise Videos</div>
-      </button>
       <button class="hub-card" onclick="openScreen('exercise-timer-screen');">
         <div class="card-emoji">&#9201;</div>
         <div class="card-title">Exercise Timer</div>
       </button>
-      <button class="hub-card" onclick="openScreen('exercise-simon-screen'); initSimonSays();">
-        <div class="card-emoji">&#128075;</div>
-        <div class="card-title">Simon Says</div>
-      </button>
       <button class="hub-card" onclick="openScreen('exercise-daily-screen'); initDailyWorkout();">
         <div class="card-emoji">&#128170;</div>
         <div class="card-title">Daily Workout</div>
-      </button>
-      <button class="hub-card" onclick="openScreen('exercise-freeze-screen'); initFreezeDance();">
-        <div class="card-emoji">&#129336;</div>
-        <div class="card-title">Freeze Dance</div>
       </button>
       <button class="hub-card" onclick="openScreen('exercise-animals-screen'); initAnimalMoves();">
         <div class="card-emoji">&#128018;</div>
@@ -771,22 +778,6 @@
     </div>
   </div>
 
-  <!-- ===== EXERCISE VIDEOS ===== -->
-  <div id="exercise-videos-screen" class="screen exercise-theme">
-    <div class="game-header">
-      <button class="back-btn" onclick="openScreen('exercise-hub'); cleanupVideoIframes();">&#9664; Back</button>
-      <h2>&#127909; Exercise Videos</h2>
-      <div class="stars-display"><span class="star-icon">&#11088;</span> <span class="player-stars">0</span></div>
-    </div>
-    <div class="game-body exercise-video-layout">
-      <div class="video-category-tabs" id="video-cat-tabs"></div>
-      <div class="video-grid" id="video-grid"></div>
-      <div class="video-player-area hidden" id="video-player-area">
-        <div id="video-player-container"></div>
-        <button class="action-btn" onclick="closeVideoPlayer()">&#9664; Back to Videos</button>
-      </div>
-    </div>
-  </div>
 
   <!-- ===== EXERCISE TIMER ===== -->
   <div id="exercise-timer-screen" class="screen exercise-theme">
@@ -821,24 +812,6 @@
     </div>
   </div>
 
-  <!-- ===== SIMON SAYS ===== -->
-  <div id="exercise-simon-screen" class="screen exercise-theme">
-    <div class="game-header">
-      <button class="back-btn" onclick="openScreen('exercise-hub'); clearSimonTimer();">&#9664; Back</button>
-      <h2>&#128075; Simon Says</h2>
-      <div class="game-score">Score: <span id="ss-ex-score">0</span> | &#10084;&#65039; <span id="ss-ex-lives">3</span></div>
-    </div>
-    <div class="game-body simon-layout">
-      <div class="simon-character" id="simon-char">&#129489;</div>
-      <div class="simon-speech" id="simon-speech">Get ready!</div>
-      <div class="simon-timer-track"><div class="simon-timer-bar" id="simon-timer-bar"></div></div>
-      <div class="simon-buttons">
-        <button class="simon-btn simon-go" id="simon-go-btn" onclick="simonAction(true)" disabled>&#9989; DO IT!</button>
-        <button class="simon-btn simon-stay" id="simon-stay-btn" onclick="simonAction(false)" disabled>&#128721; DON'T MOVE!</button>
-      </div>
-      <div id="simon-feedback" class="feedback"></div>
-    </div>
-  </div>
 
   <!-- ===== DAILY WORKOUT ===== -->
   <div id="exercise-daily-screen" class="screen exercise-theme">
@@ -865,20 +838,6 @@
     </div>
   </div>
 
-  <!-- ===== FREEZE DANCE ===== -->
-  <div id="exercise-freeze-screen" class="screen exercise-theme">
-    <div class="game-header">
-      <button class="back-btn" onclick="openScreen('exercise-hub'); clearFreezeTimer();">&#9664; Back</button>
-      <h2>&#129336; Freeze Dance</h2>
-      <div class="game-score">Score: <span id="freeze-score">0</span> | Round: <span id="freeze-round">0</span>/10</div>
-    </div>
-    <div class="game-body freeze-layout">
-      <div class="freeze-character" id="freeze-char">&#128131;</div>
-      <div class="freeze-status" id="freeze-status">Get Ready to Dance!</div>
-      <button class="freeze-btn" id="freeze-btn" onclick="freezeAction()" disabled>&#10052; FREEZE!</button>
-      <div id="freeze-feedback" class="feedback"></div>
-    </div>
-  </div>
 
   <!-- ===== ANIMAL MOVES ===== -->
   <div id="exercise-animals-screen" class="screen exercise-theme">

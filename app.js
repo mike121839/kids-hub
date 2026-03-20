@@ -2,6 +2,140 @@
    KIDS LEARNING HUB v2 — IMMERSIVE APP.JS
    ============================================ */
 
+// ============ SAFE ICON SYSTEM (cross-browser, no emoji) ============
+const _si = {
+  // Colored circles
+  'red':'<b class="si" style="background:#EF5350"></b>',
+  'blue':'<b class="si" style="background:#42A5F5"></b>',
+  'yellow':'<b class="si" style="background:#FFD600"></b>',
+  'green':'<b class="si" style="background:#66BB6A"></b>',
+  'orange':'<b class="si" style="background:#FF9800"></b>',
+  'purple':'<b class="si" style="background:#AB47BC"></b>',
+  'pink':'<b class="si" style="background:#F48FB1"></b>',
+  'brown':'<b class="si" style="background:#795548"></b>',
+  'black':'<b class="si" style="background:#333"></b>',
+  'white':'<b class="si" style="background:#fff;border:2px solid #999"></b>',
+  'half-moon':'<b class="si" style="background:linear-gradient(90deg,#333 50%,#E0E0E0 50%);border:1px solid #777"></b>',
+  'half-moon2':'<b class="si" style="background:linear-gradient(90deg,#E0E0E0 50%,#333 50%);border:1px solid #777"></b>',
+  'beige':'<b class="si" style="background:#FFECB3;border:1px solid #D7CCC8"></b>',
+  // Colored squares
+  'red-sq':'<b class="si si-sq" style="background:#EF5350"></b>',
+  'blue-sq':'<b class="si si-sq" style="background:#42A5F5"></b>',
+  'green-sq':'<b class="si si-sq" style="background:#66BB6A"></b>',
+  'orange-sq':'<b class="si si-sq" style="background:#FF9800"></b>',
+  'yellow-sq':'<b class="si si-sq" style="background:#FFD600"></b>',
+  // Size circles (for growth patterns)
+  'sm-green':'<b class="si si-sm" style="background:#66BB6A"></b>',
+  'md-green':'<b class="si si-md" style="background:#43A047"></b>',
+  'lg-green':'<b class="si si-lg" style="background:#2E7D32"></b>',
+  'sm-yellow':'<b class="si si-sm" style="background:#FFD600"></b>',
+  'md-yellow':'<b class="si" style="background:#FFC107"></b>',
+  'lg-orange':'<b class="si si-lg" style="background:#FF9800"></b>',
+  // Numbers in styled circles
+  'n1':'<b class="si-n">1</b>','n2':'<b class="si-n">2</b>','n3':'<b class="si-n">3</b>',
+  'n4':'<b class="si-n">4</b>','n5':'<b class="si-n">5</b>','n6':'<b class="si-n">6</b>',
+  // Symbols (basic Unicode)
+  'star':'<b class="si-t" style="color:#FFD600">&#9733;</b>',
+  'moon':'<b class="si-t" style="color:#5C6BC0">&#9790;</b>',
+  'sun':'<b class="si-t" style="color:#FF8F00">&#9728;</b>',
+  'cloud':'<b class="si-t" style="color:#90A4AE">&#9729;</b>',
+  'snowflake':'<b class="si-t" style="color:#42A5F5">&#10052;</b>',
+  'drop':'<b class="si-t" style="color:#2196F3">&#9670;</b>',
+  'heart':'<b class="si-t" style="color:#E53935">&#9829;</b>',
+  'music':'<b class="si-t" style="color:#9C27B0">&#9834;</b>',
+  'music2':'<b class="si-t" style="color:#7B1FA2">&#9835;</b>',
+  'flower':'<b class="si-t" style="color:#E91E63">&#10047;</b>',
+  'sparkle':'<b class="si-t" style="color:#FFD600">&#10022;</b>',
+  'rainbow':'<b class="si" style="background:linear-gradient(135deg,#EF5350,#FF9800,#FFD600,#66BB6A,#42A5F5,#AB47BC);width:1.2em"></b>',
+  'flag':'<b class="si-t" style="color:#333">&#9873;</b>',
+  'question':'<b class="si-t" style="color:#FF9800;font-size:1.2em">?</b>',
+  // Smiley faces
+  'smile1':'<b class="si-face">:-)</b>',
+  'smile2':'<b class="si-face">:-D</b>',
+  'smile3':'<b class="si-face">;-)</b>',
+  'smile4':'<b class="si-face">XD</b>',
+  // Labeled circles (animals, fruits, objects)
+  'cat':'<b class="si-l" style="background:#FF9800">C</b>',
+  'dog':'<b class="si-l" style="background:#795548">D</b>',
+  'rabbit':'<b class="si-l" style="background:#F48FB1">R</b>',
+  'duck':'<b class="si-l" style="background:#42A5F5">Dk</b>',
+  'apple':'<b class="si-l" style="background:#E53935">A</b>',
+  'banana':'<b class="si-l" style="background:#F9A825;color:#333">B</b>',
+  'grape':'<b class="si-l" style="background:#7B1FA2">G</b>',
+  'orange-f':'<b class="si-l" style="background:#FF9800">O</b>',
+  // Word badges (for Odd One Out and general use)
+  'w-apple':'<b class="si-w" style="background:#E53935">Apple</b>',
+  'w-banana':'<b class="si-w" style="background:#F9A825;color:#333">Banana</b>',
+  'w-grape':'<b class="si-w" style="background:#7B1FA2">Grapes</b>',
+  'w-car':'<b class="si-w" style="background:#607D8B">Car</b>',
+  'w-cat':'<b class="si-w" style="background:#FF9800">Cat</b>',
+  'w-dog':'<b class="si-w" style="background:#795548">Dog</b>',
+  'w-rabbit':'<b class="si-w" style="background:#F48FB1">Rabbit</b>',
+  'w-flower':'<b class="si-w" style="background:#E91E63">Flower</b>',
+  'w-soccer':'<b class="si-w" style="background:#4CAF50">Soccer</b>',
+  'w-basketball':'<b class="si-w" style="background:#FF9800">Basket</b>',
+  'w-tennis':'<b class="si-w" style="background:#CDDC39;color:#333">Tennis</b>',
+  'w-book':'<b class="si-w" style="background:#5C6BC0">Book</b>',
+  'w-bus':'<b class="si-w" style="background:#FFA726">Bus</b>',
+  'w-train':'<b class="si-w" style="background:#78909C">Train</b>',
+  'w-pizza':'<b class="si-w" style="background:#FF7043">Pizza</b>',
+  'w-piano':'<b class="si-w" style="background:#333">Piano</b>',
+  'w-guitar':'<b class="si-w" style="background:#8D6E63">Guitar</b>',
+  'w-trumpet':'<b class="si-w" style="background:#FDD835;color:#333">Trumpet</b>',
+  'w-tv':'<b class="si-w" style="background:#455A64">TV</b>',
+  'w-sneaker':'<b class="si-w" style="background:#42A5F5">Sneaker</b>',
+  'w-boot':'<b class="si-w" style="background:#6D4C41">Boot</b>',
+  'w-hat':'<b class="si-w" style="background:#AB47BC">Hat</b>',
+  'w-shoe':'<b class="si-w" style="background:#333">Shoe</b>',
+  'w-fish':'<b class="si-w" style="background:#29B6F6">Fish</b>',
+  'w-carrot':'<b class="si-w" style="background:#FF7043">Carrot</b>',
+  'w-plane':'<b class="si-w" style="background:#42A5F5">Plane</b>',
+  'w-helicopter':'<b class="si-w" style="background:#66BB6A">Heli</b>',
+  'w-rocket':'<b class="si-w" style="background:#EF5350">Rocket</b>',
+  'w-ship':'<b class="si-w" style="background:#0288D1">Ship</b>',
+  'w-ice':'<b class="si-w" style="background:#B3E5FC;color:#333">Ice</b>',
+  'w-mountain':'<b class="si-w" style="background:#78909C">Mountain</b>',
+  'w-snowflake':'<b class="si-w" style="background:#B3E5FC;color:#0277BD">Snow</b>',
+  'w-fire':'<b class="si-w" style="background:#FF5722">Fire</b>',
+  'w-elephant':'<b class="si-w" style="background:#78909C">Elephant</b>',
+  'w-whale':'<b class="si-w" style="background:#0288D1">Whale</b>',
+  'w-camel':'<b class="si-w" style="background:#D7CCC8;color:#333">Camel</b>',
+  'w-mouse':'<b class="si-w" style="background:#BDBDBD;color:#333">Mouse</b>',
+  'w-burger':'<b class="si-w" style="background:#8D6E63">Burger</b>',
+  'w-taco':'<b class="si-w" style="background:#FFA726">Taco</b>',
+  'w-cake':'<b class="si-w" style="background:#F48FB1">Cake</b>',
+  'w-sun':'<b class="si-w" style="background:#FFD600;color:#333">Sun</b>',
+  'w-moon':'<b class="si-w" style="background:#5C6BC0">Moon</b>',
+  'w-star':'<b class="si-w" style="background:#FFD600;color:#333">Star</b>',
+  'w-rain':'<b class="si-w" style="background:#42A5F5">Rain</b>',
+  'w-lion':'<b class="si-w" style="background:#FFA726">Lion</b>',
+  'w-tiger':'<b class="si-w" style="background:#FF9800">Tiger</b>',
+  'w-bear':'<b class="si-w" style="background:#795548">Bear</b>',
+  'w-penguin':'<b class="si-w" style="background:#333">Penguin</b>',
+  'w-strawberry':'<b class="si-w" style="background:#E53935">Berry</b>',
+  'w-peach':'<b class="si-w" style="background:#FFAB91">Peach</b>',
+  'w-lemon':'<b class="si-w" style="background:#FDD835;color:#333">Lemon</b>',
+  'w-frog':'<b class="si-w" style="background:#66BB6A">Frog</b>',
+  'w-croc':'<b class="si-w" style="background:#2E7D32">Croc</b>',
+  'w-turtle':'<b class="si-w" style="background:#43A047">Turtle</b>',
+  'w-milk':'<b class="si-w" style="background:#ECEFF1;color:#333">Milk</b>',
+  'w-juice':'<b class="si-w" style="background:#FFB300">Juice</b>',
+  'w-water':'<b class="si-w" style="background:#42A5F5">Water</b>',
+  'w-art':'<b class="si-w" style="background:#AB47BC">Art</b>',
+  'w-crayon':'<b class="si-w" style="background:#FF7043">Crayon</b>',
+  'w-pencil':'<b class="si-w" style="background:#FFD600;color:#333">Pencil</b>',
+  'w-hammer':'<b class="si-w" style="background:#607D8B">Hammer</b>',
+  'w-tree':'<b class="si-w" style="background:#4CAF50">Tree</b>',
+  'w-cactus':'<b class="si-w" style="background:#66BB6A">Cactus</b>',
+  'w-sunflower':'<b class="si-w" style="background:#FDD835;color:#333">Daisy</b>',
+  'w-pine':'<b class="si-w" style="background:#2E7D32">Pine</b>',
+  'w-ant':'<b class="si-w" style="background:#333">Ant</b>',
+  'w-bee':'<b class="si-w" style="background:#FDD835;color:#333">Bee</b>',
+  'w-caterpillar':'<b class="si-w" style="background:#66BB6A">Bug</b>',
+  'w-eagle':'<b class="si-w" style="background:#6D4C41">Eagle</b>',
+};
+function safeIcon(k) { return _si[k] || k; }
+
 // ============ AUDIO CONTEXT (for sound effects & background music) ============
 let audioCtx;
 function getAudioCtx() {
@@ -344,10 +478,15 @@ function playNarration(key, fallbackText, onEnd, highlightEl, highlightText) {
   }, 3000);
 }
 
+function ttsCleanText(t) {
+  // Fix pronunciation: "St." should be "Saint" not "Street"
+  return t.replace(/\bSt\.\s/g, 'Saint ');
+}
+
 function playTTS(text, onEnd) {
   stopCurrentTTS();
   if (!text || !text.trim()) { if (onEnd) onEnd(); return; }
-  const audio = new Audio(ttsUrl(text));
+  const audio = new Audio(ttsUrl(ttsCleanText(text)));
   currentTTSAudio = audio;
   _hookHighlight(audio);
   audio.onended = () => {
@@ -406,12 +545,12 @@ function stopAllAudio() {
 }
 
 // ============ PARTICLES ============
-const FAITH_PARTICLES = ['✝️', '⭐', '🕯️', '✨', '🌟', '💫', '🕊️'];
-const HEALTH_PARTICLES = ['🍎', '🥦', '🍊', '🌿', '🌻', '💚', '🥕'];
-const MUSIC_PARTICLES = ['🎵', '🎶', '🎸', '🥁', '🎹', '🎺', '🎻'];
-const BRAIN_PARTICLES = ['🧠', '💡', '⚡', '🔮', '✨', '🎯', '🧩'];
-const EXERCISE_PARTICLES = ['🏃', '💪', '⭐', '🔥', '🦘', '🤸', '🏆'];
-const MAIN_PARTICLES = ['⭐', '✨', '🌟', '💫', '🎵'];
+const FAITH_PARTICLES = ['\u2720', '\u2605', '\u2666', '\u2726', '\u2605', '\u2736', '\u2666'];
+const HEALTH_PARTICLES = ['\u25CF', '\u2666', '\u25CF', '\u273F', '\u273F', '\u2665', '\u25CF'];
+const MUSIC_PARTICLES = ['\u266A', '\u266B', '\u2666', '\u25CF', '\u25A0', '\u2666', '\u25CF'];
+const BRAIN_PARTICLES = ['\u25CF', '\u2605', '\u26A1', '\u25C6', '\u2726', '\u25CF', '\u25A0'];
+const EXERCISE_PARTICLES = ['\u25B2', '\u2605', '\u2605', '\u2666', '\u25CF', '\u2605', '\u2605'];
+const MAIN_PARTICLES = ['\u2605', '\u2726', '\u2605', '\u2736', '\u266A'];
 
 function spawnParticles(containerId, items) {
   const container = document.getElementById(containerId);
@@ -429,9 +568,9 @@ function spawnParticles(containerId, items) {
 let currentPlayer = null;
 let players = JSON.parse(localStorage.getItem('klh_players') || '[]');
 const AVATARS = [
-  { emoji: '🌲', name: 'Cedar' }, { emoji: '🕊️', name: 'Dove' },
-  { emoji: '⭐', name: 'Star' }, { emoji: '✝️', name: 'Cross' },
-  { emoji: '❤️', name: 'Heart' }, { emoji: '🍎', name: 'Apple' },
+  { emoji: '\u2663', name: 'Cedar' }, { emoji: '\u2666', name: 'Dove' },
+  { emoji: '\u2605', name: 'Star' }, { emoji: '\u2720', name: 'Cross' },
+  { emoji: '\u2665', name: 'Heart' }, { emoji: '\u25CF', name: 'Apple' },
 ];
 let setupSlotIndex = -1;
 let selectedAvatar = 0;
@@ -483,10 +622,10 @@ function renderPlayerSlots() {
     const btn = document.createElement('button');
     btn.className = 'player-slot' + (p ? '' : ' empty');
     if (p) {
-      btn.innerHTML = `<div class="slot-avatar">${p.avatar}</div><div class="slot-name">${p.name}</div><div class="slot-stars">⭐ ${p.stars || 0} Stars</div>`;
+      btn.innerHTML = `<div class="slot-avatar">${p.avatar}</div><div class="slot-name">${p.name}</div><div class="slot-stars">★ ${p.stars || 0} Stars</div>`;
       btn.onclick = () => { currentPlayer = players[i]; savePlayers(); openScreen('hub-screen'); renderHubPlayer(); };
     } else {
-      btn.innerHTML = `<div class="slot-avatar" style="opacity:0.3">➕</div><div class="slot-name">New Player</div>`;
+      btn.innerHTML = `<div class="slot-avatar" style="opacity:0.3">+</div><div class="slot-name">New Player</div>`;
       btn.onclick = () => { setupSlotIndex = i; openSetup(); };
     }
     container.appendChild(btn);
@@ -527,7 +666,7 @@ function saveNewPlayer() {
 function renderHubPlayer() {
   const el = document.getElementById('hub-player-info');
   if (currentPlayer) {
-    el.innerHTML = `<span class="player-avatar-sm">${currentPlayer.avatar}</span> ${currentPlayer.name} <span style="color:var(--faith-gold)">⭐ ${currentPlayer.stars || 0}</span>`;
+    el.innerHTML = `<span class="player-avatar-sm">${currentPlayer.avatar}</span> ${currentPlayer.name} <span style="color:var(--faith-gold)">&#9733; ${currentPlayer.stars || 0}</span>`;
   }
 }
 
@@ -536,7 +675,7 @@ function celebrate(text, stars) {
   const overlay = document.getElementById('celebration');
   overlay.classList.remove('hidden');
   document.getElementById('celebration-text').innerHTML = text;
-  document.getElementById('celebration-stars').textContent = stars > 0 ? '⭐'.repeat(stars) : '';
+  document.getElementById('celebration-stars').innerHTML = stars > 0 ? '<span style="color:#FFD600">' + '\u2605'.repeat(stars) + '</span>' : '';
   if (stars > 0) addStars(stars);
   SFX.celebrate();
   // Confetti
@@ -587,7 +726,7 @@ function closeCelebration() {
 // ===========================================================
 
 // ============ A1: STORYBOOK with ANIMATED ILLUSTRATIONS ============
-const SPARKLES_HTML = '<div class="sparkles"><span class="sparkle">✨</span><span class="sparkle">⭐</span><span class="sparkle">✨</span><span class="sparkle">🌟</span><span class="sparkle">✨</span><span class="sparkle">⭐</span></div>';
+const SPARKLES_HTML = '<div class="sparkles"><span class="sparkle">*</span><span class="sparkle">★</span><span class="sparkle">*</span><span class="sparkle">★</span><span class="sparkle">*</span><span class="sparkle">★</span></div>';
 
 const storyPages = [
   {
@@ -598,11 +737,11 @@ const storyPages = [
       <div class="el mountain1"></div><div class="el mountain2"></div>
       <div class="el snow1"></div><div class="el snow2"></div>
       <div class="ground"></div>
-      <div class="el" style="bottom:28%;left:12%;font-size:3rem;">🌲</div>
-      <div class="el" style="bottom:28%;left:22%;font-size:2.5rem;">🌲</div>
-      <div class="el" style="bottom:30%;right:22%;font-size:2.8rem;">🌲</div>
-      <div class="el" style="bottom:30%;left:38%;font-size:3.5rem;">🏘️</div>
-      <div class="el float" style="top:5%;left:40%;font-size:3rem;">⭐</div>
+      <div class="el" style="bottom:28%;left:12%;font-size:3rem;">▲</div>
+      <div class="el" style="bottom:28%;left:22%;font-size:2.5rem;">▲</div>
+      <div class="el" style="bottom:30%;right:22%;font-size:2.8rem;">▲</div>
+      <div class="el" style="bottom:30%;left:38%;font-size:3.5rem;">⌂</div>
+      <div class="el float" style="top:5%;left:40%;font-size:3rem;">★</div>
       <div class="el char char-sm" style="bottom:30%;left:54%;"><div class="ch-head"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char" style="bottom:32%;left:62%;"><div class="ch-baby-head"></div><div class="ch-swaddle"></div></div>
       ${SPARKLES_HTML}
@@ -617,13 +756,13 @@ const storyPages = [
       <div class="el hill"></div><div class="el hill2"></div>
       <div class="ground"></div>
       <div class="el sun"></div>
-      <div class="el" style="bottom:38%;left:18%;font-size:3rem;">🐑</div>
-      <div class="el" style="bottom:40%;left:33%;font-size:2.5rem;">🐑</div>
-      <div class="el" style="bottom:36%;right:28%;font-size:2.8rem;">🐑</div>
+      <div class="el" style="bottom:38%;left:18%;font-size:3rem;">●</div>
+      <div class="el" style="bottom:40%;left:33%;font-size:2.5rem;">●</div>
+      <div class="el" style="bottom:36%;right:28%;font-size:2.8rem;">●</div>
       <div class="el char char-float" style="bottom:36%;left:52%;"><div class="ch-head"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-staff"></div></div>
-      <div class="el" style="bottom:42%;right:20%;font-size:2rem;">🌸</div>
-      <div class="el" style="bottom:38%;left:8%;font-size:1.8rem;">🌼</div>
-      <div class="el" style="top:15%;left:20%;font-size:2rem;">🦋</div>
+      <div class="el" style="bottom:42%;right:20%;font-size:2rem;">✿</div>
+      <div class="el" style="bottom:38%;left:8%;font-size:1.8rem;">✿</div>
+      <div class="el" style="top:15%;left:20%;font-size:2rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'story-2'
@@ -637,11 +776,11 @@ const storyPages = [
       <div class="el path"></div>
       <div class="el monastery-base"></div>
       <div class="el monastery-roof"></div>
-      <div class="el cross-top">✝️</div>
+      <div class="el cross-top">✠</div>
       <div class="el char char-float" style="bottom:30%;left:12%;"><div class="ch-head"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="top:20%;right:25%;font-size:2rem;">🕊️</div>
-      <div class="el" style="top:15%;right:35%;font-size:1.8rem;">🕊️</div>
-      <div class="el" style="bottom:35%;right:12%;font-size:2.5rem;">🌲</div>
+      <div class="el" style="top:20%;right:25%;font-size:2rem;">*</div>
+      <div class="el" style="top:15%;right:35%;font-size:1.8rem;">*</div>
+      <div class="el" style="bottom:35%;right:12%;font-size:2.5rem;">▲</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'story-3'
@@ -654,12 +793,12 @@ const storyPages = [
       <div class="ground"></div>
       <div class="el arch"></div>
       <div class="el window-light"></div>
-      <div class="el" style="top:8%;left:45%;font-size:3.5rem;">✝️</div>
+      <div class="el" style="top:8%;left:45%;font-size:3.5rem;">✠</div>
       <div class="el char char-kneel char-pray" style="bottom:16%;left:40%;"><div class="ch-halo"></div><div class="ch-head dark"></div><div class="ch-robe"></div></div>
-      <div class="el" style="bottom:16%;left:22%;font-size:2.5rem;">🕯️</div>
-      <div class="el" style="bottom:16%;right:22%;font-size:2.5rem;">🕯️</div>
-      <div class="el" style="bottom:16%;left:30%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:16%;right:30%;font-size:2rem;">🕯️</div>
+      <div class="el" style="bottom:16%;left:22%;font-size:2.5rem;">|</div>
+      <div class="el" style="bottom:16%;right:22%;font-size:2.5rem;">|</div>
+      <div class="el" style="bottom:16%;left:30%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:16%;right:30%;font-size:2rem;">|</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'story-4'
@@ -674,11 +813,11 @@ const storyPages = [
       <div class="el hermitage"></div>
       <div class="el hermitage-roof"></div>
       <div class="el hermitage-door"></div>
-      <div class="el" style="top:8%;left:10%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:15%;left:30%;font-size:1rem;">⭐</div>
-      <div class="el" style="top:5%;left:50%;font-size:1.3rem;">⭐</div>
-      <div class="el" style="top:20%;left:70%;font-size:0.8rem;">⭐</div>
-      <div class="el" style="top:10%;right:5%;font-size:1.2rem;">⭐</div>
+      <div class="el" style="top:8%;left:10%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:15%;left:30%;font-size:1rem;">★</div>
+      <div class="el" style="top:5%;left:50%;font-size:1.3rem;">★</div>
+      <div class="el" style="top:20%;left:70%;font-size:0.8rem;">★</div>
+      <div class="el" style="top:10%;right:5%;font-size:1.2rem;">★</div>
       <div class="el char char-kneel char-pray" style="bottom:24%;left:58%;"><div class="ch-halo"></div><div class="ch-head dark"></div><div class="ch-robe"></div></div>
       ${SPARKLES_HTML}
     </div>`,
@@ -693,11 +832,11 @@ const storyPages = [
       <div class="el river"></div>
       <div class="el glow"></div>
       <div class="el char char-float" style="bottom:33%;left:40%;"><div class="ch-halo"></div><div class="ch-head dark"></div><div class="ch-robe"></div></div>
-      <div class="el" style="bottom:35%;left:15%;font-size:2.5rem;">🌷</div>
-      <div class="el" style="bottom:35%;right:15%;font-size:2.5rem;">🌻</div>
-      <div class="el" style="bottom:37%;left:68%;font-size:2rem;">🌸</div>
-      <div class="el" style="top:15%;left:15%;font-size:2rem;">🕊️</div>
-      <div class="el" style="top:20%;right:20%;font-size:1.8rem;">🦋</div>
+      <div class="el" style="bottom:35%;left:15%;font-size:2.5rem;">✿</div>
+      <div class="el" style="bottom:35%;right:15%;font-size:2.5rem;">✿</div>
+      <div class="el" style="bottom:37%;left:68%;font-size:2rem;">✿</div>
+      <div class="el" style="top:15%;left:15%;font-size:2rem;">*</div>
+      <div class="el" style="top:20%;right:20%;font-size:1.8rem;">*</div>
       <div class="el char char-sm" style="bottom:33%;left:18%;"><div class="ch-head"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:33%;right:18%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       ${SPARKLES_HTML}
@@ -713,13 +852,13 @@ const storyPages = [
       <div class="el tomb"></div>
       <div class="el tomb-top"></div>
       <div class="el light-ray"></div>
-      <div class="el" style="bottom:28%;left:33%;font-size:2.5rem;">✝️</div>
+      <div class="el" style="bottom:28%;left:33%;font-size:2.5rem;">✠</div>
       <div class="el char char-sm" style="bottom:24%;left:8%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:24%;left:17%;"><div class="ch-head"></div><div class="ch-tunic red"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:24%;right:14%;"><div class="ch-head blond"></div><div class="ch-tunic purple"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:24%;right:6%;"><div class="ch-head"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:24%;left:58%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:24%;right:24%;font-size:2rem;">🕯️</div>
+      <div class="el" style="bottom:24%;left:58%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:24%;right:24%;font-size:2rem;">|</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'story-7'
@@ -732,11 +871,11 @@ const storyPages = [
       <div class="ground"></div>
       <div class="el rays"></div>
       <div class="el cedar"><div class="cedar-trunk"></div><div class="cedar-layer1"></div><div class="cedar-layer2"></div><div class="cedar-layer3"></div></div>
-      <div class="el" style="top:10%;left:15%;font-size:3rem;">💛</div>
-      <div class="el" style="top:15%;right:15%;font-size:2.5rem;">❤️</div>
-      <div class="el" style="top:25%;left:10%;font-size:2rem;">💛</div>
-      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">🌍</div>
-      <div class="el" style="top:8%;left:45%;font-size:3rem;">⭐</div>
+      <div class="el" style="top:10%;left:15%;font-size:3rem;">♥</div>
+      <div class="el" style="top:15%;right:15%;font-size:2.5rem;">♥</div>
+      <div class="el" style="top:25%;left:10%;font-size:2rem;">♥</div>
+      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">●</div>
+      <div class="el" style="top:8%;left:45%;font-size:3rem;">★</div>
       <div class="el char char-sm" style="bottom:20%;left:8%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:20%;left:18%;"><div class="ch-head"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:20%;right:8%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
@@ -757,11 +896,11 @@ const francisPages = [
       <div class="el fr-hills"></div>
       <div class="ground"></div>
       <div class="el sun"></div>
-      <div class="el" style="bottom:30%;left:25%;font-size:3.5rem;">🏘️</div>
-      <div class="el" style="bottom:30%;right:25%;font-size:2.5rem;">🌲</div>
-      <div class="el" style="bottom:30%;right:35%;font-size:2rem;">🌲</div>
+      <div class="el" style="bottom:30%;left:25%;font-size:3.5rem;">⌂</div>
+      <div class="el" style="bottom:30%;right:25%;font-size:2.5rem;">▲</div>
+      <div class="el" style="bottom:30%;right:35%;font-size:2rem;">▲</div>
       <div class="el char char-float" style="bottom:30%;left:58%;"><div class="ch-head"></div><div class="ch-tunic red"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="top:12%;left:18%;font-size:2rem;">🕊️</div>
+      <div class="el" style="top:12%;left:18%;font-size:2rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-1'
@@ -772,13 +911,13 @@ const francisPages = [
     scene: `<div class="illust scene-fr-2">
       <div class="sky"></div>
       <div class="ground"></div>
-      <div class="el" style="top:10%;left:15%;font-size:2.5rem;">🎉</div>
-      <div class="el" style="top:15%;right:20%;font-size:2rem;">🎶</div>
-      <div class="el" style="top:8%;left:45%;font-size:2rem;">🎊</div>
+      <div class="el" style="top:10%;left:15%;font-size:2.5rem;">&#9733;</div>
+      <div class="el" style="top:15%;right:20%;font-size:2rem;">♫</div>
+      <div class="el" style="top:8%;left:45%;font-size:2rem;">*</div>
       <div class="el char char-float" style="bottom:28%;left:38%;"><div class="ch-head"></div><div class="ch-tunic gold"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:28%;left:22%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:28%;right:22%;"><div class="ch-head blond"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:28%;left:8%;font-size:2.5rem;">🏺</div>
+      <div class="el" style="bottom:28%;left:8%;font-size:2.5rem;">■</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-2'
@@ -792,10 +931,10 @@ const francisPages = [
       <div class="el fr-ruined-wall1"></div>
       <div class="el fr-ruined-wall2"></div>
       <div class="el window-light"></div>
-      <div class="el" style="top:8%;left:42%;font-size:3.5rem;">✝️</div>
+      <div class="el" style="top:8%;left:42%;font-size:3.5rem;">✠</div>
       <div class="el char char-kneel char-pray" style="bottom:18%;left:40%;"><div class="ch-head"></div><div class="ch-robe brown"></div></div>
-      <div class="el" style="bottom:18%;left:22%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:18%;right:22%;font-size:2rem;">🕯️</div>
+      <div class="el" style="bottom:18%;left:22%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:18%;right:22%;font-size:2rem;">|</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-3'
@@ -806,12 +945,12 @@ const francisPages = [
     scene: `<div class="illust scene-fr-4">
       <div class="sky"></div>
       <div class="ground"></div>
-      <div class="el" style="bottom:35%;left:15%;font-size:2.5rem;">🏘️</div>
+      <div class="el" style="bottom:35%;left:15%;font-size:2.5rem;">⌂</div>
       <div class="el char char-float" style="bottom:28%;left:35%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
       <div class="el char char-sm" style="bottom:28%;right:30%;"><div class="ch-head dark"></div><div class="ch-tunic purple"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:36%;left:50%;font-size:2rem;">👘</div>
-      <div class="el" style="top:15%;right:15%;font-size:2rem;">🕊️</div>
-      <div class="el" style="top:20%;left:15%;font-size:1.8rem;">☀️</div>
+      <div class="el" style="bottom:36%;left:50%;font-size:2rem;">■</div>
+      <div class="el" style="top:15%;right:15%;font-size:2rem;">*</div>
+      <div class="el" style="top:20%;left:15%;font-size:1.8rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-4'
@@ -822,17 +961,17 @@ const francisPages = [
     scene: `<div class="illust scene-fr-5">
       <div class="sky"></div>
       <div class="ground"></div>
-      <div class="el" style="bottom:38%;left:8%;font-size:2.5rem;">🌲</div>
-      <div class="el" style="bottom:38%;right:8%;font-size:2.8rem;">🌲</div>
+      <div class="el" style="bottom:38%;left:8%;font-size:2.5rem;">▲</div>
+      <div class="el" style="bottom:38%;right:8%;font-size:2.8rem;">▲</div>
       <div class="el char char-float" style="bottom:32%;left:38%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
-      <div class="el" style="bottom:38%;left:25%;font-size:2rem;">🐦</div>
-      <div class="el" style="bottom:34%;right:25%;font-size:1.8rem;">🐦</div>
-      <div class="el" style="bottom:40%;left:55%;font-size:1.6rem;">🐦</div>
-      <div class="el" style="top:15%;left:30%;font-size:2rem;">🕊️</div>
-      <div class="el" style="top:20%;right:25%;font-size:1.8rem;">🕊️</div>
-      <div class="el" style="top:12%;right:40%;font-size:2.2rem;">🕊️</div>
-      <div class="el" style="bottom:35%;left:18%;font-size:1.5rem;">🌸</div>
-      <div class="el" style="bottom:35%;right:18%;font-size:1.5rem;">🌼</div>
+      <div class="el" style="bottom:38%;left:25%;font-size:2rem;">*</div>
+      <div class="el" style="bottom:34%;right:25%;font-size:1.8rem;">*</div>
+      <div class="el" style="bottom:40%;left:55%;font-size:1.6rem;">*</div>
+      <div class="el" style="top:15%;left:30%;font-size:2rem;">*</div>
+      <div class="el" style="top:20%;right:25%;font-size:1.8rem;">*</div>
+      <div class="el" style="top:12%;right:40%;font-size:2.2rem;">*</div>
+      <div class="el" style="bottom:35%;left:18%;font-size:1.5rem;">✿</div>
+      <div class="el" style="bottom:35%;right:18%;font-size:1.5rem;">✿</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-5'
@@ -843,12 +982,12 @@ const francisPages = [
     scene: `<div class="illust scene-fr-6">
       <div class="sky"></div>
       <div class="ground"></div>
-      <div class="el" style="bottom:35%;right:10%;font-size:2.5rem;">🏘️</div>
+      <div class="el" style="bottom:35%;right:10%;font-size:2.5rem;">⌂</div>
       <div class="el char char-float" style="bottom:28%;left:30%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
-      <div class="el" style="bottom:28%;left:52%;font-size:3.5rem;">🐺</div>
+      <div class="el" style="bottom:28%;left:52%;font-size:3.5rem;">■</div>
       <div class="el char char-xs" style="bottom:28%;right:20%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:28%;right:14%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="top:18%;left:12%;font-size:1.8rem;">🌙</div>
+      <div class="el" style="top:18%;left:12%;font-size:1.8rem;">☽</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-6'
@@ -861,11 +1000,11 @@ const francisPages = [
       <div class="el fr-mountain"></div>
       <div class="ground"></div>
       <div class="el light-ray"></div>
-      <div class="el" style="top:5%;left:42%;font-size:3rem;">✝️</div>
+      <div class="el" style="top:5%;left:42%;font-size:3rem;">✠</div>
       <div class="el char char-kneel char-pray" style="bottom:32%;left:38%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
-      <div class="el" style="top:15%;left:20%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:10%;right:20%;font-size:1.2rem;">⭐</div>
-      <div class="el" style="top:20%;right:35%;font-size:1rem;">⭐</div>
+      <div class="el" style="top:15%;left:20%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:10%;right:20%;font-size:1.2rem;">★</div>
+      <div class="el" style="top:20%;right:35%;font-size:1rem;">★</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-7'
@@ -877,17 +1016,17 @@ const francisPages = [
       <div class="sky"></div>
       <div class="ground"></div>
       <div class="el rays"></div>
-      <div class="el" style="top:8%;left:42%;font-size:3rem;">☀️</div>
-      <div class="el" style="top:15%;left:15%;font-size:2.5rem;">🕊️</div>
-      <div class="el" style="top:12%;right:15%;font-size:2rem;">🕊️</div>
-      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">🌍</div>
-      <div class="el" style="bottom:32%;left:10%;font-size:2rem;">🌸</div>
-      <div class="el" style="bottom:32%;right:10%;font-size:2rem;">🌻</div>
+      <div class="el" style="top:8%;left:42%;font-size:3rem;">*</div>
+      <div class="el" style="top:15%;left:15%;font-size:2.5rem;">*</div>
+      <div class="el" style="top:12%;right:15%;font-size:2rem;">*</div>
+      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">●</div>
+      <div class="el" style="bottom:32%;left:10%;font-size:2rem;">✿</div>
+      <div class="el" style="bottom:32%;right:10%;font-size:2rem;">✿</div>
       <div class="el char char-sm" style="bottom:28%;left:20%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:28%;left:30%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-float" style="bottom:28%;left:45%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
       <div class="el char char-sm" style="bottom:28%;right:20%;"><div class="ch-head"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:36%;left:60%;font-size:1.8rem;">🐦</div>
+      <div class="el" style="bottom:36%;left:60%;font-size:1.8rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'francis-8'
@@ -902,12 +1041,12 @@ const clarePages = [
     scene: `<div class="illust scene-cl-1">
       <div class="sky"></div>
       <div class="ground"></div>
-      <div class="el" style="bottom:32%;left:15%;font-size:3.5rem;">🏠</div>
-      <div class="el" style="bottom:32%;left:35%;font-size:2.5rem;">🌷</div>
+      <div class="el" style="bottom:32%;left:15%;font-size:3.5rem;">⌂</div>
+      <div class="el" style="bottom:32%;left:35%;font-size:2.5rem;">✿</div>
       <div class="el char char-float" style="bottom:30%;left:55%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:30%;right:15%;font-size:2.5rem;">🌲</div>
-      <div class="el" style="top:10%;right:15%;font-size:2rem;">☀️</div>
-      <div class="el" style="top:18%;left:20%;font-size:1.8rem;">🦋</div>
+      <div class="el" style="bottom:30%;right:15%;font-size:2.5rem;">▲</div>
+      <div class="el" style="top:10%;right:15%;font-size:2rem;">*</div>
+      <div class="el" style="top:18%;left:20%;font-size:1.8rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-1'
@@ -920,11 +1059,11 @@ const clarePages = [
       <div class="ground"></div>
       <div class="el arch"></div>
       <div class="el window-light"></div>
-      <div class="el" style="top:8%;left:45%;font-size:3rem;">✝️</div>
+      <div class="el" style="top:8%;left:45%;font-size:3rem;">✠</div>
       <div class="el char char-float" style="bottom:18%;left:30%;"><div class="ch-halo"></div><div class="ch-head"></div><div class="ch-robe brown"></div></div>
       <div class="el char" style="bottom:18%;right:28%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:18%;left:18%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:18%;right:18%;font-size:2rem;">🕯️</div>
+      <div class="el" style="bottom:18%;left:18%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:18%;right:18%;font-size:2rem;">|</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-2'
@@ -936,15 +1075,15 @@ const clarePages = [
       <div class="sky"></div>
       <div class="ground"></div>
       <div class="el moon"></div>
-      <div class="el" style="top:8%;left:10%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:15%;left:30%;font-size:1rem;">⭐</div>
-      <div class="el" style="top:5%;left:55%;font-size:1.3rem;">⭐</div>
-      <div class="el" style="top:18%;right:15%;font-size:0.8rem;">⭐</div>
-      <div class="el" style="top:10%;right:30%;font-size:1.2rem;">⭐</div>
+      <div class="el" style="top:8%;left:10%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:15%;left:30%;font-size:1rem;">★</div>
+      <div class="el" style="top:5%;left:55%;font-size:1.3rem;">★</div>
+      <div class="el" style="top:18%;right:15%;font-size:0.8rem;">★</div>
+      <div class="el" style="top:10%;right:30%;font-size:1.2rem;">★</div>
       <div class="el char char-float" style="bottom:28%;left:45%;"><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:32%;left:38%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:30%;left:12%;font-size:2.5rem;">🏠</div>
-      <div class="el" style="bottom:30%;right:15%;font-size:2rem;">🌲</div>
+      <div class="el" style="bottom:32%;left:38%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:30%;left:12%;font-size:2.5rem;">⌂</div>
+      <div class="el" style="bottom:30%;right:15%;font-size:2rem;">▲</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-3'
@@ -957,12 +1096,12 @@ const clarePages = [
       <div class="ground"></div>
       <div class="el cl-convent"></div>
       <div class="el cl-convent-roof"></div>
-      <div class="el" style="top:12%;left:38%;font-size:2.5rem;">✝️</div>
+      <div class="el" style="top:12%;left:38%;font-size:2.5rem;">✠</div>
       <div class="el char char-float" style="bottom:26%;left:20%;"><div class="ch-halo"></div><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-sm" style="bottom:26%;left:35%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-sm" style="bottom:26%;right:30%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-xs" style="bottom:26%;right:22%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
-      <div class="el" style="bottom:30%;right:10%;font-size:2rem;">🌷</div>
+      <div class="el" style="bottom:30%;right:10%;font-size:2rem;">✿</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-4'
@@ -977,10 +1116,10 @@ const clarePages = [
       <div class="el glow"></div>
       <div class="el cl-monstrance"></div>
       <div class="el char char-kneel char-pray" style="bottom:16%;left:38%;"><div class="ch-halo"></div><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
-      <div class="el" style="bottom:16%;left:18%;font-size:2.5rem;">🕯️</div>
-      <div class="el" style="bottom:16%;right:18%;font-size:2.5rem;">🕯️</div>
-      <div class="el" style="bottom:16%;left:28%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:16%;right:28%;font-size:2rem;">🕯️</div>
+      <div class="el" style="bottom:16%;left:18%;font-size:2.5rem;">|</div>
+      <div class="el" style="bottom:16%;right:18%;font-size:2.5rem;">|</div>
+      <div class="el" style="bottom:16%;left:28%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:16%;right:28%;font-size:2rem;">|</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-5'
@@ -994,7 +1133,7 @@ const clarePages = [
       <div class="el cl-wall"></div>
       <div class="el glow"></div>
       <div class="el char char-float" style="bottom:26%;left:55%;"><div class="ch-halo"></div><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
-      <div class="el" style="bottom:44%;left:58%;font-size:2rem;">✝️</div>
+      <div class="el" style="bottom:44%;left:58%;font-size:2rem;">✠</div>
       <div class="el char char-sm" style="bottom:26%;left:10%;"><div class="ch-head dark"></div><div class="ch-tunic dark-armor"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:26%;left:22%;"><div class="ch-head dark"></div><div class="ch-tunic dark-armor"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:26%;right:18%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
@@ -1009,15 +1148,15 @@ const clarePages = [
       <div class="sky"></div>
       <div class="ground"></div>
       <div class="el sun"></div>
-      <div class="el" style="bottom:35%;left:8%;font-size:2rem;">🌷</div>
-      <div class="el" style="bottom:35%;left:18%;font-size:1.8rem;">🌻</div>
-      <div class="el" style="bottom:35%;right:8%;font-size:2rem;">🌸</div>
-      <div class="el" style="bottom:35%;right:18%;font-size:1.8rem;">🌼</div>
+      <div class="el" style="bottom:35%;left:8%;font-size:2rem;">✿</div>
+      <div class="el" style="bottom:35%;left:18%;font-size:1.8rem;">✿</div>
+      <div class="el" style="bottom:35%;right:8%;font-size:2rem;">✿</div>
+      <div class="el" style="bottom:35%;right:18%;font-size:1.8rem;">✿</div>
       <div class="el char char-float" style="bottom:28%;left:25%;"><div class="ch-halo"></div><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-sm" style="bottom:28%;left:42%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-sm" style="bottom:28%;right:25%;"><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
-      <div class="el" style="top:15%;left:15%;font-size:2rem;">🦋</div>
-      <div class="el" style="top:20%;right:20%;font-size:1.8rem;">🐦</div>
+      <div class="el" style="top:15%;left:15%;font-size:2rem;">*</div>
+      <div class="el" style="top:20%;right:20%;font-size:1.8rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'clare-7'
@@ -1029,10 +1168,10 @@ const clarePages = [
       <div class="sky"></div>
       <div class="ground"></div>
       <div class="el rays"></div>
-      <div class="el" style="top:8%;left:42%;font-size:3rem;">⭐</div>
-      <div class="el" style="top:15%;left:15%;font-size:2.5rem;">💛</div>
-      <div class="el" style="top:12%;right:15%;font-size:2rem;">❤️</div>
-      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">🌍</div>
+      <div class="el" style="top:8%;left:42%;font-size:3rem;">★</div>
+      <div class="el" style="top:15%;left:15%;font-size:2.5rem;">♥</div>
+      <div class="el" style="top:12%;right:15%;font-size:2rem;">♥</div>
+      <div class="el" style="top:20%;right:30%;font-size:2.5rem;">●</div>
       <div class="el char char-float" style="bottom:24%;left:38%;"><div class="ch-halo"></div><div class="ch-head veiled"></div><div class="ch-robe white"></div></div>
       <div class="el char char-sm" style="bottom:24%;left:15%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:24%;left:25%;"><div class="ch-head blond"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
@@ -1057,8 +1196,8 @@ const michaelPages = [
       <div class="el mi-cloud3"></div>
       <div class="el rays"></div>
       <div class="el char char-float" style="bottom:30%;left:35%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-sword"></div></div>
-      <div class="el" style="top:8%;left:15%;font-size:2rem;">⭐</div>
-      <div class="el" style="top:12%;right:18%;font-size:1.5rem;">⭐</div>
+      <div class="el" style="top:8%;left:15%;font-size:2rem;">★</div>
+      <div class="el" style="top:12%;right:18%;font-size:1.5rem;">★</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-1'
@@ -1089,9 +1228,9 @@ const michaelPages = [
       <div class="el light-ray" style="left:45%;"></div>
       <div class="el char char-float" style="bottom:40%;left:32%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-sword"></div></div>
       <div class="el dark-shape" style="bottom:15%;left:38%;opacity:0.5;"></div>
-      <div class="el" style="top:5%;left:15%;font-size:2.5rem;">⭐</div>
-      <div class="el" style="top:10%;right:15%;font-size:2rem;">⭐</div>
-      <div class="el" style="top:15%;left:40%;font-size:3rem;">✝️</div>
+      <div class="el" style="top:5%;left:15%;font-size:2.5rem;">★</div>
+      <div class="el" style="top:10%;right:15%;font-size:2rem;">★</div>
+      <div class="el" style="top:15%;left:40%;font-size:3rem;">✠</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-3'
@@ -1108,7 +1247,7 @@ const michaelPages = [
       <div class="el char char-xs" style="bottom:25%;left:26%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-sm" style="bottom:25%;right:20%;"><div class="ch-head"></div><div class="ch-tunic green"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:25%;right:30%;"><div class="ch-head dark"></div><div class="ch-tunic red"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="top:10%;right:12%;font-size:2rem;">☀️</div>
+      <div class="el" style="top:10%;right:12%;font-size:2rem;">*</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-4'
@@ -1122,9 +1261,9 @@ const michaelPages = [
       <div class="el glow"></div>
       <div class="el char char-sm" style="bottom:28%;left:20%;"><div class="ch-head"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-float" style="bottom:32%;right:22%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-shield"></div></div>
-      <div class="el" style="top:10%;left:10%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:15%;right:15%;font-size:1.2rem;">⭐</div>
-      <div class="el" style="top:8%;left:45%;font-size:2rem;">⭐</div>
+      <div class="el" style="top:10%;left:10%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:15%;right:15%;font-size:1.2rem;">★</div>
+      <div class="el" style="top:8%;left:45%;font-size:2rem;">★</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-5'
@@ -1137,11 +1276,11 @@ const michaelPages = [
       <div class="ground"></div>
       <div class="el monastery-base"></div>
       <div class="el monastery-roof"></div>
-      <div class="el cross-top">✝️</div>
+      <div class="el cross-top">✠</div>
       <div class="el char char-float" style="top:10%;left:55%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-sword"></div></div>
       <div class="el char char-xs" style="bottom:26%;left:10%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:26%;left:20%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
-      <div class="el" style="bottom:28%;right:15%;font-size:2.5rem;">🌲</div>
+      <div class="el" style="bottom:28%;right:15%;font-size:2.5rem;">▲</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-6'
@@ -1155,10 +1294,10 @@ const michaelPages = [
       <div class="el glow"></div>
       <div class="el char char-kneel char-pray" style="bottom:20%;left:28%;"><div class="ch-head"></div><div class="ch-tunic blue"></div></div>
       <div class="el char char-float" style="bottom:28%;right:22%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-shield"></div></div>
-      <div class="el" style="bottom:20%;left:18%;font-size:2rem;">🕯️</div>
-      <div class="el" style="bottom:20%;left:44%;font-size:2rem;">🕯️</div>
-      <div class="el" style="top:10%;left:15%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:8%;right:20%;font-size:1.2rem;">⭐</div>
+      <div class="el" style="bottom:20%;left:18%;font-size:2rem;">|</div>
+      <div class="el" style="bottom:20%;left:44%;font-size:2rem;">|</div>
+      <div class="el" style="top:10%;left:15%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:8%;right:20%;font-size:1.2rem;">★</div>
       ${SPARKLES_HTML}
     </div>`,
     narrationKey: 'michael-7'
@@ -1170,11 +1309,11 @@ const michaelPages = [
       <div class="sky"></div>
       <div class="ground"></div>
       <div class="el rays"></div>
-      <div class="el" style="top:5%;left:15%;font-size:1.5rem;">⭐</div>
-      <div class="el" style="top:10%;left:35%;font-size:1rem;">⭐</div>
-      <div class="el" style="top:8%;right:15%;font-size:1.3rem;">⭐</div>
-      <div class="el" style="top:15%;right:30%;font-size:0.8rem;">⭐</div>
-      <div class="el" style="top:20%;left:55%;font-size:2.5rem;">🌍</div>
+      <div class="el" style="top:5%;left:15%;font-size:1.5rem;">★</div>
+      <div class="el" style="top:10%;left:35%;font-size:1rem;">★</div>
+      <div class="el" style="top:8%;right:15%;font-size:1.3rem;">★</div>
+      <div class="el" style="top:15%;right:30%;font-size:0.8rem;">★</div>
+      <div class="el" style="top:20%;left:55%;font-size:2.5rem;">●</div>
       <div class="el char char-float" style="bottom:35%;left:35%;"><div class="ch-wings"></div><div class="ch-halo"></div><div class="ch-head blond"></div><div class="ch-tunic white"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div><div class="ch-sword"></div></div>
       <div class="el char char-sm" style="bottom:22%;left:10%;"><div class="ch-head dark"></div><div class="ch-tunic blue"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
       <div class="el char char-xs" style="bottom:22%;left:22%;"><div class="ch-head blond"></div><div class="ch-tunic pink"></div><div class="ch-legs"><div class="ch-leg"></div><div class="ch-leg"></div></div></div>
@@ -1257,21 +1396,21 @@ function updatePageDots() {
 
 // ============ A2: FAITH MEMORY MATCH (5 Levels) ============
 const faithSymbols = [
-  { emoji: '✝️', name: 'Cross' },
-  { emoji: '🌲', name: 'Cedar' },
-  { emoji: '⛪', name: 'Church' },
-  { emoji: '🕯️', name: 'Candle' },
-  { emoji: '🕊️', name: 'Dove' },
-  { emoji: '📿', name: 'Rosary' },
-  { emoji: '🙏', name: 'Prayer' },
-  { emoji: '⭐', name: 'Star' },
-  { emoji: '📖', name: 'Bible' },
-  { emoji: '🔔', name: 'Bell' },
-  { emoji: '❤️', name: 'Heart' },
-  { emoji: '🌹', name: 'Rose' },
-  { emoji: '🏔️', name: 'Mountain' },
-  { emoji: '🐑', name: 'Sheep' },
-  { emoji: '🌙', name: 'Moon' },
+  { emoji: '\u2720', name: 'Cross' },
+  { emoji: '\u2663', name: 'Cedar' },
+  { emoji: '\u2302', name: 'Church' },
+  { emoji: '\u2666', name: 'Candle' },
+  { emoji: '\u2666', name: 'Dove' },
+  { emoji: '\u25CB', name: 'Rosary' },
+  { emoji: '\u271D', name: 'Prayer' },
+  { emoji: '\u2605', name: 'Star' },
+  { emoji: '\u25A1', name: 'Bible' },
+  { emoji: '\u266A', name: 'Bell' },
+  { emoji: '\u2665', name: 'Heart' },
+  { emoji: '\u273F', name: 'Rose' },
+  { emoji: '\u25B2', name: 'Mountain' },
+  { emoji: '\u25CF', name: 'Sheep' },
+  { emoji: '\u263D', name: 'Moon' },
 ];
 
 const fmLevels = [
@@ -1371,7 +1510,7 @@ function flipFaithCard(index, card) {
 
       const phrase = matchPhrases[Math.floor(Math.random() * matchPhrases.length)];
       const symbolName = fmCards[a.index].name;
-      document.getElementById('fm-feedback').textContent = `✅ ${phrase} You matched the ${symbolName}!`;
+      document.getElementById('fm-feedback').innerHTML = `<span style="color:#4CAF50;font-weight:bold">&#10003; ${phrase} You matched the ${symbolName}!</span>`;
       document.getElementById('fm-feedback').className = 'feedback correct';
       SFX.faithCorrect();
       speakQuick(phrase + ` You matched the ${symbolName}!`);
@@ -1382,11 +1521,11 @@ function flipFaithCard(index, card) {
       if (fmMatched === lvl.pairs) {
         const maxMoves = lvl.pairs * 2;
         const stars = fmMoves <= maxMoves ? 3 : fmMoves <= maxMoves + 5 ? 2 : 1;
-        setTimeout(() => { celebrate(`🎉 ${lvl.label} Complete! All ${lvl.pairs} pairs in ${fmMoves} moves! 🎉`, stars); startFaithMemory(); }, 800);
+        setTimeout(() => { celebrate(`&#9733; ${lvl.label} Complete! All ${lvl.pairs} pairs in ${fmMoves} moves! &#9733;`, stars); startFaithMemory(); }, 800);
       }
     } else {
       const phrase = missPhrases[Math.floor(Math.random() * missPhrases.length)];
-      document.getElementById('fm-feedback').textContent = `❌ ${phrase}`;
+      document.getElementById('fm-feedback').innerHTML = `<span style="color:#EF5350;font-weight:bold">&#10007; ${phrase}</span>`;
       document.getElementById('fm-feedback').className = 'feedback incorrect';
       SFX.faithWrong();
       speakQuick(phrase);
@@ -1476,7 +1615,7 @@ function wsClick(r,c) {
       SFX.faithCorrect();
       speakQuick(`You found ${match}!`);
       renderWSWordList();
-      if (wsFound.length===wsWords.length) setTimeout(()=>celebrate('🎉 All words found! 🎉',3),500);
+      if (wsFound.length===wsWords.length) setTimeout(()=>celebrate('&#9733; All words found! &#9733;',3),500);
     }
     wsSelecting=false; wsSelStart=null;
   }
@@ -1562,9 +1701,9 @@ const michaelQuizData = [
 
 const faithQuizzes = {
   charbel:  { title: "St. Charbel Quiz",  icon: "⛪", data: charbelQuizData },
-  francis:  { title: "St. Francis Quiz",   icon: "🐦", data: francisQuizData },
-  clare:    { title: "St. Clare Quiz",     icon: "✨", data: clareQuizData },
-  michael:  { title: "St. Michael Quiz",   icon: "⚔️", data: michaelQuizData },
+  francis:  { title: "St. Francis Quiz",   icon: "*", data: francisQuizData },
+  clare:    { title: "St. Clare Quiz",     icon: "*", data: clareQuizData },
+  michael:  { title: "St. Michael Quiz",   icon: "⚔", data: michaelQuizData },
 };
 let activeQuizData = charbelQuizData;
 let activeQuizTitle = "St. Charbel Quiz";
@@ -1589,7 +1728,7 @@ function startFaithQuiz() {
 function renderFaithQuizQ() {
   if (fqIndex>=activeQuizData.length) {
     const stars = fqScore>=9?3:fqScore>=6?2:1;
-    celebrate(`🎉 Quiz complete! ${fqScore}/${activeQuizData.length} 🎉`, stars);
+    celebrate(`&#9733; Quiz complete! ${fqScore}/${activeQuizData.length} &#9733;`, stars);
     return;
   }
   fqAnswered=false;
@@ -1634,7 +1773,7 @@ function faithQuizAnswer(i,btn) {
   if (i===fqCorrectIdx) {
     btn.classList.add('correct'); fqScore++;
     document.getElementById('fq-score').textContent=fqScore;
-    document.getElementById('fq-feedback').textContent='✅ Correct! Great job!';
+    document.getElementById('fq-feedback').innerHTML='<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! Great job!</span>';
     document.getElementById('fq-feedback').className='feedback correct';
     SFX.faithCorrect();
     speakQuick('Correct! Great job!', ()=>{
@@ -1642,7 +1781,7 @@ function faithQuizAnswer(i,btn) {
     });
   } else {
     btn.classList.add('wrong'); btns[fqCorrectIdx].classList.add('correct');
-    document.getElementById('fq-feedback').textContent='❌ Not quite! The answer is: '+fqShuffled[fqCorrectIdx];
+    document.getElementById('fq-feedback').innerHTML='<span style="color:#EF5350;font-weight:bold">&#10007; Not quite! The answer is: '+fqShuffled[fqCorrectIdx]+'</span>';
     document.getElementById('fq-feedback').className='feedback incorrect';
     SFX.faithWrong();
     speakQuick('Not quite! The answer is '+fqShuffled[fqCorrectIdx], ()=>{
@@ -1693,7 +1832,7 @@ const prayerIllusts = [
     <div class="pi-trinity">
       <div class="pi-halo-ring"></div><div class="pi-halo-ring"></div><div class="pi-halo-ring"></div>
     </div>
-    <div class="pi-dove">🕊️</div>
+    <div class="pi-dove">*</div>
   </div>`,
   /* 3: St. Michael */
   `<div class="prayer-illust pi-st-michael">
@@ -1721,12 +1860,12 @@ const prayerIllusts = [
   /* 5: St. Francis */
   `<div class="prayer-illust pi-francis">
     <div class="pi-sun"></div>
-    <div class="pi-bird">🐦</div><div class="pi-bird">🕊️</div><div class="pi-bird">🐦</div>
+    <div class="pi-bird">*</div><div class="pi-bird">*</div><div class="pi-bird">*</div>
     <div class="pi-figure">
       <div class="pi-head"><div class="pi-tonsure"></div></div>
       <div class="pi-robe"></div>
     </div>
-    <div class="pi-animal">🐺</div><div class="pi-animal">🐰</div>
+    <div class="pi-animal">■</div><div class="pi-animal">●</div>
   </div>`,
   /* 6: St. Clare */
   `<div class="prayer-illust pi-clare">
@@ -1735,11 +1874,11 @@ const prayerIllusts = [
       <div class="pi-head"><div class="pi-veil"></div></div>
       <div class="pi-robe"><div class="pi-lantern"></div></div>
     </div>
-    <div class="pi-flower">🌸</div><div class="pi-flower">🌺</div><div class="pi-flower">🌸</div><div class="pi-flower">🌺</div>
+    <div class="pi-flower">✿</div><div class="pi-flower">✿</div><div class="pi-flower">✿</div><div class="pi-flower">✿</div>
   </div>`,
   /* 7: Memorare */
   `<div class="prayer-illust pi-memorare">
-    <div class="pi-rose">🌹</div><div class="pi-rose">🌹</div><div class="pi-rose">🌹</div><div class="pi-rose">🌹</div>
+    <div class="pi-rose">✿</div><div class="pi-rose">✿</div><div class="pi-rose">✿</div><div class="pi-rose">✿</div>
     <div class="pi-figure">
       <div class="pi-head"><div class="pi-crown"></div><div class="pi-veil"></div></div>
       <div class="pi-cloak"><div class="pi-hands"></div></div>
@@ -1754,7 +1893,7 @@ function readPrayer() {
   const pEl=document.getElementById('prayer-text');
   playNarration(prayers[currentPrayer].key, prayers[currentPrayer].text, ()=>{
     prayersListened.add(currentPrayer);
-    if (prayersListened.size===prayers.length) celebrate('🙏 You listened to all the prayers! 🙏',1);
+    if (prayersListened.size===prayers.length) celebrate('&#10013; You listened to all the prayers! &#10013;',1);
   }, pEl);
 }
 
@@ -1764,23 +1903,23 @@ function readPrayer() {
 
 // ============ B1: FOOD GROUPS ============
 const foodGroups = [
-  { name:'Protein', emoji:'🍗', className:'fg-protein', items:['🍗','🥩','🥚','🐟','🥜'], benefit:'Builds strong muscles and helps your body grow!', fact:'Did you know? Your muscles are made mostly of protein! Every time you run, jump, or play, your proteins are hard at work.',
+  { name:'Protein', emoji:'\u25CF', className:'fg-protein', items:['\u25CF','\u25CF','\u25CB','\u25C6','\u25CF'], benefit:'Builds strong muscles and helps your body grow!', fact:'Did you know? Your muscles are made mostly of protein! Every time you run, jump, or play, your proteins are hard at work.',
     scene: `<div class="illust scene-fg-protein">
       <div class="sky"></div><div class="ground"></div>
       <div class="el barn"></div><div class="el barn-roof"></div><div class="el barn-door"></div>
       <div class="el fence" style="bottom:28%;right:10%;width:40%;height:15%;"><div class="fence-post"></div><div class="fence-post" style="left:33%"></div><div class="fence-post" style="left:66%"></div><div class="fence-post" style="right:0"></div></div>
       <div class="el sun" style="top:8%;right:12%;"></div>
-      <div class="el float" style="bottom:32%;right:15%;font-size:2.2rem;">🐔</div>
-      <div class="el float" style="bottom:34%;right:30%;font-size:2rem;animation-delay:0.5s;">🐔</div>
-      <div class="el" style="bottom:34%;left:55%;font-size:2.5rem;">🐄</div>
-      <div class="el float" style="top:15%;left:20%;font-size:2rem;">🍗</div>
-      <div class="el float" style="top:12%;right:30%;font-size:1.8rem;animation-delay:0.3s;">🥩</div>
-      <div class="el float" style="top:20%;left:50%;font-size:1.5rem;animation-delay:0.6s;">🥚</div>
-      <div class="el float" style="top:18%;right:15%;font-size:1.6rem;animation-delay:0.9s;">🐟</div>
-      <div class="el float" style="top:25%;left:35%;font-size:1.4rem;animation-delay:1.2s;">🥜</div>
+      <div class="el float" style="bottom:32%;right:15%;font-size:2.2rem;">●</div>
+      <div class="el float" style="bottom:34%;right:30%;font-size:2rem;animation-delay:0.5s;">●</div>
+      <div class="el" style="bottom:34%;left:55%;font-size:2.5rem;">■</div>
+      <div class="el float" style="top:15%;left:20%;font-size:2rem;">●</div>
+      <div class="el float" style="top:12%;right:30%;font-size:1.8rem;animation-delay:0.3s;">■</div>
+      <div class="el float" style="top:20%;left:50%;font-size:1.5rem;animation-delay:0.6s;">○</div>
+      <div class="el float" style="top:18%;right:15%;font-size:1.6rem;animation-delay:0.9s;">≈</div>
+      <div class="el float" style="top:25%;left:35%;font-size:1.4rem;animation-delay:1.2s;">○</div>
       ${SPARKLES_HTML}
     </div>` },
-  { name:'Carbs', emoji:'🍞', className:'fg-carbs', items:['🍞','🍚','🍝','🥔','🥣'], benefit:'Gives you energy to run, play, and think!', fact:'Did you know? Carbs are like fuel for your body, just like petrol for a car. Without them, you would feel tired and sleepy!',
+  { name:'Carbs', emoji:'\u25A0', className:'fg-carbs', items:['\u25A0','\u25CF','\u25CB','\u25CF','\u25CB'], benefit:'Gives you energy to run, play, and think!', fact:'Did you know? Carbs are like fuel for your body, just like petrol for a car. Without them, you would feel tired and sleepy!',
     scene: `<div class="illust scene-fg-carbs">
       <div class="sky"></div>
       <div class="el hill-1"></div><div class="el hill-2"></div>
@@ -1793,14 +1932,14 @@ const foodGroups = [
       <div class="el wheat" style="bottom:38%;left:44%;height:30px;animation-delay:0.8s;"></div>
       <div class="el wheat" style="bottom:38%;right:35%;height:34px;animation-delay:0.3s;"></div>
       <div class="el wheat" style="bottom:38%;right:25%;height:28px;animation-delay:0.5s;"></div>
-      <div class="el float" style="top:12%;left:15%;font-size:2rem;">🍞</div>
-      <div class="el float" style="top:10%;left:40%;font-size:1.8rem;animation-delay:0.4s;">🍚</div>
-      <div class="el float" style="top:15%;right:25%;font-size:1.6rem;animation-delay:0.8s;">🍝</div>
-      <div class="el float" style="top:20%;right:10%;font-size:1.5rem;animation-delay:1.1s;">🥔</div>
-      <div class="el float" style="top:8%;right:45%;font-size:1.4rem;animation-delay:0.6s;">🥣</div>
+      <div class="el float" style="top:12%;left:15%;font-size:2rem;">■</div>
+      <div class="el float" style="top:10%;left:40%;font-size:1.8rem;animation-delay:0.4s;">●</div>
+      <div class="el float" style="top:15%;right:25%;font-size:1.6rem;animation-delay:0.8s;">≡</div>
+      <div class="el float" style="top:20%;right:10%;font-size:1.5rem;animation-delay:1.1s;">◆</div>
+      <div class="el float" style="top:8%;right:45%;font-size:1.4rem;animation-delay:0.6s;">○</div>
       ${SPARKLES_HTML}
     </div>` },
-  { name:'Fruits', emoji:'🍎', className:'fg-fruits', items:['🍎','🍌','🫐','🍊','🍇'], benefit:'Full of vitamins that keep you healthy and strong!', fact:'Did you know? Eating colourful fruits gives you different vitamins. Try to eat a rainbow every day!',
+  { name:'Fruits', emoji:'\u25CF', className:'fg-fruits', items:['\u25CF','\u25CF','\u25CF','\u25CF','\u25CF'], benefit:'Full of vitamins that keep you healthy and strong!', fact:'Did you know? Eating colourful fruits gives you different vitamins. Try to eat a rainbow every day!',
     scene: `<div class="illust scene-fg-fruits">
       <div class="sky"></div><div class="ground"></div>
       <div class="el rainbow"></div>
@@ -1809,16 +1948,16 @@ const foodGroups = [
       <div class="el tree-canopy" style="bottom:55%;left:3%;"></div>
       <div class="el tree-trunk" style="bottom:28%;right:10%;"></div>
       <div class="el tree-canopy" style="bottom:55%;right:3%;"></div>
-      <div class="el float" style="bottom:60%;left:8%;font-size:1.5rem;">🍎</div>
-      <div class="el float" style="bottom:62%;right:8%;font-size:1.3rem;animation-delay:0.3s;">🍊</div>
-      <div class="el float" style="top:15%;left:30%;font-size:2.2rem;">🍎</div>
-      <div class="el float" style="top:12%;left:50%;font-size:2rem;animation-delay:0.4s;">🍌</div>
-      <div class="el float" style="top:18%;right:20%;font-size:1.6rem;animation-delay:0.7s;">🫐</div>
-      <div class="el float" style="top:10%;right:35%;font-size:1.8rem;animation-delay:1s;">🍊</div>
-      <div class="el float" style="top:22%;left:20%;font-size:1.5rem;animation-delay:0.5s;">🍇</div>
+      <div class="el float" style="bottom:60%;left:8%;font-size:1.5rem;">●</div>
+      <div class="el float" style="bottom:62%;right:8%;font-size:1.3rem;animation-delay:0.3s;">●</div>
+      <div class="el float" style="top:15%;left:30%;font-size:2.2rem;">●</div>
+      <div class="el float" style="top:12%;left:50%;font-size:2rem;animation-delay:0.4s;">◆</div>
+      <div class="el float" style="top:18%;right:20%;font-size:1.6rem;animation-delay:0.7s;">●</div>
+      <div class="el float" style="top:10%;right:35%;font-size:1.8rem;animation-delay:1s;">●</div>
+      <div class="el float" style="top:22%;left:20%;font-size:1.5rem;animation-delay:0.5s;">●</div>
       ${SPARKLES_HTML}
     </div>` },
-  { name:'Vegetables', emoji:'🥦', className:'fg-veggies', items:['🥦','🥕','🥬','🫛','🍅'], benefit:'Superfoods that protect your body like a shield!', fact:'Did you know? Carrots really do help your eyes! They have a vitamin called beta-carotene that keeps your vision sharp.',
+  { name:'Vegetables', emoji:'\u273F', className:'fg-veggies', items:['\u273F','\u25CF','\u273F','\u25CF','\u25CF'], benefit:'Superfoods that protect your body like a shield!', fact:'Did you know? Carrots really do help your eyes! They have a vitamin called beta-carotene that keeps your vision sharp.',
     scene: `<div class="illust scene-fg-veggies">
       <div class="sky"></div><div class="ground"></div>
       <div class="el sun" style="top:6%;right:10%;"></div>
@@ -1831,15 +1970,15 @@ const foodGroups = [
       <div class="el plant" style="bottom:20%;left:28%;height:22px;"></div>
       <div class="el plant" style="bottom:20%;left:48%;"></div>
       <div class="el plant" style="bottom:20%;left:68%;height:26px;"></div>
-      <div class="el" style="bottom:33%;right:15%;font-size:2.5rem;">🧑‍🌾</div>
-      <div class="el float" style="top:10%;left:15%;font-size:2rem;">🥦</div>
-      <div class="el float" style="top:8%;left:40%;font-size:1.8rem;animation-delay:0.3s;">🥕</div>
-      <div class="el float" style="top:14%;right:25%;font-size:1.6rem;animation-delay:0.6s;">🥬</div>
-      <div class="el float" style="top:12%;right:10%;font-size:1.5rem;animation-delay:0.9s;">🫛</div>
-      <div class="el float" style="top:20%;left:28%;font-size:1.4rem;animation-delay:1.1s;">🍅</div>
+      <div class="el" style="bottom:33%;right:15%;font-size:2.5rem;">●♣</div>
+      <div class="el float" style="top:10%;left:15%;font-size:2rem;">♣</div>
+      <div class="el float" style="top:8%;left:40%;font-size:1.8rem;animation-delay:0.3s;">▲</div>
+      <div class="el float" style="top:14%;right:25%;font-size:1.6rem;animation-delay:0.6s;">♣</div>
+      <div class="el float" style="top:12%;right:10%;font-size:1.5rem;animation-delay:0.9s;">&#9679;</div>
+      <div class="el float" style="top:20%;left:28%;font-size:1.4rem;animation-delay:1.1s;">●</div>
       ${SPARKLES_HTML}
     </div>` },
-  { name:'Healthy Fats', emoji:'🥑', className:'fg-fats', items:['🥑','🫒','🥜','🌻','🐟'], benefit:'Helps your brain think clearly and learn new things!', fact:'Did you know? Your brain is about 60% fat! Eating healthy fats like avocado and nuts makes your brain work better.',
+  { name:'Healthy Fats', emoji:'\u25C6', className:'fg-fats', items:['\u25C6','\u25CF','\u25CF','\u273F','\u25C6'], benefit:'Helps your brain think clearly and learn new things!', fact:'Did you know? Your brain is about 60% fat! Eating healthy fats like avocado and nuts makes your brain work better.',
     scene: `<div class="illust scene-fg-fats">
       <div class="sky"></div><div class="ground"></div>
       <div class="el ocean"></div>
@@ -1848,27 +1987,27 @@ const foodGroups = [
       <div class="el olive-canopy" style="bottom:55%;left:5%;"></div>
       <div class="el olive-trunk" style="bottom:35%;right:15%;"></div>
       <div class="el olive-canopy" style="bottom:55%;right:8%;"></div>
-      <div class="el float" style="top:10%;left:15%;font-size:2rem;">🥑</div>
-      <div class="el float" style="top:8%;left:40%;font-size:1.8rem;animation-delay:0.4s;">🫒</div>
-      <div class="el float" style="top:15%;right:20%;font-size:1.6rem;animation-delay:0.7s;">🥜</div>
-      <div class="el float" style="top:12%;right:40%;font-size:1.5rem;animation-delay:1s;">🌻</div>
-      <div class="el float" style="top:20%;left:30%;font-size:1.4rem;animation-delay:0.5s;">🐟</div>
+      <div class="el float" style="top:10%;left:15%;font-size:2rem;">●</div>
+      <div class="el float" style="top:8%;left:40%;font-size:1.8rem;animation-delay:0.4s;">●</div>
+      <div class="el float" style="top:15%;right:20%;font-size:1.6rem;animation-delay:0.7s;">○</div>
+      <div class="el float" style="top:12%;right:40%;font-size:1.5rem;animation-delay:1s;">✿</div>
+      <div class="el float" style="top:20%;left:30%;font-size:1.4rem;animation-delay:0.5s;">≈</div>
       ${SPARKLES_HTML}
     </div>` },
-  { name:'Water', emoji:'💧', className:'fg-water', items:['💧','🚰','🧊','🥤','💦'], benefit:"Your body's best friend — keeps everything working!", fact:'Did you know? Your body is made up of about 60% water. Drinking enough water helps you think, play, and stay healthy!',
+  { name:'Water', emoji:'\u25C6', className:'fg-water', items:['\u25C6','\u25CF','\u25A0','\u25CF','\u25C6'], benefit:"Your body's best friend — keeps everything working!", fact:'Did you know? Your body is made up of about 60% water. Drinking enough water helps you think, play, and stay healthy!',
     scene: `<div class="illust scene-fg-water">
       <div class="sky"></div><div class="ground"></div>
       <div class="el cliff-left"></div><div class="el cliff-right"></div>
       <div class="el waterfall"></div>
       <div class="el pool"></div>
       <div class="el foam"></div>
-      <div class="el float" style="bottom:25%;left:25%;font-size:1.5rem;">🐟</div>
-      <div class="el float" style="bottom:28%;right:25%;font-size:1.3rem;animation-delay:0.5s;">🐟</div>
-      <div class="el float" style="top:8%;left:10%;font-size:2rem;">💧</div>
-      <div class="el float" style="top:6%;right:10%;font-size:1.8rem;animation-delay:0.3s;">🚰</div>
-      <div class="el float" style="top:14%;left:35%;font-size:1.5rem;animation-delay:0.6s;">🧊</div>
-      <div class="el float" style="top:12%;right:35%;font-size:1.4rem;animation-delay:0.9s;">🥤</div>
-      <div class="el float" style="top:20%;left:22%;font-size:1.3rem;animation-delay:1.1s;">💦</div>
+      <div class="el float" style="bottom:25%;left:25%;font-size:1.5rem;">≈</div>
+      <div class="el float" style="bottom:28%;right:25%;font-size:1.3rem;animation-delay:0.5s;">≈</div>
+      <div class="el float" style="top:8%;left:10%;font-size:2rem;">●</div>
+      <div class="el float" style="top:6%;right:10%;font-size:1.8rem;animation-delay:0.3s;">●</div>
+      <div class="el float" style="top:14%;left:35%;font-size:1.5rem;animation-delay:0.6s;">■</div>
+      <div class="el float" style="top:12%;right:35%;font-size:1.4rem;animation-delay:0.9s;">□</div>
+      <div class="el float" style="top:20%;left:22%;font-size:1.3rem;animation-delay:1.1s;">●</div>
       ${SPARKLES_HTML}
     </div>` }
 ];
@@ -1900,7 +2039,7 @@ function showFoodDetail(i) {
   fFactEl.textContent=fg.fact;
   SFX.healthCorrect();
   playNarration('food-'+fg.name.toLowerCase().replace(/\s/g,'-'), fg.name+'. '+fg.benefit+' '+fg.fact, ()=>{
-    if (foodGroupsExplored.size===foodGroups.length) celebrate('🎉 You explored all the food groups! 🎉',2);
+    if (foodGroupsExplored.size===foodGroups.length) celebrate('&#9733; You explored all the food groups! &#9733;',2);
   }, fFactEl, fg.fact);
 }
 
@@ -1913,7 +2052,7 @@ function closeFoodDetail() {
 // ============ B2: BODY TOUR (Food Journey Adventure) ============
 const bodyStages = [
   {
-    title:'👄 Mouth', tapText:'TAP TO CHEW!', key:'body-tour-1',
+    title:'● Mouth', tapText:'TAP TO CHEW!', key:'body-tour-1',
     text:"Chomp chomp chomp! Your teeth break the food into tiny little pieces! Your tongue and saliva start to melt it down. Great job chewing!",
     scene: (char) => `<div class="illust scene-body-1">
       <div class="el lips-left"></div><div class="el lips-right"></div>
@@ -1925,20 +2064,20 @@ const bodyStages = [
     </div>`
   },
   {
-    title:'⬇️ Throat', tapText:'TAP TO SWALLOW!', key:'body-tour-2',
+    title:'⬇ Throat', tapText:'TAP TO SWALLOW!', key:'body-tour-2',
     text:"Wheee, down it goes! A special tube called the esophagus squeezes the food down to your tummy, like a waterslide!",
     scene: (char) => `<div class="illust scene-body-2">
       <div class="el tube-left"></div><div class="el tube-right"></div>
       <div class="el tube-wave1"></div><div class="el tube-wave2"></div><div class="el tube-wave3"></div>
-      <div class="el" style="top:5%;left:36%;font-size:1.5rem;">💧</div>
-      <div class="el" style="top:40%;right:30%;font-size:1.3rem;">💧</div>
-      <div class="el" style="top:70%;left:35%;font-size:1.2rem;">💧</div>
+      <div class="el" style="top:5%;left:36%;font-size:1.5rem;">●</div>
+      <div class="el" style="top:40%;right:30%;font-size:1.3rem;">●</div>
+      <div class="el" style="top:70%;left:35%;font-size:1.2rem;">●</div>
       <div class="el food-char-scene ${char}" style="position:absolute;top:5%;left:40%;z-index:5;">${foodCharHTML(char,true)}</div>
       ${SPARKLES_HTML}
     </div>`
   },
   {
-    title:'🫃 Stomach', tapText:'TAP TO MIX!', key:'body-tour-3',
+    title:'● Stomach', tapText:'TAP TO MIX!', key:'body-tour-3',
     text:"Splash! Your tummy is like a big mixing machine! It churns and squishes the food with special juices until it becomes a mushy soup!",
     scene: (char) => `<div class="illust scene-body-3">
       <div class="el stomach-shape">
@@ -1947,29 +2086,29 @@ const bodyStages = [
         <div class="el bubble" style="bottom:20%;left:55%;"></div>
         <div class="el bubble" style="bottom:35%;right:25%;"></div>
       </div>
-      <div class="el" style="top:5%;left:15%;font-size:1.5rem;">💦</div>
-      <div class="el" style="top:10%;right:20%;font-size:1.3rem;">💦</div>
+      <div class="el" style="top:5%;left:15%;font-size:1.5rem;">●</div>
+      <div class="el" style="top:10%;right:20%;font-size:1.3rem;">●</div>
       <div class="el food-char-scene ${char}" style="position:absolute;top:30%;left:38%;z-index:5;">${foodCharHTML(char,true)}</div>
       ${SPARKLES_HTML}
     </div>`
   },
   {
-    title:'🌀 Small Intestine', tapText:'TAP TO ABSORB!', key:'body-tour-4',
+    title:'● Small Intestine', tapText:'TAP TO ABSORB!', key:'body-tour-4',
     text:"This is where the magic happens! Your small intestine grabs all the good stuff — vitamins, energy, and protein — from the mushy food!",
     scene: (char) => `<div class="illust scene-body-4">
       <div class="el intestine-tube">
         <div class="tube-seg"></div><div class="tube-seg"></div><div class="tube-seg"></div><div class="tube-seg"></div>
         <div class="tube-conn-1"></div><div class="tube-conn-2"></div><div class="tube-conn-3"></div>
       </div>
-      <div class="el nutrient-star" style="top:15%;left:20%;font-size:1.4rem;">⭐</div>
-      <div class="el nutrient-star" style="top:40%;right:15%;font-size:1.2rem;">✨</div>
-      <div class="el nutrient-star" style="top:65%;left:25%;font-size:1.5rem;">🌟</div>
-      <div class="el nutrient-star" style="bottom:10%;right:20%;font-size:1.3rem;">⭐</div>
+      <div class="el nutrient-star" style="top:15%;left:20%;font-size:1.4rem;">★</div>
+      <div class="el nutrient-star" style="top:40%;right:15%;font-size:1.2rem;">*</div>
+      <div class="el nutrient-star" style="top:65%;left:25%;font-size:1.5rem;">★</div>
+      <div class="el nutrient-star" style="bottom:10%;right:20%;font-size:1.3rem;">★</div>
       ${SPARKLES_HTML}
     </div>`
   },
   {
-    title:'🩸 Blood Stream', tapText:'TAP TO DELIVER!', key:'body-tour-5',
+    title:'● Blood Stream', tapText:'TAP TO DELIVER!', key:'body-tour-5',
     text:"The nutrients hop onto your blood like passengers on a bus! They zoom off to your muscles, your bones, and your brain!",
     scene: (char) => `<div class="illust scene-body-5">
       <div class="sky"></div>
@@ -1978,16 +2117,16 @@ const bodyStages = [
       <div class="el blood-cell" style="bottom:35%;left:40%;animation-delay:0.5s;"></div>
       <div class="el blood-cell" style="bottom:28%;right:20%;animation-delay:1s;"></div>
       <div class="el blood-cell" style="bottom:38%;right:40%;animation-delay:1.5s;"></div>
-      <div class="el dest-icon" style="top:8%;left:10%;">💪</div>
-      <div class="el dest-icon" style="top:8%;left:43%;animation-delay:0.3s;">🦴</div>
-      <div class="el dest-icon" style="top:8%;right:10%;animation-delay:0.6s;">🧠</div>
-      <div class="el nutrient-star" style="bottom:40%;left:35%;font-size:1.2rem;">✨</div>
-      <div class="el nutrient-star" style="bottom:42%;right:30%;font-size:1rem;">⭐</div>
+      <div class="el dest-icon" style="top:8%;left:10%;">★</div>
+      <div class="el dest-icon" style="top:8%;left:43%;animation-delay:0.3s;">●</div>
+      <div class="el dest-icon" style="top:8%;right:10%;animation-delay:0.6s;">●</div>
+      <div class="el nutrient-star" style="bottom:40%;left:35%;font-size:1.2rem;">*</div>
+      <div class="el nutrient-star" style="bottom:42%;right:30%;font-size:1rem;">★</div>
       ${SPARKLES_HTML}
     </div>`
   },
   {
-    title:'🧠 Brain Power!', tapText:'TAP TO POWER UP!', key:'body-tour-6',
+    title:'● Brain Power!', tapText:'TAP TO POWER UP!', key:'body-tour-6',
     text:"Your brain lights up with power! Healthy food makes you think better, learn faster, and feel amazing! What an incredible journey!",
     scene: (char) => `<div class="illust scene-body-6">
       <div class="sky"></div>
@@ -1999,8 +2138,8 @@ const bodyStages = [
       <div class="el synapse" style="top:20%;right:18%;animation-delay:0.4s;">⚡</div>
       <div class="el synapse" style="top:75%;left:25%;animation-delay:0.8s;">⚡</div>
       <div class="el synapse" style="top:80%;right:22%;animation-delay:1.2s;">⚡</div>
-      <div class="el" style="top:5%;left:45%;font-size:2rem;">💡</div>
-      <div class="el" style="bottom:5%;left:40%;font-size:1.8rem;">🌟</div>
+      <div class="el" style="top:5%;left:45%;font-size:2rem;">*</div>
+      <div class="el" style="bottom:5%;left:40%;font-size:1.8rem;">★</div>
       ${SPARKLES_HTML}
     </div>`
   }
@@ -2056,7 +2195,7 @@ function renderBodyStage() {
     SFX.pop();
     setTimeout(()=>{
       playNarration(s.key, s.title.replace(/[^\w\s!]/g,'')+'. '+s.text, ()=>{
-        if (bodyStage===bodyStages.length-1) celebrate('🎉 Amazing food journey complete! 🎉',2);
+        if (bodyStage===bodyStages.length-1) celebrate('&#9733; Amazing food journey complete! &#9733;',2);
       }, bTextEl, s.text);
     }, 1200);
   };
@@ -2084,12 +2223,12 @@ function updateBodyDots() {
 
 // ============ B3: BUILD A PLATE ============
 const plateFood = [
-  {emoji:'🍗',name:'Chicken',group:'protein'},{emoji:'🐟',name:'Fish',group:'protein'},
-  {emoji:'🥚',name:'Egg',group:'protein'},{emoji:'🍞',name:'Bread',group:'carbs'},
-  {emoji:'🍚',name:'Rice',group:'carbs'},{emoji:'🥔',name:'Potato',group:'carbs'},
-  {emoji:'🥦',name:'Broccoli',group:'veggies'},{emoji:'🥕',name:'Carrot',group:'veggies'},
-  {emoji:'🍎',name:'Apple',group:'fruit'},{emoji:'🍌',name:'Banana',group:'fruit'},
-  {emoji:'🥑',name:'Avocado',group:'fats'},{emoji:'🥜',name:'Nuts',group:'fats'},
+  {emoji:'\u25CF',name:'Chicken',group:'protein'},{emoji:'\u2248',name:'Fish',group:'protein'},
+  {emoji:'\u25CB',name:'Egg',group:'protein'},{emoji:'\u25A0',name:'Bread',group:'carbs'},
+  {emoji:'\u25CF',name:'Rice',group:'carbs'},{emoji:'\u25C6',name:'Potato',group:'carbs'},
+  {emoji:'\u2663',name:'Broccoli',group:'veggies'},{emoji:'\u25B2',name:'Carrot',group:'veggies'},
+  {emoji:'\u25CF',name:'Apple',group:'fruit'},{emoji:'\u25C6',name:'Banana',group:'fruit'},
+  {emoji:'\u25CF',name:'Avocado',group:'fats'},{emoji:'\u25CB',name:'Nuts',group:'fats'},
 ];
 let plateItems=[], plateOptions=[];
 
@@ -2131,9 +2270,9 @@ function addToPlate(i) {
 function checkPlate() {
   const groups=new Set(plateItems.map(i=>plateOptions[i].group));
   let msg,stars;
-  if (groups.size>=4) { msg='🎉 Perfect! A beautifully balanced plate! 🎉'; stars=3; }
-  else if (groups.size>=3) { msg='👍 Good job! Try adding more variety next time!'; stars=2; }
-  else { msg='🤔 Try mixing different food groups for a healthier plate!'; stars=1; }
+  if (groups.size>=4) { msg='&#9733; Perfect! A beautifully balanced plate! &#9733;'; stars=3; }
+  else if (groups.size>=3) { msg='Good job! Try adding more variety next time!'; stars=2; }
+  else { msg='Try mixing different food groups for a healthier plate!'; stars=1; }
   celebrate(msg,stars);
 }
 
@@ -2142,35 +2281,35 @@ const habitsScenes = {
   bathroom: `<div class="illust scene-hab-bathroom">
     <div class="el tiles"></div><div class="ground"></div>
     <div class="el sink"></div><div class="el faucet"></div>
-    <div class="el" style="bottom:45%;left:55%;font-size:1.8rem;">🧼</div>
-    <div class="el float" style="top:20%;left:25%;font-size:1.2rem;">🫧</div>
-    <div class="el float" style="top:15%;right:30%;font-size:1rem;animation-delay:0.5s;">🫧</div>
-    <div class="el float" style="top:25%;left:50%;font-size:0.8rem;animation-delay:1s;">🫧</div>
+    <div class="el" style="bottom:45%;left:55%;font-size:1.8rem;">○</div>
+    <div class="el float" style="top:20%;left:25%;font-size:1.2rem;">○</div>
+    <div class="el float" style="top:15%;right:30%;font-size:1rem;animation-delay:0.5s;">○</div>
+    <div class="el float" style="top:25%;left:50%;font-size:0.8rem;animation-delay:1s;">○</div>
   </div>`,
   dining: `<div class="illust scene-hab-dining">
     <div class="sky"></div><div class="ground"></div>
     <div class="el window-frame"></div>
     <div class="el table-top"></div><div class="el table-leg-l"></div><div class="el table-leg-r"></div>
-    <div class="el" style="bottom:30%;left:25%;font-size:1.5rem;">🍽️</div>
-    <div class="el" style="bottom:30%;right:25%;font-size:1.5rem;">🍽️</div>
-    <div class="el" style="bottom:30%;left:45%;font-size:1.2rem;">🥤</div>
+    <div class="el" style="bottom:30%;left:25%;font-size:1.5rem;">□</div>
+    <div class="el" style="bottom:30%;right:25%;font-size:1.5rem;">□</div>
+    <div class="el" style="bottom:30%;left:45%;font-size:1.2rem;">□</div>
   </div>`,
   kitchen: `<div class="illust scene-hab-kitchen">
     <div class="sky"></div><div class="ground"></div>
     <div class="el cabinet"></div><div class="el counter"></div>
-    <div class="el" style="bottom:30%;left:20%;font-size:1.5rem;">🍳</div>
-    <div class="el" style="bottom:30%;left:45%;font-size:1.3rem;">🥘</div>
-    <div class="el" style="bottom:30%;right:20%;font-size:1.4rem;">🍽️</div>
+    <div class="el" style="bottom:30%;left:20%;font-size:1.5rem;">●</div>
+    <div class="el" style="bottom:30%;left:45%;font-size:1.3rem;">●</div>
+    <div class="el" style="bottom:30%;right:20%;font-size:1.4rem;">□</div>
   </div>`,
   market: `<div class="illust scene-hab-market">
     <div class="sky"></div><div class="ground"></div>
     <div class="el sun" style="top:5%;right:8%;"></div>
     <div class="el stall"></div><div class="el stall-roof"></div>
     <div class="el stall2"></div><div class="el stall2-roof"></div>
-    <div class="el float" style="bottom:35%;left:20%;font-size:1.3rem;">🍎</div>
-    <div class="el float" style="bottom:38%;left:30%;font-size:1.1rem;animation-delay:0.3s;">🥕</div>
-    <div class="el float" style="bottom:33%;right:18%;font-size:1.2rem;animation-delay:0.6s;">🥦</div>
-    <div class="el float" style="bottom:36%;right:28%;font-size:1rem;animation-delay:0.9s;">🍌</div>
+    <div class="el float" style="bottom:35%;left:20%;font-size:1.3rem;">●</div>
+    <div class="el float" style="bottom:38%;left:30%;font-size:1.1rem;animation-delay:0.3s;">▲</div>
+    <div class="el float" style="bottom:33%;right:18%;font-size:1.2rem;animation-delay:0.6s;">♣</div>
+    <div class="el float" style="bottom:36%;right:28%;font-size:1rem;animation-delay:0.9s;">◆</div>
   </div>`
 };
 const habitsData = [
@@ -2195,7 +2334,7 @@ function startHabits() {
 function renderHabit() {
   if (habitIndex>=habitsData.length) {
     const stars=habitScore>=7?3:habitScore>=5?2:1;
-    celebrate(`🎉 Great manners! ${habitScore}/${habitsData.length} 🎉`,stars);
+    celebrate(`&#9733; Great manners! ${habitScore}/${habitsData.length} &#9733;`,stars);
     return;
   }
   habitAnswered=false;
@@ -2252,7 +2391,7 @@ function habitAnswer(i,btn) {
   if (i===habCorrectIdx) {
     btn.classList.add('correct'); habitScore++;
     document.getElementById('habits-score').textContent=habitScore;
-    document.getElementById('habit-feedback').textContent='✅ '+h.explanation;
+    document.getElementById('habit-feedback').innerHTML='<span style="color:#4CAF50;font-weight:bold">&#10003; '+h.explanation+'</span>';
     document.getElementById('habit-feedback').className='feedback correct';
     SFX.healthCorrect();
     speakQuick('That is correct! '+h.explanation, ()=>{
@@ -2260,7 +2399,7 @@ function habitAnswer(i,btn) {
     });
   } else {
     btn.classList.add('wrong'); btns[habCorrectIdx].classList.add('correct');
-    document.getElementById('habit-feedback').textContent='💡 '+h.explanation;
+    document.getElementById('habit-feedback').textContent='* '+h.explanation;
     document.getElementById('habit-feedback').className='feedback incorrect';
     SFX.healthWrong();
     speakQuick('Not quite. '+h.explanation, ()=>{
@@ -2276,10 +2415,10 @@ const nutriQuizScenes = {
     <div class="sky"></div><div class="ground"></div>
     <div class="el hill"></div><div class="el hill2"></div>
     <div class="el sun" style="top:6%;right:10%;"></div>
-    <div class="el float" style="bottom:35%;left:20%;font-size:1.8rem;">🌷</div>
-    <div class="el float" style="bottom:38%;right:25%;font-size:1.5rem;animation-delay:0.5s;">🌻</div>
-    <div class="el float" style="bottom:33%;left:50%;font-size:1.3rem;animation-delay:1s;">🌸</div>
-    <div class="el" style="top:15%;left:15%;font-size:1.5rem;">🦋</div>
+    <div class="el float" style="bottom:35%;left:20%;font-size:1.8rem;">✿</div>
+    <div class="el float" style="bottom:38%;right:25%;font-size:1.5rem;animation-delay:0.5s;">✿</div>
+    <div class="el float" style="bottom:33%;left:50%;font-size:1.3rem;animation-delay:1s;">✿</div>
+    <div class="el" style="top:15%;left:15%;font-size:1.5rem;">*</div>
   </div>`,
   bathroom: habitsScenes.bathroom,
   dining: habitsScenes.dining
@@ -2308,7 +2447,7 @@ function startNutriQuiz() {
 function renderNutriQ() {
   if (nqIndex>=nutriQuizData.length) {
     const stars=nqScore>=9?3:nqScore>=6?2:1;
-    celebrate(`🎉 Nutrition Quiz complete! ${nqScore}/${nutriQuizData.length} 🎉`,stars);
+    celebrate(`&#9733; Nutrition Quiz complete! ${nqScore}/${nutriQuizData.length} &#9733;`,stars);
     return;
   }
   nqAnswered=false;
@@ -2352,7 +2491,7 @@ function nutriQuizAnswer(i,btn) {
   if (i===nqCorrectIdx) {
     btn.classList.add('correct'); nqScore++;
     document.getElementById('nq-score').textContent=nqScore;
-    document.getElementById('nq-feedback').textContent='✅ Correct! Well done!';
+    document.getElementById('nq-feedback').innerHTML='<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! Well done!</span>';
     document.getElementById('nq-feedback').className='feedback correct';
     SFX.healthCorrect();
     speakQuick('Correct! Well done!', ()=>{
@@ -2360,7 +2499,7 @@ function nutriQuizAnswer(i,btn) {
     });
   } else {
     btn.classList.add('wrong'); btns[nqCorrectIdx].classList.add('correct');
-    document.getElementById('nq-feedback').textContent='❌ The answer is: '+nqShuffled[nqCorrectIdx];
+    document.getElementById('nq-feedback').innerHTML='<span style="color:#EF5350;font-weight:bold">&#10007; The answer is: '+nqShuffled[nqCorrectIdx]+'</span>';
     document.getElementById('nq-feedback').className='feedback incorrect';
     SFX.healthWrong();
     speakQuick('Not quite! The answer is '+nqShuffled[nqCorrectIdx], ()=>{
@@ -2371,16 +2510,16 @@ function nutriQuizAnswer(i,btn) {
 
 // ============ B6: FOOD SORT ============
 const sortFoods = [
-  {emoji:'🍗',name:'Chicken',group:'protein'},{emoji:'🥩',name:'Steak',group:'protein'},
-  {emoji:'🥚',name:'Egg',group:'protein'},{emoji:'🐟',name:'Fish',group:'protein'},
-  {emoji:'🫘',name:'Beans',group:'protein'},{emoji:'🍞',name:'Bread',group:'carbs'},
-  {emoji:'🍚',name:'Rice',group:'carbs'},{emoji:'🍝',name:'Pasta',group:'carbs'},
-  {emoji:'🥔',name:'Potato',group:'carbs'},{emoji:'🥣',name:'Oats',group:'carbs'},
-  {emoji:'🍎',name:'Apple',group:'fruitsveggies'},{emoji:'🥦',name:'Broccoli',group:'fruitsveggies'},
-  {emoji:'🥕',name:'Carrot',group:'fruitsveggies'},{emoji:'🍌',name:'Banana',group:'fruitsveggies'},
-  {emoji:'🍇',name:'Grapes',group:'fruitsveggies'},{emoji:'🥑',name:'Avocado',group:'fats'},
-  {emoji:'🥜',name:'Nuts',group:'fats'},{emoji:'🫒',name:'Olive Oil',group:'fats'},
-  {emoji:'🌻',name:'Seeds',group:'fats'},{emoji:'🧈',name:'Butter',group:'fats'},
+  {emoji:'\u25CF',name:'Chicken',group:'protein'},{emoji:'\u25A0',name:'Steak',group:'protein'},
+  {emoji:'\u25CB',name:'Egg',group:'protein'},{emoji:'\u2248',name:'Fish',group:'protein'},
+  {emoji:'\u25C6',name:'Beans',group:'protein'},{emoji:'\u25A0',name:'Bread',group:'carbs'},
+  {emoji:'\u25CF',name:'Rice',group:'carbs'},{emoji:'\u2261',name:'Pasta',group:'carbs'},
+  {emoji:'\u25C6',name:'Potato',group:'carbs'},{emoji:'\u25CB',name:'Oats',group:'carbs'},
+  {emoji:'\u25CF',name:'Apple',group:'fruitsveggies'},{emoji:'\u2663',name:'Broccoli',group:'fruitsveggies'},
+  {emoji:'\u25B2',name:'Carrot',group:'fruitsveggies'},{emoji:'\u25C6',name:'Banana',group:'fruitsveggies'},
+  {emoji:'\u25CF',name:'Grapes',group:'fruitsveggies'},{emoji:'\u25CF',name:'Avocado',group:'fats'},
+  {emoji:'\u25CB',name:'Nuts',group:'fats'},{emoji:'\u25C6',name:'Olive Oil',group:'fats'},
+  {emoji:'\u2736',name:'Seeds',group:'fats'},{emoji:'\u25A0',name:'Butter',group:'fats'},
 ];
 let fsQueue=[], fsCurrent=0, fsScore2=0;
 
@@ -2398,7 +2537,7 @@ function startFoodSort() {
 function renderSortFood() {
   if (fsCurrent>=fsQueue.length) {
     const stars=fsScore2>=13?3:fsScore2>=10?2:1;
-    celebrate(`🎉 Food Factory done! ${fsScore2}/${fsQueue.length} correct! 🎉`,stars);
+    celebrate(`&#9733; Food Factory done! ${fsScore2}/${fsQueue.length} correct! &#9733;`,stars);
     return;
   }
   const f=fsQueue[fsCurrent];
@@ -2417,12 +2556,12 @@ function sortFood(group) {
   const el=document.getElementById('sort-food');
   if (f.group===group) {
     fsScore2++; document.getElementById('fs-score').textContent=fsScore2;
-    fb.textContent='✅ Correct! '+f.name+' is '+groupLabel(group)+'!';
+    fb.innerHTML='<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! '+f.name+' is '+groupLabel(group)+'!</span>';
     fb.className='feedback correct';
     el.classList.add('sort-correct');
     SFX.healthCorrect();
   } else {
-    fb.textContent='❌ '+f.name+' is actually '+groupLabel(f.group)+'!';
+    fb.innerHTML='<span style="color:#EF5350;font-weight:bold">&#10007; '+f.name+' is actually '+groupLabel(f.group)+'!</span>';
     fb.className='feedback incorrect';
     el.classList.add('sort-wrong');
     SFX.healthWrong();
@@ -2438,17 +2577,17 @@ function groupLabel(g) {
 
 // ============ M: MUSIC & INSTRUMENTS ============
 const instruments = [
-  { id:'piano', emoji:'🎹', name:'Piano', family:'strings', fact:'A piano has 88 keys and makes sound when little hammers hit strings inside!' },
-  { id:'guitar', emoji:'🎸', name:'Guitar', family:'strings', fact:'A guitar has 6 strings you pluck or strum to make beautiful music!' },
-  { id:'violin', emoji:'🎻', name:'Violin', family:'strings', fact:'A violin is played with a bow that slides across its strings to make a singing sound!' },
-  { id:'drum', emoji:'🥁', name:'Drum', family:'percussion', fact:'Drums are one of the oldest instruments! You hit them with sticks to make a beat!' },
-  { id:'tambourine', emoji:'🪇', name:'Tambourine', family:'percussion', fact:'A tambourine has tiny metal discs that jingle when you shake or hit it!' },
-  { id:'xylophone', emoji:'🎵', name:'Xylophone', family:'percussion', fact:'A xylophone has colourful bars you hit with mallets to play different notes!' },
-  { id:'trumpet', emoji:'🎺', name:'Trumpet', family:'wind', fact:'A trumpet is a shiny brass instrument you blow into to make a bright, loud sound!' },
-  { id:'flute', emoji:'🪈', name:'Flute', family:'wind', fact:'A flute makes a soft, gentle sound when you blow air across a hole!' },
+  { id:'piano', emoji:'♫', name:'Piano', family:'strings', fact:'A piano has 88 keys and makes sound when little hammers hit strings inside!' },
+  { id:'guitar', emoji:'♪', name:'Guitar', family:'strings', fact:'A guitar has 6 strings you pluck or strum to make beautiful music!' },
+  { id:'violin', emoji:'♫', name:'Violin', family:'strings', fact:'A violin is played with a bow that slides across its strings to make a singing sound!' },
+  { id:'drum', emoji:'●', name:'Drum', family:'percussion', fact:'Drums are one of the oldest instruments! You hit them with sticks to make a beat!' },
+  { id:'tambourine', emoji:'●', name:'Tambourine', family:'percussion', fact:'A tambourine has tiny metal discs that jingle when you shake or hit it!' },
+  { id:'xylophone', emoji:'♪', name:'Xylophone', family:'percussion', fact:'A xylophone has colourful bars you hit with mallets to play different notes!' },
+  { id:'trumpet', emoji:'▲', name:'Trumpet', family:'wind', fact:'A trumpet is a shiny brass instrument you blow into to make a bright, loud sound!' },
+  { id:'flute', emoji:'●', name:'Flute', family:'wind', fact:'A flute makes a soft, gentle sound when you blow air across a hole!' },
 ];
 
-const familyNames = { strings:'Strings 🎸', percussion:'Percussion 🥁', wind:'Wind 🎺' };
+const familyNames = { strings:'Strings ♪', percussion:'Percussion ●', wind:'Wind ▲' };
 
 // --- Web Audio Instrument Sounds (rich, 2-3s each) ---
 function _playNote(ctx, freq, startTime, duration, vol, type, filterFreq) {
@@ -2691,71 +2830,71 @@ function initMusicExplorer() {
   speakQuick('Tap an instrument to learn about it!');
 }
 
-const MUSIC_SPARKLES = '<div class="sparkles"><span class="sparkle">🎵</span><span class="sparkle">✨</span><span class="sparkle">🎶</span><span class="sparkle">⭐</span><span class="sparkle">✨</span><span class="sparkle">🎵</span></div>';
+const MUSIC_SPARKLES = '<div class="sparkles"><span class="sparkle">♪</span><span class="sparkle">*</span><span class="sparkle">♫</span><span class="sparkle">★</span><span class="sparkle">*</span><span class="sparkle">♪</span></div>';
 const instrumentScenes = {
   piano: `<div class="illust inst-scene-piano">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🎹</div>
-    <div class="el float" style="top:10%;left:15%;font-size:2.5rem;">🎵</div>
-    <div class="el float" style="top:18%;right:18%;font-size:2rem;">🎶</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">♫</div>
+    <div class="el float" style="top:10%;left:15%;font-size:2.5rem;">♪</div>
+    <div class="el float" style="top:18%;right:18%;font-size:2rem;">♫</div>
     <div class="el float" style="top:30%;left:8%;font-size:1.8rem;">♪</div>
-    <div class="el" style="top:8%;right:35%;font-size:1.5rem;">✨</div>
+    <div class="el" style="top:8%;right:35%;font-size:1.5rem;">*</div>
     ${MUSIC_SPARKLES}</div>`,
   guitar: `<div class="illust inst-scene-guitar">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🎸</div>
-    <div class="el float" style="top:12%;left:12%;font-size:2.2rem;">⭐</div>
-    <div class="el float" style="top:20%;right:15%;font-size:2rem;">🎵</div>
-    <div class="el" style="bottom:35%;right:10%;font-size:2.5rem;">🔥</div>
-    <div class="el float" style="top:8%;left:45%;font-size:1.8rem;">🎶</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">♪</div>
+    <div class="el float" style="top:12%;left:12%;font-size:2.2rem;">★</div>
+    <div class="el float" style="top:20%;right:15%;font-size:2rem;">♪</div>
+    <div class="el" style="bottom:35%;right:10%;font-size:2.5rem;">★</div>
+    <div class="el float" style="top:8%;left:45%;font-size:1.8rem;">♫</div>
     ${MUSIC_SPARKLES}</div>`,
   violin: `<div class="illust inst-scene-violin">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🎻</div>
-    <div class="el float" style="top:10%;left:20%;font-size:2rem;">✨</div>
-    <div class="el float" style="top:15%;right:15%;font-size:2.5rem;">🎵</div>
-    <div class="el" style="top:35%;left:10%;font-size:1.8rem;">🌟</div>
-    <div class="el float" style="top:8%;right:40%;font-size:2rem;">🎶</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">♫</div>
+    <div class="el float" style="top:10%;left:20%;font-size:2rem;">*</div>
+    <div class="el float" style="top:15%;right:15%;font-size:2.5rem;">♪</div>
+    <div class="el" style="top:35%;left:10%;font-size:1.8rem;">★</div>
+    <div class="el float" style="top:8%;right:40%;font-size:2rem;">♫</div>
     ${MUSIC_SPARKLES}</div>`,
   drum: `<div class="illust inst-scene-drum">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🥁</div>
-    <div class="el float" style="top:8%;left:20%;font-size:2.5rem;">💥</div>
-    <div class="el float" style="top:15%;right:12%;font-size:2rem;">🎵</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">●</div>
+    <div class="el float" style="top:8%;left:20%;font-size:2.5rem;">*</div>
+    <div class="el float" style="top:15%;right:12%;font-size:2rem;">♪</div>
     <div class="el" style="top:25%;left:8%;font-size:2.2rem;">⚡</div>
-    <div class="el float" style="top:10%;right:35%;font-size:1.8rem;">🔊</div>
+    <div class="el float" style="top:10%;right:35%;font-size:1.8rem;">♪</div>
     ${MUSIC_SPARKLES}</div>`,
   tambourine: `<div class="illust inst-scene-tambourine">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🪇</div>
-    <div class="el float" style="top:10%;left:15%;font-size:2rem;">✨</div>
-    <div class="el float" style="top:18%;right:20%;font-size:2.5rem;">🎶</div>
-    <div class="el" style="top:30%;right:10%;font-size:1.8rem;">💫</div>
-    <div class="el float" style="top:8%;left:40%;font-size:2rem;">🌟</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">●</div>
+    <div class="el float" style="top:10%;left:15%;font-size:2rem;">*</div>
+    <div class="el float" style="top:18%;right:20%;font-size:2.5rem;">♫</div>
+    <div class="el" style="top:30%;right:10%;font-size:1.8rem;">*</div>
+    <div class="el float" style="top:8%;left:40%;font-size:2rem;">★</div>
     ${MUSIC_SPARKLES}</div>`,
   xylophone: `<div class="illust inst-scene-xylophone">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🎵</div>
-    <div class="el float" style="top:10%;left:10%;font-size:2.5rem;">🌈</div>
-    <div class="el float" style="top:15%;right:15%;font-size:2rem;">✨</div>
-    <div class="el" style="top:28%;left:18%;font-size:2rem;">🎶</div>
-    <div class="el float" style="top:8%;right:38%;font-size:1.8rem;">⭐</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">♪</div>
+    <div class="el float" style="top:10%;left:10%;font-size:2.5rem;">★</div>
+    <div class="el float" style="top:15%;right:15%;font-size:2rem;">*</div>
+    <div class="el" style="top:28%;left:18%;font-size:2rem;">♫</div>
+    <div class="el float" style="top:8%;right:38%;font-size:1.8rem;">★</div>
     ${MUSIC_SPARKLES}</div>`,
   trumpet: `<div class="illust inst-scene-trumpet">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🎺</div>
-    <div class="el float" style="top:8%;left:15%;font-size:2.5rem;">⭐</div>
-    <div class="el float" style="top:18%;right:12%;font-size:2rem;">🎵</div>
-    <div class="el" style="top:12%;left:40%;font-size:2.2rem;">👑</div>
-    <div class="el float" style="top:30%;right:25%;font-size:1.8rem;">🎶</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">▲</div>
+    <div class="el float" style="top:8%;left:15%;font-size:2.5rem;">★</div>
+    <div class="el float" style="top:18%;right:12%;font-size:2rem;">♪</div>
+    <div class="el" style="top:12%;left:40%;font-size:2.2rem;">★</div>
+    <div class="el float" style="top:30%;right:25%;font-size:1.8rem;">♫</div>
     ${MUSIC_SPARKLES}</div>`,
   flute: `<div class="illust inst-scene-flute">
     <div class="sky"></div><div class="ground"></div>
-    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">🪈</div>
-    <div class="el float" style="top:10%;left:12%;font-size:2.5rem;">🦋</div>
-    <div class="el float" style="top:18%;right:15%;font-size:2rem;">🌿</div>
-    <div class="el" style="top:30%;left:20%;font-size:1.8rem;">🍃</div>
-    <div class="el float" style="top:8%;right:30%;font-size:2rem;">🎵</div>
+    <div class="el" style="bottom:15%;left:50%;transform:translateX(-50%);font-size:9rem;">●</div>
+    <div class="el float" style="top:10%;left:12%;font-size:2.5rem;">*</div>
+    <div class="el float" style="top:18%;right:15%;font-size:2rem;">♣</div>
+    <div class="el" style="top:30%;left:20%;font-size:1.8rem;">♣</div>
+    <div class="el float" style="top:8%;right:30%;font-size:2rem;">♪</div>
     ${MUSIC_SPARKLES}</div>`,
 };
 
@@ -2773,7 +2912,7 @@ function exploreInstrument(idx) {
   playInstrumentSound(inst.id);
   speakQuick(`This is a ${inst.name}! ${inst.fact}`, null, document.getElementById('inst-fact-text'), inst.fact);
   if (meExplored.size === instruments.length) {
-    setTimeout(() => celebrate('🎉 You explored all 8 instruments! 🎉', 3), 2000);
+    setTimeout(() => celebrate('&#9733; You explored all 8 instruments! &#9733;', 3), 2000);
   }
 }
 
@@ -2791,7 +2930,7 @@ function startSoundQuiz() {
 function renderSoundQuizQ() {
   if (sqCurrent >= sqQuestions.length) {
     const stars = sqScore >= 7 ? 3 : sqScore >= 5 ? 2 : 1;
-    celebrate(`🎉 Sound Quiz done! ${sqScore}/8 correct! 🎉`, stars);
+    celebrate(`&#9733; Sound Quiz done! ${sqScore}/8 correct! &#9733;`, stars);
     return;
   }
   sqCurrentInst = sqQuestions[sqCurrent];
@@ -2838,13 +2977,13 @@ function answerSoundQuiz(chosenId, btn) {
   if (chosenId === sqCurrentInst.id) {
     sqScore++;
     document.getElementById('sq-score').textContent = sqScore;
-    fb.textContent = `✅ Correct! That was the ${sqCurrentInst.name}!`;
+    fb.innerHTML = `<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! That was the ${sqCurrentInst.name}!</span>`;
     fb.className = 'feedback correct';
     btn.style.borderColor = '#4CAF50';
     SFX.faithCorrect();
     speakQuick(`Correct! That was the ${sqCurrentInst.name}!`);
   } else {
-    fb.textContent = `❌ Not quite! That was the ${sqCurrentInst.name}!`;
+    fb.innerHTML = `<span style="color:#EF5350;font-weight:bold">&#10007; Not quite! That was the ${sqCurrentInst.name}!</span>`;
     fb.className = 'feedback incorrect';
     btn.style.borderColor = '#f44336';
     SFX.faithWrong();
@@ -2878,7 +3017,7 @@ function startMusicFamilies() {
 function renderMusicFamilyItem() {
   if (mfCurrent >= mfQueue.length) {
     const stars = mfScore >= 7 ? 3 : mfScore >= 5 ? 2 : 1;
-    celebrate(`🎉 All instruments sorted! ${mfScore}/8 correct! 🎉`, stars);
+    celebrate(`&#9733; All instruments sorted! ${mfScore}/8 correct! &#9733;`, stars);
     return;
   }
   const inst = mfQueue[mfCurrent];
@@ -2896,12 +3035,12 @@ function sortInstrument(family) {
   const fb = document.getElementById('mf-feedback');
   if (inst.family === family) {
     mfScore++;
-    fb.textContent = `✅ Correct! ${inst.name} is a ${family} instrument!`;
+    fb.innerHTML = `<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! ${inst.name} is a ${family} instrument!</span>`;
     fb.className = 'feedback correct';
     SFX.faithCorrect();
     speakQuick(`Correct! ${inst.name} is a ${family} instrument!`);
   } else {
-    fb.textContent = `❌ ${inst.name} is actually a ${inst.family} instrument!`;
+    fb.innerHTML = `<span style="color:#EF5350;font-weight:bold">&#10007; ${inst.name} is actually a ${inst.family} instrument!</span>`;
     fb.className = 'feedback incorrect';
     SFX.faithWrong();
     speakQuick(`Not quite! ${inst.name} is a ${inst.family} instrument!`);
@@ -2983,7 +3122,7 @@ function renderPlayInstrument() {
       const key = document.createElement('button'); key.className = 'piano-key';
       key.style.background = `linear-gradient(180deg, ${n.color}, ${darken(n.color)})`;
       key.innerHTML = `<div class="key-note">${n.note.replace('2','')}</div>`;
-      key.onclick = () => { playInstrumentSound('piano', n.freq); key.classList.add('key-active'); fb.textContent = `🎵 ${n.note.replace('2','')}`; setTimeout(() => key.classList.remove('key-active'), 300); };
+      key.onclick = () => { playInstrumentSound('piano', n.freq); key.classList.add('key-active'); fb.textContent = `♪ ${n.note.replace('2','')}`; setTimeout(() => key.classList.remove('key-active'), 300); };
       c.appendChild(key);
     });
     area.appendChild(c);
@@ -2998,7 +3137,7 @@ function renderPlayInstrument() {
       bar.style.height = n.h + 'px';
       bar.style.width = (95 - i * 5) + 'px';
       bar.innerHTML = n.note.replace('2','');
-      bar.onclick = () => { playInstrumentSound('xylophone', n.freq); bar.classList.add('bar-active'); fb.textContent = `🎵 ${n.note.replace('2','')}`; setTimeout(() => bar.classList.remove('bar-active'), 300); };
+      bar.onclick = () => { playInstrumentSound('xylophone', n.freq); bar.classList.add('bar-active'); fb.textContent = `♪ ${n.note.replace('2','')}`; setTimeout(() => bar.classList.remove('bar-active'), 300); };
       bars.appendChild(bar);
     });
     wrap.appendChild(frame);
@@ -3012,7 +3151,7 @@ function renderPlayInstrument() {
       piece.className = `drum-piece ${dk.css}`;
       const inner = dk.css.includes('drum-shell') ? `<div class="drum-head"></div><span class="drum-name">${dk.name}</span>` : `<span class="drum-name">${dk.name}</span>`;
       piece.innerHTML = inner;
-      piece.onclick = () => { playDrumSound(dk.type); piece.classList.add('dp-active'); fb.textContent = `🥁 ${dk.name}!`; setTimeout(() => piece.classList.remove('dp-active'), 200); };
+      piece.onclick = () => { playDrumSound(dk.type); piece.classList.add('dp-active'); fb.textContent = `● ${dk.name}!`; setTimeout(() => piece.classList.remove('dp-active'), 200); };
       kit.appendChild(piece);
     });
     area.appendChild(kit);
@@ -3025,7 +3164,7 @@ function renderPlayInstrument() {
     guitarStrings.forEach((s, i) => {
       const row = document.createElement('div'); row.className = 'gtr-string';
       row.innerHTML = `<span class="gtr-string-label" style="color:${s.color}">${s.note}</span><div class="gtr-string-wire" style="background:${s.color};height:${s.thickness}px;"></div><span class="gtr-string-note">${s.note}</span>`;
-      row.onclick = () => { playInstrumentSound('guitar', s.freq); row.classList.add('gs-active'); fb.textContent = `🎸 ${s.note} string!`; setTimeout(() => row.classList.remove('gs-active'), 600); };
+      row.onclick = () => { playInstrumentSound('guitar', s.freq); row.classList.add('gs-active'); fb.textContent = `♪ ${s.note} string!`; setTimeout(() => row.classList.remove('gs-active'), 600); };
       stringsArea.appendChild(row);
     });
     visual.appendChild(stringsArea);
@@ -3092,14 +3231,14 @@ function playDrumSound(type) {
 
 // --- M5: Animal Orchestra ---
 const animalOrchestra = [
-  { animal: '🐱', name: 'Cat', instrument: 'violin', instName: 'Violin' },
-  { animal: '🐶', name: 'Dog', instrument: 'drum', instName: 'Drums' },
-  { animal: '🐸', name: 'Frog', instrument: 'xylophone', instName: 'Xylophone' },
-  { animal: '🦁', name: 'Lion', instrument: 'trumpet', instName: 'Trumpet' },
-  { animal: '🐦', name: 'Bird', instrument: 'flute', instName: 'Flute' },
-  { animal: '🐷', name: 'Pig', instrument: 'tambourine', instName: 'Tambourine' },
-  { animal: '🐮', name: 'Cow', instrument: 'guitar', instName: 'Guitar' },
-  { animal: '🐵', name: 'Monkey', instrument: 'piano', instName: 'Piano' },
+  { animal: '●', name: 'Cat', instrument: 'violin', instName: 'Violin' },
+  { animal: '■', name: 'Dog', instrument: 'drum', instName: 'Drums' },
+  { animal: '◆', name: 'Frog', instrument: 'xylophone', instName: 'Xylophone' },
+  { animal: '★', name: 'Lion', instrument: 'trumpet', instName: 'Trumpet' },
+  { animal: '*', name: 'Bird', instrument: 'flute', instName: 'Flute' },
+  { animal: '●', name: 'Pig', instrument: 'tambourine', instName: 'Tambourine' },
+  { animal: '■', name: 'Cow', instrument: 'guitar', instName: 'Guitar' },
+  { animal: '◆', name: 'Monkey', instrument: 'piano', instName: 'Piano' },
 ];
 let aoPlayed = new Set();
 
@@ -3134,7 +3273,7 @@ function tapAnimal(idx) {
   fb.textContent = `${a.animal} The ${a.name} played the ${a.instName}!`;
   speakQuick(`The ${a.name} played the ${a.instName}!`);
   if (aoPlayed.size === animalOrchestra.length) {
-    setTimeout(() => celebrate('🎉 You heard the whole Animal Orchestra! 🎉', 3), 1500);
+    setTimeout(() => celebrate('&#9733; You heard the whole Animal Orchestra! &#9733;', 3), 1500);
   }
 }
 
@@ -3231,17 +3370,17 @@ function answerTF(val) {
   const fb = document.getElementById('tf-feedback');
   if (val === null) {
     card.classList.add('tf-wrong');
-    fb.textContent = `⏰ Time's up! Answer: ${q.a ? 'TRUE' : 'FALSE'}`;
+    fb.innerHTML = '<span style="color:#FF9800;font-weight:bold">Time\'s up! Answer: ' + (q.a ? 'TRUE' : 'FALSE') + '</span>';
     SFX.brainWrong();
   } else if (val === q.a) {
     tfScore++;
     card.classList.add('tf-correct');
-    fb.textContent = '✅ Correct!';
+    fb.innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Correct!</span>';
     SFX.brainCorrect();
     document.getElementById('tf-score').textContent = tfScore;
   } else {
     card.classList.add('tf-wrong');
-    fb.textContent = `❌ Nope! Answer: ${q.a ? 'TRUE' : 'FALSE'}`;
+    fb.innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; Nope! Answer: ' + (q.a ? 'TRUE' : 'FALSE') + '</span>';
     SFX.brainWrong();
   }
   tfIndex++;
@@ -3251,30 +3390,30 @@ function answerTF(val) {
 // ============ BRAIN GYM: WHAT COMES NEXT ============
 const wcnAllPatterns = [
   // AB patterns
-  { seq: ['🔴','🔵','🔴','🔵','🔴'], ans: '🔵', ch: ['🔵','🟡','🔴'] },
-  { seq: ['⭐','🌙','⭐','🌙','⭐'], ans: '🌙', ch: ['🌙','⭐','☀️'] },
-  { seq: ['🐱','🐶','🐱','🐶','🐱'], ans: '🐶', ch: ['🐶','🐱','🐰'] },
-  { seq: ['🟢','🟡','🟢','🟡','🟢'], ans: '🟡', ch: ['🟡','🟢','🔴'] },
+  { seq: ['red','blue','red','blue','red'], ans: 'blue', ch: ['blue','yellow','red'] },
+  { seq: ['star','moon','star','moon','star'], ans: 'moon', ch: ['moon','star','sun'] },
+  { seq: ['cat','dog','cat','dog','cat'], ans: 'dog', ch: ['dog','cat','rabbit'] },
+  { seq: ['green','yellow','green','yellow','green'], ans: 'yellow', ch: ['yellow','green','red'] },
   // AAB patterns
-  { seq: ['⭐','⭐','🌙','⭐','⭐'], ans: '🌙', ch: ['🌙','⭐','💫'] },
-  { seq: ['🔴','🔴','🔵','🔴','🔴'], ans: '🔵', ch: ['🔵','🔴','🟡'] },
-  { seq: ['🍎','🍎','🍌','🍎','🍎'], ans: '🍌', ch: ['🍌','🍎','🍇'] },
+  { seq: ['star','star','moon','star','star'], ans: 'moon', ch: ['moon','star','sparkle'] },
+  { seq: ['red','red','blue','red','red'], ans: 'blue', ch: ['blue','red','yellow'] },
+  { seq: ['apple','apple','banana','apple','apple'], ans: 'banana', ch: ['banana','apple','grape'] },
   // ABB patterns
-  { seq: ['🌈','☁️','☁️','🌈','☁️'], ans: '☁️', ch: ['☁️','🌈','⭐'] },
-  { seq: ['🎵','🎶','🎶','🎵','🎶'], ans: '🎶', ch: ['🎶','🎵','🎸'] },
+  { seq: ['rainbow','cloud','cloud','rainbow','cloud'], ans: 'cloud', ch: ['cloud','rainbow','star'] },
+  { seq: ['music','music2','music2','music','music2'], ans: 'music2', ch: ['music2','music','flower'] },
   // ABC patterns
-  { seq: ['🔴','🔵','🟡','🔴','🔵'], ans: '🟡', ch: ['🟡','🔴','🟢'] },
-  { seq: ['🍎','🍌','🍇','🍎','🍌'], ans: '🍇', ch: ['🍇','🍎','🍊'] },
-  { seq: ['🐱','🐶','🐰','🐱','🐶'], ans: '🐰', ch: ['🐰','🐱','🐶'] },
+  { seq: ['red','blue','yellow','red','blue'], ans: 'yellow', ch: ['yellow','red','green'] },
+  { seq: ['apple','banana','grape','apple','banana'], ans: 'grape', ch: ['grape','apple','orange-f'] },
+  { seq: ['cat','dog','rabbit','cat','dog'], ans: 'rabbit', ch: ['rabbit','cat','dog'] },
   // Growing/number
-  { seq: ['1️⃣','2️⃣','3️⃣','4️⃣'], ans: '5️⃣', ch: ['5️⃣','6️⃣','3️⃣'] },
-  { seq: ['🌱','🌿','🌲','🌱','🌿'], ans: '🌲', ch: ['🌲','🌱','🌿'] },
-  { seq: ['🐣','🐥','🐔','🐣','🐥'], ans: '🐔', ch: ['🐔','🐣','🦆'] },
-  { seq: ['❄️','💧','☀️','❄️','💧'], ans: '☀️', ch: ['☀️','❄️','🌈'] },
-  { seq: ['🌑','🌓','🌕','🌑','🌓'], ans: '🌕', ch: ['🌕','🌑','🌗'] },
-  { seq: ['🥚','🐣','🐥','🥚','🐣'], ans: '🐥', ch: ['🐥','🥚','🐔'] },
-  { seq: ['🟦','🟧','🟩','🟦','🟧'], ans: '🟩', ch: ['🟩','🟦','🟥'] },
-  { seq: ['😀','😃','😄','😀','😃'], ans: '😄', ch: ['😄','😀','😆'] },
+  { seq: ['n1','n2','n3','n4'], ans: 'n5', ch: ['n5','n6','n3'] },
+  { seq: ['sm-green','md-green','lg-green','sm-green','md-green'], ans: 'lg-green', ch: ['lg-green','sm-green','md-green'] },
+  { seq: ['sm-yellow','md-yellow','lg-orange','sm-yellow','md-yellow'], ans: 'lg-orange', ch: ['lg-orange','sm-yellow','duck'] },
+  { seq: ['snowflake','drop','sun','snowflake','drop'], ans: 'sun', ch: ['sun','snowflake','rainbow'] },
+  { seq: ['black','half-moon','white','black','half-moon'], ans: 'white', ch: ['white','black','half-moon2'] },
+  { seq: ['beige','sm-yellow','md-yellow','beige','sm-yellow'], ans: 'md-yellow', ch: ['md-yellow','beige','lg-orange'] },
+  { seq: ['blue-sq','orange-sq','green-sq','blue-sq','orange-sq'], ans: 'green-sq', ch: ['green-sq','blue-sq','red-sq'] },
+  { seq: ['smile1','smile2','smile3','smile1','smile2'], ans: 'smile3', ch: ['smile3','smile1','smile4'] },
 ];
 let wcnRounds = [], wcnIndex = 0, wcnScore = 0, wcnAnswered = false;
 
@@ -3306,12 +3445,12 @@ function renderWCNRound() {
   p.seq.forEach(item => {
     const d = document.createElement('div');
     d.className = 'wcn-item';
-    d.textContent = item;
+    d.innerHTML = safeIcon(item);
     seqEl.appendChild(d);
   });
   const mystery = document.createElement('div');
   mystery.className = 'wcn-item wcn-mystery';
-  mystery.textContent = '❓';
+  mystery.innerHTML = safeIcon('question');
   mystery.id = 'wcn-mystery';
   seqEl.appendChild(mystery);
   // Render choices (shuffled)
@@ -3321,7 +3460,7 @@ function renderWCNRound() {
   shuffled.forEach(c => {
     const btn = document.createElement('button');
     btn.className = 'wcn-choice';
-    btn.textContent = c;
+    btn.innerHTML = safeIcon(c);
     btn.onclick = () => answerWCN(c, btn);
     choicesEl.appendChild(btn);
   });
@@ -3336,19 +3475,19 @@ function answerWCN(choice, btn) {
   if (choice === p.ans) {
     wcnScore++;
     btn.classList.add('wcn-correct');
-    fb.textContent = '✅ Correct!';
+    fb.innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Correct!</span>';
     SFX.brainCorrect();
     document.getElementById('wcn-score').textContent = wcnScore;
     // Reveal answer in mystery slot
     const m = document.getElementById('wcn-mystery');
-    m.textContent = p.ans;
+    m.innerHTML = safeIcon(p.ans);
     m.className = 'wcn-item wcn-reveal';
   } else {
     btn.classList.add('wcn-wrong');
-    fb.textContent = `❌ It was ${p.ans}`;
+    fb.innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; It was </span>' + safeIcon(p.ans);
     SFX.brainWrong();
     const m = document.getElementById('wcn-mystery');
-    m.textContent = p.ans;
+    m.innerHTML = safeIcon(p.ans);
     m.className = 'wcn-item wcn-reveal';
   }
   wcnIndex++;
@@ -3358,28 +3497,28 @@ function answerWCN(choice, btn) {
 // ============ BRAIN GYM: ODD ONE OUT ============
 const oooAllData = [
   // Easy
-  { items: ['🍎','🍌','🍇','🚗'], odd: 3, reason: "Car is not a fruit!" },
-  { items: ['🐱','🐶','🐰','🌺'], odd: 3, reason: "Flower is not an animal!" },
-  { items: ['⚽','🏀','🎾','📚'], odd: 3, reason: "Book is not a ball!" },
-  { items: ['🚗','🚌','🚂','🍕'], odd: 3, reason: "Pizza is not a vehicle!" },
-  { items: ['🎹','🎸','🎺','📺'], odd: 3, reason: "TV is not an instrument!" },
-  { items: ['👟','👢','🧢','👞'], odd: 2, reason: "Hat goes on your head, not feet!" },
+  { items: ['w-apple','w-banana','w-grape','w-car'], odd: 3, reason: "Car is not a fruit!" },
+  { items: ['w-cat','w-dog','w-rabbit','w-flower'], odd: 3, reason: "Flower is not an animal!" },
+  { items: ['w-soccer','w-basketball','w-tennis','w-book'], odd: 3, reason: "Book is not a ball!" },
+  { items: ['w-car','w-bus','w-train','w-pizza'], odd: 3, reason: "Pizza is not a vehicle!" },
+  { items: ['w-piano','w-guitar','w-trumpet','w-tv'], odd: 3, reason: "TV is not an instrument!" },
+  { items: ['w-sneaker','w-boot','w-hat','w-shoe'], odd: 2, reason: "Hat goes on your head, not feet!" },
   // Medium
-  { items: ['🐱','🐶','🐟','🐰'], odd: 2, reason: "Fish lives in water, not on land!" },
-  { items: ['🍎','🍌','🥕','🍇'], odd: 2, reason: "Carrot is a vegetable, not a fruit!" },
-  { items: ['✈️','🚁','🚀','🚢'], odd: 3, reason: "Ship doesn't fly!" },
-  { items: ['🧊','🏔️','❄️','🔥'], odd: 3, reason: "Fire is hot, the rest are cold!" },
-  { items: ['🐘','🐋','🐪','🐁'], odd: 1, reason: "Whale lives in the ocean!" },
-  { items: ['🍕','🍔','🌮','🎂'], odd: 3, reason: "Cake is dessert, not a meal!" },
-  { items: ['🌞','🌙','⭐','🌧️'], odd: 3, reason: "Rain is weather, others are in the sky!" },
-  { items: ['🦁','🐯','🐻','🐧'], odd: 3, reason: "Penguin is a bird, others are big mammals!" },
+  { items: ['w-cat','w-dog','w-fish','w-rabbit'], odd: 2, reason: "Fish lives in water, not on land!" },
+  { items: ['w-apple','w-banana','w-carrot','w-grape'], odd: 2, reason: "Carrot is a vegetable, not a fruit!" },
+  { items: ['w-plane','w-helicopter','w-rocket','w-ship'], odd: 3, reason: "Ship doesn't fly!" },
+  { items: ['w-ice','w-mountain','w-snowflake','w-fire'], odd: 3, reason: "Fire is hot, the rest are cold!" },
+  { items: ['w-elephant','w-whale','w-camel','w-mouse'], odd: 1, reason: "Whale lives in the ocean!" },
+  { items: ['w-pizza','w-burger','w-taco','w-cake'], odd: 3, reason: "Cake is dessert, not a meal!" },
+  { items: ['w-sun','w-moon','w-star','w-rain'], odd: 3, reason: "Rain is weather, others are in the sky!" },
+  { items: ['w-lion','w-tiger','w-bear','w-penguin'], odd: 3, reason: "Penguin is a bird, others are big mammals!" },
   // Hard
-  { items: ['🍎','🍓','🍑','🍋'], odd: 3, reason: "Lemon is yellow, the rest are red!" },
-  { items: ['🐸','🐊','🐢','🐧'], odd: 3, reason: "Penguin lives in ice, others like warmth!" },
-  { items: ['🥛','🧃','💧','🍕'], odd: 3, reason: "Pizza is food, the rest are drinks!" },
-  { items: ['🎨','🖍️','✏️','🔨'], odd: 3, reason: "Hammer is a tool, not for drawing!" },
-  { items: ['🌳','🌵','🌻','🌲'], odd: 2, reason: "Sunflower is not a tree!" },
-  { items: ['🐜','🐝','🐛','🦅'], odd: 3, reason: "Eagle is big, the rest are tiny bugs!" },
+  { items: ['w-apple','w-strawberry','w-peach','w-lemon'], odd: 3, reason: "Lemon is yellow, the rest are red!" },
+  { items: ['w-frog','w-croc','w-turtle','w-penguin'], odd: 3, reason: "Penguin lives in ice, others like warmth!" },
+  { items: ['w-milk','w-juice','w-water','w-pizza'], odd: 3, reason: "Pizza is food, the rest are drinks!" },
+  { items: ['w-art','w-crayon','w-pencil','w-hammer'], odd: 3, reason: "Hammer is a tool, not for drawing!" },
+  { items: ['w-tree','w-cactus','w-sunflower','w-pine'], odd: 2, reason: "Sunflower is not a tree!" },
+  { items: ['w-ant','w-bee','w-caterpillar','w-eagle'], odd: 3, reason: "Eagle is big, the rest are tiny bugs!" },
 ];
 let oooRounds = [], oooIndex = 0, oooScore = 0, oooAnswered = false;
 
@@ -3409,7 +3548,7 @@ function renderOOORound() {
   q.items.forEach((item, i) => {
     const btn = document.createElement('button');
     btn.className = 'ooo-card';
-    btn.textContent = item;
+    btn.innerHTML = safeIcon(item);
     btn.onclick = () => selectOOO(i, btn);
     grid.appendChild(btn);
   });
@@ -3425,14 +3564,14 @@ function selectOOO(idx, btn) {
   if (idx === q.odd) {
     oooScore++;
     btn.classList.add('ooo-correct');
-    fb.textContent = '✅ ' + q.reason;
+    fb.innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; ' + q.reason + '</span>';
     SFX.brainCorrect();
     document.getElementById('ooo-score').textContent = oooScore;
     cards.forEach((c, i) => { if (i !== q.odd) c.classList.add('ooo-dim'); });
   } else {
     btn.classList.add('ooo-wrong');
     cards[q.odd].classList.add('ooo-correct');
-    fb.textContent = '❌ ' + q.reason;
+    fb.innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; ' + q.reason + '</span>';
     SFX.brainWrong();
   }
   oooIndex++;
@@ -3444,26 +3583,26 @@ const ssPhases = [
   {
     rule: 'Sort by SHAPE!',
     bins: [
-      { label: '⚪ Circle', match: 'circle' },
-      { label: '⬜ Square', match: 'square' },
-      { label: '🔺 Triangle', match: 'triangle' },
+      { label: 'Circle', match: 'circle' },
+      { label: 'Square', match: 'square' },
+      { label: 'Triangle', match: 'triangle' },
     ],
     key: 'shape'
   },
   {
     rule: 'Sort by COLOR!',
     bins: [
-      { label: '🔴 Red', match: '#EF5350' },
-      { label: '🔵 Blue', match: '#42A5F5' },
-      { label: '🟡 Yellow', match: '#FFD600' },
+      { label: 'Red', match: '#EF5350' },
+      { label: 'Blue', match: '#42A5F5' },
+      { label: 'Yellow', match: '#FFD600' },
     ],
     key: 'color'
   },
   {
     rule: 'Sort by SIZE!',
     bins: [
-      { label: '🔍 Small', match: 'small' },
-      { label: '🔎 Big', match: 'big' },
+      { label: 'Small', match: 'small' },
+      { label: 'Big', match: 'big' },
     ],
     key: 'size'
   },
@@ -3559,12 +3698,12 @@ function sortSSShape(binMatch, btn) {
   if (binMatch === correct) {
     ssScore++;
     btn.classList.add('ss-correct');
-    fb.textContent = '✅ Correct!';
+    fb.innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Correct!</span>';
     SFX.brainCorrect();
     document.getElementById('ss-score').textContent = ssScore;
   } else {
     btn.classList.add('ss-wrong');
-    fb.textContent = '❌ Not quite!';
+    fb.innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; Not quite!</span>';
     SFX.brainWrong();
   }
   ssIndex++;
@@ -3579,48 +3718,58 @@ function sortSSShape(binMatch, btn) {
 
 // ============ BRAIN GYM: RIDDLE TIME ============
 const riddleAllData = [
-  // Easy (1-3): very concrete, everyday objects
+  // Easy (1-4): very concrete, everyday things toddlers know
   {
-    riddle: "I am yellow and I shine in the sky. What am I?",
-    hints: ["I come out during the day", "I keep you warm", "I go away at night!"],
-    choices: ["Sun", "Moon", "Star", "Cloud"], correct: 0
+    riddle: "I have long ears and hop around. What am I?",
+    hints: ["I eat carrots", "I am soft and fluffy", "I go hop hop hop!"],
+    choices: ["Rabbit", "Dog", "Cat", "Bird"], correct: 0
   },
   {
-    riddle: "I am cold and white and fall from the sky. What am I?",
-    hints: ["I come in winter", "Kids play in me", "You can build a man with me!"],
-    choices: ["Snow", "Rain", "Clouds", "Ice Cream"], correct: 0
+    riddle: "I am round and you kick me. What am I?",
+    hints: ["Kids play with me outside", "I bounce", "You score goals with me!"],
+    choices: ["Ball", "Balloon", "Egg", "Wheel"], correct: 0
   },
   {
-    riddle: "You use me to eat soup. What am I?",
-    hints: ["I'm in the kitchen", "I'm not a fork", "I am round and scoopy!"],
-    choices: ["Spoon", "Cup", "Plate", "Knife"], correct: 0
-  },
-  // Medium (4-6): simple "I have ___ but can't ___" format
-  {
-    riddle: "I have four legs but I can't walk. What am I?",
-    hints: ["You sit at me", "I'm in your house", "You eat dinner at me!"],
-    choices: ["Table", "Dog", "Horse", "Frog"], correct: 0
+    riddle: "I fall from the sky and make puddles. What am I?",
+    hints: ["You need an umbrella for me", "I make flowers grow", "Drip drop drip drop!"],
+    choices: ["Rain", "Snow", "Leaves", "Stars"], correct: 0
   },
   {
-    riddle: "I have a trunk but I'm not an elephant. What am I?",
-    hints: ["I'm very tall", "I have green leaves", "Birds sit on me!"],
-    choices: ["Tree", "Car", "Suitcase", "Elephant"], correct: 0
+    riddle: "I am big, grey, and have a long nose. What am I?",
+    hints: ["I live in Africa", "I squirt water from my nose", "I am the biggest land animal!"],
+    choices: ["Elephant", "Hippo", "Whale", "Bear"], correct: 0
+  },
+  // Medium (5-8): a little trickier but still very concrete
+  {
+    riddle: "I have wings but I am not a bird. I love flowers. What am I?",
+    hints: ["I am very pretty and colourful", "I used to be a caterpillar", "I flutter around the garden!"],
+    choices: ["Butterfly", "Bee", "Bat", "Airplane"], correct: 0
   },
   {
-    riddle: "I have hands but can't clap. What am I?",
-    hints: ["I hang on a wall", "I have numbers on my face", "Tick tock!"],
-    choices: ["Clock", "Book", "Mirror", "Door"], correct: 0
-  },
-  // Slightly harder (7-8)
-  {
-    riddle: "I have teeth but I can't eat. What am I?",
-    hints: ["You use me every morning", "I keep your hair neat", "You pull me through your hair!"],
-    choices: ["Comb", "Shark", "Key", "Zipper"], correct: 0
+    riddle: "You put me on your feet before you go outside. What am I?",
+    hints: ["I come in pairs", "I protect your toes", "You tie my laces!"],
+    choices: ["Shoes", "Socks", "Gloves", "Hat"], correct: 0
   },
   {
-    riddle: "I have keys but no locks. What am I?",
-    hints: ["I make music", "I'm black and white", "You press me with your fingers!"],
-    choices: ["Piano", "Computer", "Map", "Chest"], correct: 0
+    riddle: "I am full of pages but I am not a tree. What am I?",
+    hints: ["You read me at bedtime", "I tell stories", "I have pictures inside!"],
+    choices: ["Book", "Newspaper", "Letter", "Phone"], correct: 0
+  },
+  {
+    riddle: "I shine at night and I am round. What am I?",
+    hints: ["I come out when it is dark", "I live in the sky", "I change my shape every night!"],
+    choices: ["Moon", "Sun", "Lamp", "Star"], correct: 0
+  },
+  // Slightly harder (9-10)
+  {
+    riddle: "I have a face but no eyes. I have hands but no fingers. What am I?",
+    hints: ["I hang on the wall", "I tell you when it is bedtime", "Tick tock tick tock!"],
+    choices: ["Clock", "Mirror", "Picture", "Door"], correct: 0
+  },
+  {
+    riddle: "I have a tail and whiskers. I say meow. What am I?",
+    hints: ["I purr when I am happy", "I like to chase mice", "I drink milk!"],
+    choices: ["Cat", "Dog", "Mouse", "Fox"], correct: 0
   },
 ];
 let rdIndex = 0, rdScore = 0, rdHintsUsed = 0, rdAnswered = false;
@@ -3646,7 +3795,7 @@ function renderRiddle() {
   document.getElementById('rd-hint-text').textContent = '';
   document.getElementById('rd-feedback').textContent = '';
   document.getElementById('rd-hint-btn').disabled = false;
-  document.getElementById('rd-hint-btn').textContent = '💡 Need a Hint?';
+  document.getElementById('rd-hint-btn').textContent = 'Need a Hint?';
   // Shuffle choices
   const indices = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
   const correctNewIdx = indices.indexOf(r.correct);
@@ -3664,13 +3813,13 @@ function renderRiddle() {
 function useRiddleHint() {
   if (rdAnswered || rdHintsUsed >= 3) return;
   const r = riddleAllData[rdIndex];
-  document.getElementById('rd-hint-text').textContent = '💡 ' + r.hints[rdHintsUsed];
+  document.getElementById('rd-hint-text').textContent = 'Hint: ' + r.hints[rdHintsUsed];
   rdHintsUsed++;
   if (rdHintsUsed >= 3) {
     document.getElementById('rd-hint-btn').disabled = true;
     document.getElementById('rd-hint-btn').textContent = 'No more hints';
   } else {
-    document.getElementById('rd-hint-btn').textContent = `💡 Hint ${rdHintsUsed + 1}/3`;
+    document.getElementById('rd-hint-btn').textContent = `Hint ${rdHintsUsed + 1}/3`;
   }
 }
 
@@ -3684,515 +3833,339 @@ function answerRiddle(isCorrect, btn) {
     const pts = rdHintsUsed === 0 ? 3 : rdHintsUsed === 1 ? 2 : 1;
     rdScore += pts;
     btn.classList.add('rd-correct');
-    fb.textContent = `✅ Correct! +${pts} points`;
+    fb.innerHTML = `<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! +${pts} points</span>`;
     SFX.brainCorrect();
     document.getElementById('rd-score').textContent = rdScore;
   } else {
     btn.classList.add('rd-wrong');
     // Show correct
     const r = riddleAllData[rdIndex];
-    fb.textContent = `❌ It was: ${r.choices[r.correct]}`;
+    fb.innerHTML = `<span style="color:#EF5350;font-weight:bold">&#10007; It was: ${r.choices[r.correct]}</span>`;
     SFX.brainWrong();
   }
   rdIndex++;
   setTimeout(renderRiddle, 2000);
 }
 
-// ============ BRAIN GYM: SPOT THE DIFFERENCE ============
-const stdScenes = [
-  // ---- LEVEL 1: Sunny Day — 1 difference (very easy, big obvious missing item) ----
-  {
-    name: 'Sunny Day', bgClass: 'std-scene-sky',
-    elements: [
-      { type: 'sun', x: 75, y: 5, w: 30, h: 30, css: 'background:#FFD600;border-radius:50%;box-shadow:0 0 20px #FFD600;' },
-      { type: 'cloud', x: 25, y: 8, w: 40, h: 18, css: 'background:#fff;border-radius:50%;opacity:0.8;' },
-      { type: 'tree', x: 15, y: 35, w: 35, h: 55, css: 'background:#4CAF50;border-radius:50%;' },
-      { type: 'trunk', x: 22, y: 65, w: 10, h: 35, css: 'background:#795548;border-radius:4px;' },
-      { type: 'flower', x: 60, y: 78, w: 22, h: 22, text: '🌻', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'grass', x: 0, y: 88, w: 100, h: 12, css: 'background:linear-gradient(#66BB6A,#388E3C);' },
-    ],
-    diffs: [
-      { idx: 4, prop: 'hidden', val: true }, // sunflower missing
-    ]
-  },
-  // ---- LEVEL 2: Fruit Bowl — 1 difference (emoji swap) ----
-  {
-    name: 'Fruit Bowl', bgClass: 'std-scene-kitchen',
-    elements: [
-      { type: 'table', x: 5, y: 60, w: 90, h: 10, css: 'background:#8D6E63;border-radius:6px;' },
-      { type: 'bowl', x: 25, y: 40, w: 50, h: 28, css: 'background:#FFCC80;border-radius:0 0 50% 50%;border:3px solid #EF6C00;' },
-      { type: 'apple', x: 30, y: 32, w: 18, h: 18, text: '🍎', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'banana', x: 50, y: 30, w: 18, h: 18, text: '🍌', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'grapes', x: 40, y: 22, w: 18, h: 18, text: '🍇', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'floor', x: 0, y: 85, w: 100, h: 15, css: 'background:repeating-linear-gradient(90deg,#BCAAA4,#BCAAA4 20px,#D7CCC8 20px,#D7CCC8 40px);' },
-    ],
-    diffs: [
-      { idx: 2, prop: 'text', val: '🍏' }, // red apple → green apple
-    ]
-  },
-  // ---- LEVEL 3: Playground — 2 differences (missing + emoji swap) ----
-  {
-    name: 'Playground', bgClass: 'std-scene-sky',
-    elements: [
-      { type: 'sky', x: 0, y: 0, w: 100, h: 88, css: '' },
-      { type: 'swing', x: 20, y: 25, w: 20, h: 50, css: 'border-top:6px solid #795548;border-left:4px solid #795548;border-right:4px solid #795548;border-bottom:none;' },
-      { type: 'ball', x: 60, y: 72, w: 20, h: 20, css: 'background:#F44336;border-radius:50%;border:3px solid #C62828;' },
-      { type: 'butterfly', x: 70, y: 18, w: 18, h: 18, text: '🦋', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'sun', x: 80, y: 5, w: 25, h: 25, css: 'background:#FFD600;border-radius:50%;box-shadow:0 0 15px #FFD600;' },
-      { type: 'grass', x: 0, y: 88, w: 100, h: 12, css: 'background:linear-gradient(#66BB6A,#388E3C);' },
-    ],
-    diffs: [
-      { idx: 2, prop: 'css', val: 'background:#2196F3;border-radius:50%;border:3px solid #1565C0;' }, // red ball → blue ball
-      { idx: 3, prop: 'hidden', val: true }, // butterfly missing
-    ]
-  },
-  // ---- LEVEL 4: Bedroom — 2 differences (missing + color change) ----
-  {
-    name: 'Bedroom', bgClass: 'std-scene-kitchen',
-    elements: [
-      { type: 'bed', x: 10, y: 45, w: 55, h: 30, css: 'background:#7E57C2;border-radius:8px;border:3px solid #4527A0;' },
-      { type: 'pillow', x: 12, y: 42, w: 18, h: 12, css: 'background:#fff;border-radius:6px;border:2px solid #ccc;' },
-      { type: 'lamp', x: 75, y: 25, w: 14, h: 30, css: 'background:#FFD54F;border-radius:50% 50% 0 0;border:2px solid #F9A825;' },
-      { type: 'teddy', x: 70, y: 55, w: 22, h: 22, text: '🧸', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'window', x: 35, y: 5, w: 30, h: 30, css: 'background:#81D4FA;border:4px solid #795548;border-radius:4px;' },
-      { type: 'moon', x: 42, y: 10, w: 16, h: 16, text: '🌙', css: 'font-size:1.2rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'floor', x: 0, y: 85, w: 100, h: 15, css: 'background:#D7CCC8;' },
-    ],
-    diffs: [
-      { idx: 3, prop: 'hidden', val: true }, // teddy missing
-      { idx: 0, prop: 'css', val: 'background:#42A5F5;border-radius:8px;border:3px solid #1565C0;' }, // bed purple → blue
-    ]
-  },
-  // ---- LEVEL 5: Park — 3 differences (original park scene) ----
-  {
-    name: 'Park', bgClass: 'std-scene-sky',
-    elements: [
-      { type: 'tree', x: 15, y: 35, w: 40, h: 70, css: 'background:#4CAF50;border-radius:50%;' },
-      { type: 'tree-trunk', x: 23, y: 70, w: 10, h: 35, css: 'background:#795548;border-radius:4px;' },
-      { type: 'sun', x: 78, y: 8, w: 35, h: 35, css: 'background:#FFD600;border-radius:50%;box-shadow:0 0 20px #FFD600;' },
-      { type: 'flower', x: 50, y: 80, w: 20, h: 20, text: '🌸', css: 'font-size:1.4rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'bird', x: 60, y: 20, w: 20, h: 20, text: '🐦', css: 'font-size:1.3rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'bench', x: 55, y: 65, w: 50, h: 14, css: 'background:#8D6E63;border-radius:4px;border:2px solid #5D4037;' },
-      { type: 'cloud', x: 35, y: 5, w: 45, h: 20, css: 'background:#fff;border-radius:50%;opacity:0.7;' },
-      { type: 'grass', x: 0, y: 88, w: 100, h: 12, css: 'background:linear-gradient(#66BB6A,#388E3C);' },
-    ],
-    diffs: [
-      { idx: 0, prop: 'css', val: 'background:#FF9800;border-radius:50%;' }, // tree green → orange
-      { idx: 3, prop: 'hidden', val: true }, // flower missing
-      { idx: 4, prop: 'x', val: 30 }, // bird moved
-    ]
-  },
-  // ---- LEVEL 6: Aquarium — 3 differences (emoji swaps + missing) ----
-  {
-    name: 'Aquarium', bgClass: 'std-scene-underwater',
-    elements: [
-      { type: 'fish1', x: 18, y: 25, w: 22, h: 20, text: '🐠', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'fish2', x: 62, y: 45, w: 22, h: 20, text: '🐟', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'octopus', x: 40, y: 65, w: 24, h: 24, text: '🐙', css: 'font-size:1.8rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'seaweed', x: 8, y: 55, w: 14, h: 42, css: 'background:linear-gradient(#4CAF50,#2E7D32);border-radius:40% 40% 0 0;' },
-      { type: 'shell', x: 70, y: 82, w: 18, h: 16, text: '🐚', css: 'font-size:1.3rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'bubble', x: 50, y: 12, w: 12, h: 12, css: 'background:rgba(255,255,255,0.3);border-radius:50%;border:2px solid rgba(255,255,255,0.5);' },
-      { type: 'sand', x: 0, y: 90, w: 100, h: 10, css: 'background:linear-gradient(#FFD54F,#FFB300);' },
-    ],
-    diffs: [
-      { idx: 0, prop: 'text', val: '🐡' }, // tropical fish → blowfish
-      { idx: 2, prop: 'hidden', val: true }, // octopus missing
-      { idx: 4, prop: 'text', val: '🦀' }, // shell → crab
-    ]
-  },
-  // ---- LEVEL 7: Kitchen — 4 differences ----
-  {
-    name: 'Kitchen', bgClass: 'std-scene-kitchen',
-    elements: [
-      { type: 'table', x: 10, y: 55, w: 80, h: 8, css: 'background:#8D6E63;border-radius:4px;' },
-      { type: 'window', x: 30, y: 5, w: 40, h: 35, css: 'background:#81D4FA;border:4px solid #795548;border-radius:4px;' },
-      { type: 'cup', x: 20, y: 42, w: 16, h: 18, css: 'background:#42A5F5;border-radius:0 0 8px 8px;border:2px solid #1E88E5;' },
-      { type: 'plant', x: 72, y: 30, w: 20, h: 25, text: '🪴', css: 'font-size:1.8rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'clock', x: 75, y: 5, w: 18, h: 18, css: 'background:#fff;border-radius:50%;border:3px solid #333;' },
-      { type: 'fruit', x: 45, y: 40, w: 22, h: 18, text: '🍎', css: 'font-size:1.4rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'floor', x: 0, y: 85, w: 100, h: 15, css: 'background:repeating-linear-gradient(90deg,#BCAAA4,#BCAAA4 20px,#D7CCC8 20px,#D7CCC8 40px);' },
-    ],
-    diffs: [
-      { idx: 2, prop: 'css', val: 'background:#EF5350;border-radius:0 0 8px 8px;border:2px solid #C62828;' }, // cup blue → red
-      { idx: 3, prop: 'x', val: 60 }, // plant moved
-      { idx: 4, prop: 'hidden', val: true }, // clock missing
-      { idx: 5, prop: 'text', val: '🍊' }, // apple → orange
-    ]
-  },
-  // ---- LEVEL 8: Garden — 4 differences (colors, moved, swap) ----
-  {
-    name: 'Garden', bgClass: 'std-scene-sky',
-    elements: [
-      { type: 'fence', x: 0, y: 55, w: 100, h: 8, css: 'background:repeating-linear-gradient(90deg,#D7CCC8,#D7CCC8 12px,#795548 12px,#795548 14px);border-radius:2px;' },
-      { type: 'rose', x: 15, y: 40, w: 20, h: 20, text: '🌹', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'tulip', x: 40, y: 42, w: 20, h: 20, text: '🌷', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'sunflower', x: 65, y: 35, w: 22, h: 22, text: '🌻', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'bee', x: 55, y: 15, w: 18, h: 18, text: '🐝', css: 'font-size:1.3rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'ladybug', x: 25, y: 70, w: 16, h: 16, text: '🐞', css: 'font-size:1.2rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'watering', x: 75, y: 68, w: 20, h: 20, text: '🚿', css: 'font-size:1.4rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'grass', x: 0, y: 88, w: 100, h: 12, css: 'background:linear-gradient(#66BB6A,#388E3C);' },
-    ],
-    diffs: [
-      { idx: 1, prop: 'text', val: '🌺' }, // rose → hibiscus
-      { idx: 3, prop: 'hidden', val: true }, // sunflower missing
-      { idx: 4, prop: 'x', val: 30 }, // bee moved
-      { idx: 5, prop: 'hidden', val: true }, // ladybug missing
-    ]
-  },
-  // ---- LEVEL 9: Underwater — 5 differences ----
-  {
-    name: 'Underwater', bgClass: 'std-scene-underwater',
-    elements: [
-      { type: 'fish1', x: 20, y: 30, w: 24, h: 20, text: '🐠', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'fish2', x: 65, y: 50, w: 24, h: 20, text: '🐟', css: 'font-size:1.6rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'coral', x: 40, y: 75, w: 25, h: 25, text: '🪸', css: 'font-size:1.8rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'seaweed', x: 10, y: 60, w: 15, h: 40, css: 'background:linear-gradient(#4CAF50,#2E7D32);border-radius:40% 40% 0 0;' },
-      { type: 'star', x: 75, y: 80, w: 20, h: 20, text: '⭐', css: 'font-size:1.3rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'shell', x: 50, y: 88, w: 18, h: 14, text: '🐚', css: 'font-size:1.2rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'bubble', x: 30, y: 15, w: 14, h: 14, css: 'background:rgba(255,255,255,0.3);border-radius:50%;border:2px solid rgba(255,255,255,0.5);' },
-      { type: 'jellyfish', x: 55, y: 18, w: 20, h: 20, text: '🪼', css: 'font-size:1.4rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'sand', x: 0, y: 90, w: 100, h: 10, css: 'background:linear-gradient(#FFD54F,#FFB300);' },
-    ],
-    diffs: [
-      { idx: 0, prop: 'text', val: '🐡' }, // tropical fish → blowfish
-      { idx: 1, prop: 'x', val: 50 }, // fish moved
-      { idx: 2, prop: 'hidden', val: true }, // coral missing
-      { idx: 4, prop: 'hidden', val: true }, // starfish missing
-      { idx: 7, prop: 'x', val: 70 }, // jellyfish moved
-    ]
-  },
-  // ---- LEVEL 10: Space — 6 differences (hardest!) ----
-  {
-    name: 'Space', bgClass: 'std-scene-underwater',
-    elements: [
-      { type: 'rocket', x: 15, y: 25, w: 22, h: 28, text: '🚀', css: 'font-size:2rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'planet1', x: 65, y: 20, w: 28, h: 28, css: 'background:#FF7043;border-radius:50%;border:3px solid #BF360C;' },
-      { type: 'planet2', x: 40, y: 60, w: 22, h: 22, css: 'background:#42A5F5;border-radius:50%;border:3px solid #1565C0;' },
-      { type: 'star1', x: 30, y: 10, w: 14, h: 14, text: '⭐', css: 'font-size:1rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'star2', x: 80, y: 55, w: 14, h: 14, text: '⭐', css: 'font-size:1rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'star3', x: 55, y: 8, w: 12, h: 12, text: '✨', css: 'font-size:0.9rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'moon', x: 78, y: 75, w: 20, h: 20, text: '🌙', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'alien', x: 10, y: 70, w: 20, h: 20, text: '👽', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'ufo', x: 45, y: 35, w: 22, h: 18, text: '🛸', css: 'font-size:1.5rem;display:flex;align-items:center;justify-content:center;' },
-      { type: 'comet', x: 5, y: 5, w: 16, h: 16, text: '☄️', css: 'font-size:1.2rem;display:flex;align-items:center;justify-content:center;' },
-    ],
-    diffs: [
-      { idx: 1, prop: 'css', val: 'background:#66BB6A;border-radius:50%;border:3px solid #2E7D32;' }, // orange planet → green
-      { idx: 2, prop: 'x', val: 50 }, // blue planet moved
-      { idx: 3, prop: 'hidden', val: true }, // star1 missing
-      { idx: 7, prop: 'hidden', val: true }, // alien missing
-      { idx: 8, prop: 'text', val: '🛰️' }, // ufo → satellite
-      { idx: 9, prop: 'x', val: 85 }, // comet moved
-    ]
-  },
+// ============ FIND THAT NUMBER ============
+const FTN_LEVELS = [
+  { count: 7, max: 20 }, { count: 10, max: 20 },
+  { count: 14, max: 40 }, { count: 18, max: 40 },
+  { count: 24, max: 60 }, { count: 30, max: 60 },
+  { count: 38, max: 80 }, { count: 48, max: 80 },
+  { count: 60, max: 100 }, { count: 75, max: 100 }
 ];
-let stdLevel = 0, stdFound = 0, stdFoundSet = new Set();
+let ftnLevel = 0, ftnScore = 0, ftnTarget = 0, ftnAnswered = false;
 
-function startSpotDiff() {
-  stdLevel = 0; stdFound = 0; stdFoundSet = new Set();
-  renderSTDScene();
+function numberToWords(n) {
+  if (n === 0) return 'zero';
+  const ones = ['','one','two','three','four','five','six','seven','eight','nine',
+    'ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  const tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  if (n < 20) return ones[n];
+  if (n < 100) return tens[Math.floor(n/10)] + (n%10 ? ' ' + ones[n%10] : '');
+  return 'one hundred';
 }
 
-function renderSTDScene() {
-  if (stdLevel >= stdScenes.length) {
-    celebrate('Eagle Eyes!\nAll 10 levels complete!', 3);
+function startFindNumber() {
+  ftnLevel = 0; ftnScore = 0;
+  document.getElementById('ftn-score').textContent = '0';
+  document.getElementById('ftn-level').textContent = '1';
+  renderFTNLevel();
+}
+
+function renderFTNLevel() {
+  if (ftnLevel >= FTN_LEVELS.length) {
+    const stars = ftnScore >= 10 ? 3 : ftnScore >= 7 ? 2 : 1;
+    celebrate('Find That Number!\nScore: ' + ftnScore + '/10', stars);
     return;
   }
-  stdFound = 0; stdFoundSet = new Set();
-  const scene = stdScenes[stdLevel];
-  document.getElementById('std-level').textContent = stdLevel + 1;
-  document.getElementById('std-total').textContent = scene.diffs.length;
-  document.getElementById('std-found').textContent = '0';
-  document.getElementById('std-feedback').textContent = '';
-  const pair = document.getElementById('std-pair');
-  pair.innerHTML = '';
-  // Left scene (original)
-  const leftDiv = document.createElement('div');
-  leftDiv.className = `std-scene std-scene-left ${scene.bgClass}`;
-  leftDiv.innerHTML = '<div class="std-label">Original</div>';
-  scene.elements.forEach(el => {
-    const d = document.createElement('div');
-    d.className = 'std-el';
-    d.style.cssText = `left:${el.x}%;top:${el.y}%;width:${el.w}%;height:${el.h}%;${el.css||''}`;
-    if (el.text) d.textContent = el.text;
-    leftDiv.appendChild(d);
+  ftnAnswered = false;
+  const lv = FTN_LEVELS[ftnLevel];
+  document.getElementById('ftn-level').textContent = ftnLevel + 1;
+  document.getElementById('ftn-feedback').textContent = '';
+
+  // Generate unique random numbers
+  const nums = new Set();
+  while (nums.size < lv.count) nums.add(Math.floor(Math.random() * (lv.max + 1)));
+  const arr = [...nums];
+  ftnTarget = arr[Math.floor(Math.random() * arr.length)];
+
+  const prompt = document.getElementById('ftn-prompt');
+  prompt.textContent = 'Find the number ' + ftnTarget + '!';
+  speakQuick('Find the number ' + numberToWords(ftnTarget));
+
+  // Render grid — use cell-based layout to prevent overlap
+  const grid = document.getElementById('ftn-grid');
+  grid.innerHTML = '';
+  const cols = Math.ceil(Math.sqrt(lv.count * 1.5));
+  const rows = Math.ceil(lv.count / cols);
+  grid.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+
+  // Shuffle positions
+  const cells = [];
+  for (let i = 0; i < cols * rows; i++) cells.push(i);
+  for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [cells[i],cells[j]] = [cells[j],cells[i]]; }
+
+  // Font size decreases as count grows
+  const fs = lv.count <= 10 ? '1.8rem' : lv.count <= 20 ? '1.4rem' : lv.count <= 40 ? '1.1rem' : '0.9rem';
+
+  arr.forEach((num, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'ftn-num';
+    btn.textContent = num;
+    btn.style.fontSize = fs;
+    btn.style.order = cells[i];
+    btn.onclick = () => pickFTN(num, btn);
+    grid.appendChild(btn);
   });
-  pair.appendChild(leftDiv);
-  // Right scene (with differences)
-  const rightDiv = document.createElement('div');
-  rightDiv.className = `std-scene std-scene-right ${scene.bgClass}`;
-  rightDiv.innerHTML = '<div class="std-label">Find differences!</div>';
-  scene.elements.forEach((el, i) => {
-    const diff = scene.diffs.find(d => d.idx === i);
-    const d = document.createElement('div');
-    d.className = 'std-el';
-    let elData = { ...el };
-    if (diff && !diff.hidden) {
-      if (diff.prop === 'css') elData.css = diff.val;
-      if (diff.prop === 'x') elData.x = diff.val;
-      if (diff.prop === 'text') elData.text = diff.val;
-    }
-    if (diff && diff.prop === 'hidden' && diff.val) {
-      // Hidden element — skip rendering
-      return;
-    }
-    d.style.cssText = `left:${elData.x}%;top:${elData.y}%;width:${elData.w}%;height:${elData.h}%;${elData.css||''}`;
-    if (elData.text) d.textContent = elData.text;
-    d.dataset.idx = i;
-    rightDiv.appendChild(d);
-  });
-  // Click handler for right scene
-  rightDiv.onclick = (e) => {
-    const target = e.target.closest('.std-el');
-    if (!target) {
-      // Check if clicking where a hidden element should be
-      const rect = rightDiv.getBoundingClientRect();
-      const clickX = ((e.clientX - rect.left) / rect.width) * 100;
-      const clickY = ((e.clientY - rect.top) / rect.height) * 100;
-      // Check hidden diffs
-      scene.diffs.forEach((diff, di) => {
-        if (diff.prop === 'hidden' && diff.val && !stdFoundSet.has(di)) {
-          const origEl = scene.elements[diff.idx];
-          if (Math.abs(clickX - origEl.x - origEl.w/2) < origEl.w && Math.abs(clickY - origEl.y - origEl.h/2) < origEl.h) {
-            markSTDFound(di, e.clientX - rect.left, e.clientY - rect.top, rightDiv);
-          }
-        }
-      });
-      return;
-    }
-    const idx = parseInt(target.dataset.idx);
-    const diffIdx = scene.diffs.findIndex(d => d.idx === idx);
-    if (diffIdx >= 0 && !stdFoundSet.has(diffIdx)) {
-      const rect = rightDiv.getBoundingClientRect();
-      markSTDFound(diffIdx, e.clientX - rect.left, e.clientY - rect.top, rightDiv);
-    }
-  };
-  pair.appendChild(rightDiv);
 }
 
-function markSTDFound(diffIdx, x, y, container) {
-  stdFoundSet.add(diffIdx);
-  stdFound++;
-  document.getElementById('std-found').textContent = stdFound;
-  SFX.brainCorrect();
-  // Add marker
-  const marker = document.createElement('div');
-  marker.className = 'std-found-marker';
-  marker.style.left = x + 'px';
-  marker.style.top = y + 'px';
-  marker.textContent = '✅';
-  container.appendChild(marker);
-  const scene = stdScenes[stdLevel];
-  if (stdFound >= scene.diffs.length) {
-    SFX.brainLevelUp();
-    document.getElementById('std-feedback').textContent = '🎉 All found!';
-    stdLevel++;
-    setTimeout(renderSTDScene, 2000);
-  }
-}
-
-// ============ BRAIN GYM: MAZE ADVENTURE ============
-let mazeGrid = null, mazeRows = 0, mazeCols = 0, mazePlayerPos = null;
-let mazeStarsCollected = 0, mazeMoves = 0, mazeStarPositions = [], mazeEndPos = null;
-let mazeLevel = 0, mazeKeyHandler = null;
-const mazeLevels = [
-  // Easy start — tiny mazes for little ones
-  { rows: 5, cols: 5, cellSize: 48, starCount: 1 },
-  { rows: 5, cols: 7, cellSize: 44, starCount: 1 },
-  { rows: 7, cols: 7, cellSize: 40, starCount: 2 },
-  // Medium — getting bigger
-  { rows: 7, cols: 9, cellSize: 36, starCount: 2 },
-  { rows: 9, cols: 9, cellSize: 32, starCount: 3 },
-  { rows: 9, cols: 11, cellSize: 28, starCount: 3 },
-  // Hard — big mazes!
-  { rows: 11, cols: 11, cellSize: 26, starCount: 3 },
-  { rows: 13, cols: 13, cellSize: 22, starCount: 4 },
-  { rows: 13, cols: 15, cellSize: 20, starCount: 4 },
-  { rows: 15, cols: 15, cellSize: 18, starCount: 5 },
-];
-
-function generateMaze(rows, cols) {
-  // Create grid: all walls
-  const grid = [];
-  for (let r = 0; r < rows; r++) {
-    grid[r] = [];
-    for (let c = 0; c < cols; c++) {
-      grid[r][c] = 1; // wall
-    }
-  }
-  // Carve passages using recursive backtracker (on odd cells)
-  function carve(r, c) {
-    grid[r][c] = 0;
-    const dirs = [[0,2],[2,0],[0,-2],[-2,0]].sort(() => Math.random() - 0.5);
-    for (const [dr, dc] of dirs) {
-      const nr = r + dr, nc = c + dc;
-      if (nr > 0 && nr < rows && nc > 0 && nc < cols && grid[nr][nc] === 1) {
-        grid[r + dr/2][c + dc/2] = 0; // carve wall between
-        carve(nr, nc);
-      }
-    }
-  }
-  carve(1, 1);
-  return grid;
-}
-
-function startMaze() {
-  mazeLevel = 0;
-  renderMazeLevel();
-}
-
-function renderMazeLevel() {
-  if (mazeLevel >= mazeLevels.length) {
-    celebrate('Maze Master!\nAll 10 mazes completed!', 3);
-    stopMazeKeys();
-    return;
-  }
-  const lvl = mazeLevels[mazeLevel];
-  mazeRows = lvl.rows; mazeCols = lvl.cols;
-  mazeGrid = generateMaze(mazeRows, mazeCols);
-  mazePlayerPos = { r: 1, c: 1 };
-  mazeEndPos = { r: mazeRows - 2, c: mazeCols - 2 };
-  mazeGrid[mazeEndPos.r][mazeEndPos.c] = 0; // ensure end is open
-  mazeStarsCollected = 0; mazeMoves = 0;
-  document.getElementById('maze-stars').textContent = '0';
-  document.getElementById('maze-moves').textContent = '0';
-  document.getElementById('maze-feedback').textContent = `Maze ${mazeLevel + 1} of ${mazeLevels.length}`;
-  // Place stars along the solution path so player collects them before reaching the flag
-  mazeStarPositions = [];
-  // BFS to find solution path from start to end
-  const solQueue = [{ r: 1, c: 1, path: [] }];
-  const solVisited = new Set();
-  solVisited.add('1,1');
-  let solutionPath = [];
-  while (solQueue.length > 0) {
-    const cur = solQueue.shift();
-    if (cur.r === mazeEndPos.r && cur.c === mazeEndPos.c) {
-      solutionPath = cur.path;
-      break;
-    }
-    for (const [dr, dc] of [[0,1],[1,0],[0,-1],[-1,0]]) {
-      const nr = cur.r + dr, nc = cur.c + dc;
-      const key = nr + ',' + nc;
-      if (nr >= 0 && nr < mazeRows && nc >= 0 && nc < mazeCols && mazeGrid[nr][nc] === 0 && !solVisited.has(key)) {
-        solVisited.add(key);
-        solQueue.push({ r: nr, c: nc, path: [...cur.path, { r: nr, c: nc }] });
-      }
-    }
-  }
-  // Remove start and end from path, then spread stars evenly along it
-  const starCandidates = solutionPath.filter(p => !(p.r === mazeEndPos.r && p.c === mazeEndPos.c));
-  if (starCandidates.length > 0 && lvl.starCount > 0) {
-    const count = Math.min(lvl.starCount, starCandidates.length);
-    const spacing = Math.floor(starCandidates.length / (count + 1));
-    for (let i = 0; i < count; i++) {
-      mazeStarPositions.push(starCandidates[spacing * (i + 1)]);
-    }
-  }
-  renderMazeGrid();
-  setupMazeKeys();
-}
-
-function renderMazeGrid() {
-  const container = document.getElementById('maze-container');
-  const lvl = mazeLevels[mazeLevel];
-  const sz = lvl.cellSize;
-  container.innerHTML = '';
-  const grid = document.createElement('div');
-  grid.className = 'maze-grid';
-  grid.style.gridTemplate = `repeat(${mazeRows}, ${sz}px) / repeat(${mazeCols}, ${sz}px)`;
-  for (let r = 0; r < mazeRows; r++) {
-    for (let c = 0; c < mazeCols; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'maze-cell';
-      cell.style.width = sz + 'px';
-      cell.style.height = sz + 'px';
-      if (mazeGrid[r][c] === 1) {
-        cell.classList.add('maze-wall');
-      } else {
-        cell.classList.add('maze-path');
-        if (r === 1 && c === 1) cell.classList.add('maze-start');
-        if (r === mazeEndPos.r && c === mazeEndPos.c) cell.classList.add('maze-end');
-      }
-      // Player
-      if (r === mazePlayerPos.r && c === mazePlayerPos.c) {
-        const player = document.createElement('div');
-        player.className = 'maze-player';
-        cell.appendChild(player);
-      }
-      // Star
-      if (mazeStarPositions.some(s => s.r === r && s.c === c)) {
-        const star = document.createElement('span');
-        star.className = 'maze-star';
-        star.textContent = '⭐';
-        star.dataset.r = r;
-        star.dataset.c = c;
-        cell.appendChild(star);
-      }
-      // End flag
-      if (r === mazeEndPos.r && c === mazeEndPos.c && !(r === mazePlayerPos.r && c === mazePlayerPos.c)) {
-        const flag = document.createElement('span');
-        flag.className = 'maze-exit';
-        flag.textContent = '🏁';
-        cell.appendChild(flag);
-      }
-      cell.dataset.r = r;
-      cell.dataset.c = c;
-      grid.appendChild(cell);
-    }
-  }
-  container.appendChild(grid);
-}
-
-function setupMazeKeys() {
-  stopMazeKeys();
-  mazeKeyHandler = (e) => {
-    const screen = document.querySelector('.screen.active');
-    if (!screen || screen.id !== 'brain-maze-screen') return;
-    const dirMap = { ArrowUp: [-1,0], ArrowDown: [1,0], ArrowLeft: [0,-1], ArrowRight: [0,1] };
-    const dir = dirMap[e.key];
-    if (!dir) return;
-    e.preventDefault();
-    e.stopPropagation();
-    moveMazePlayer(dir[0], dir[1]);
-  };
-  document.addEventListener('keydown', mazeKeyHandler, true);
-}
-
-function stopMazeKeys() {
-  if (mazeKeyHandler) {
-    document.removeEventListener('keydown', mazeKeyHandler, true);
-    mazeKeyHandler = null;
-  }
-}
-
-function moveMazePlayer(dr, dc) {
-  const nr = mazePlayerPos.r + dr, nc = mazePlayerPos.c + dc;
-  if (nr < 0 || nr >= mazeRows || nc < 0 || nc >= mazeCols) return;
-  if (mazeGrid[nr][nc] === 1) return;
-  mazePlayerPos = { r: nr, c: nc };
-  mazeMoves++;
-  document.getElementById('maze-moves').textContent = mazeMoves;
-  // Check star collection
-  const starIdx = mazeStarPositions.findIndex(s => s.r === nr && s.c === nc);
-  if (starIdx >= 0) {
-    mazeStarPositions.splice(starIdx, 1);
-    mazeStarsCollected++;
-    document.getElementById('maze-stars').textContent = mazeStarsCollected;
+function pickFTN(num, btn) {
+  if (ftnAnswered) return;
+  if (num === ftnTarget) {
+    ftnAnswered = true;
+    ftnScore++;
+    document.getElementById('ftn-score').textContent = ftnScore;
+    btn.classList.add('ftn-correct');
     SFX.brainCorrect();
+    document.getElementById('ftn-feedback').innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Great job!</span>';
+    speakQuick('Great job!');
+    ftnLevel++;
+    setTimeout(renderFTNLevel, 1500);
+  } else {
+    btn.classList.add('ftn-wrong');
+    SFX.brainWrong();
+    setTimeout(() => btn.classList.remove('ftn-wrong'), 600);
   }
-  renderMazeGrid();
-  // Check if reached end
-  if (nr === mazeEndPos.r && nc === mazeEndPos.c) {
-    stopMazeKeys();
-    const stars = 1 + mazeStarsCollected;
-    SFX.brainLevelUp();
-    document.getElementById('maze-feedback').textContent = `🎉 Maze ${mazeLevel + 1} complete! +${stars} ⭐`;
-    addStars(stars);
-    mazeLevel++;
-    setTimeout(() => {
-      renderMazeLevel();
-    }, 2000);
+}
+
+// ============ LET'S READ ============
+const READ_WORDS = [
+  { word: 'cat', color: '#FF6D00' }, { word: 'dog', color: '#8D6E63' },
+  { word: 'sun', color: '#FFD600' }, { word: 'hat', color: '#E91E63' },
+  { word: 'cup', color: '#42A5F5' }, { word: 'bus', color: '#FFC107' },
+  { word: 'bed', color: '#7E57C2' }, { word: 'egg', color: '#FFEE58' },
+  { word: 'cow', color: '#6D4C41' }, { word: 'bee', color: '#FFD600' },
+  { word: 'bat', color: '#546E7A' }, { word: 'fan', color: '#26A69A' },
+  { word: 'bag', color: '#FF7043' }, { word: 'bug', color: '#66BB6A' },
+  { word: 'run', color: '#42A5F5' }, { word: 'box', color: '#8D6E63' },
+  { word: 'mum', color: '#EC407A' }, { word: 'dad', color: '#5C6BC0' },
+  { word: 'nut', color: '#A1887F' }, { word: 'rat', color: '#78909C' }
+];
+
+const READ_ILLUST = {
+  cat: '<div class="ri-cat"><div class="ri-cat-head"></div><div class="ri-cat-ear ri-cat-ear-l"></div><div class="ri-cat-ear ri-cat-ear-r"></div><div class="ri-cat-eye ri-cat-eye-l"></div><div class="ri-cat-eye ri-cat-eye-r"></div><div class="ri-cat-nose"></div><div class="ri-cat-mouth"></div></div>',
+  dog: '<div class="ri-dog"><div class="ri-dog-head"></div><div class="ri-dog-ear ri-dog-ear-l"></div><div class="ri-dog-ear ri-dog-ear-r"></div><div class="ri-dog-eye ri-dog-eye-l"></div><div class="ri-dog-eye ri-dog-eye-r"></div><div class="ri-dog-nose"></div><div class="ri-dog-tongue"></div></div>',
+  sun: '<div class="ri-sun"><div class="ri-sun-body"></div><div class="ri-sun-ray ri-r1"></div><div class="ri-sun-ray ri-r2"></div><div class="ri-sun-ray ri-r3"></div><div class="ri-sun-ray ri-r4"></div><div class="ri-sun-eye ri-sun-eye-l"></div><div class="ri-sun-eye ri-sun-eye-r"></div><div class="ri-sun-smile"></div></div>',
+  hat: '<div class="ri-hat"><div class="ri-hat-top"></div><div class="ri-hat-brim"></div><div class="ri-hat-band"></div></div>',
+  cup: '<div class="ri-cup"><div class="ri-cup-body"></div><div class="ri-cup-handle"></div><div class="ri-cup-steam ri-s1"></div><div class="ri-cup-steam ri-s2"></div></div>',
+  bus: '<div class="ri-bus"><div class="ri-bus-body"></div><div class="ri-bus-window ri-bw1"></div><div class="ri-bus-window ri-bw2"></div><div class="ri-bus-window ri-bw3"></div><div class="ri-bus-wheel ri-bus-wl"></div><div class="ri-bus-wheel ri-bus-wr"></div></div>',
+  bed: '<div class="ri-bed"><div class="ri-bed-frame"></div><div class="ri-bed-pillow"></div><div class="ri-bed-blanket"></div><div class="ri-bed-leg ri-bl1"></div><div class="ri-bed-leg ri-bl2"></div></div>',
+  egg: '<div class="ri-egg"><div class="ri-egg-body"></div><div class="ri-egg-yolk"></div></div>',
+  cow: '<div class="ri-cow"><div class="ri-cow-body"></div><div class="ri-cow-head"></div><div class="ri-cow-spot ri-cs1"></div><div class="ri-cow-spot ri-cs2"></div><div class="ri-cow-eye"></div></div>',
+  bee: '<div class="ri-bee"><div class="ri-bee-body"></div><div class="ri-bee-stripe ri-bs1"></div><div class="ri-bee-stripe ri-bs2"></div><div class="ri-bee-wing ri-bee-wl"></div><div class="ri-bee-wing ri-bee-wr"></div><div class="ri-bee-eye"></div></div>',
+  bat: '<div class="ri-bat"><div class="ri-bat-body"></div><div class="ri-bat-wing ri-bat-wl"></div><div class="ri-bat-wing ri-bat-wr"></div><div class="ri-bat-eye ri-bat-el"></div><div class="ri-bat-eye ri-bat-er"></div></div>',
+  fan: '<div class="ri-fan"><div class="ri-fan-center"></div><div class="ri-fan-blade ri-fb1"></div><div class="ri-fan-blade ri-fb2"></div><div class="ri-fan-blade ri-fb3"></div><div class="ri-fan-pole"></div></div>',
+  bag: '<div class="ri-bag"><div class="ri-bag-body"></div><div class="ri-bag-handle"></div></div>',
+  bug: '<div class="ri-bug"><div class="ri-bug-body"></div><div class="ri-bug-head"></div><div class="ri-bug-dot ri-bd1"></div><div class="ri-bug-dot ri-bd2"></div><div class="ri-bug-dot ri-bd3"></div><div class="ri-bug-ant ri-ba1"></div><div class="ri-bug-ant ri-ba2"></div></div>',
+  run: '<div class="ri-run"><div class="ri-run-head"></div><div class="ri-run-body"></div><div class="ri-run-arm"></div><div class="ri-run-leg1"></div><div class="ri-run-leg2"></div></div>',
+  box: '<div class="ri-box"><div class="ri-box-body"></div><div class="ri-box-lid"></div><div class="ri-box-flap"></div></div>',
+  mum: '<div class="ri-mum"><div class="ri-mum-head"></div><div class="ri-mum-hair"></div><div class="ri-mum-body"></div><div class="ri-mum-eye ri-me1"></div><div class="ri-mum-eye ri-me2"></div><div class="ri-mum-smile"></div></div>',
+  dad: '<div class="ri-dad"><div class="ri-dad-head"></div><div class="ri-dad-hair"></div><div class="ri-dad-body"></div><div class="ri-dad-eye ri-de1"></div><div class="ri-dad-eye ri-de2"></div><div class="ri-dad-smile"></div></div>',
+  nut: '<div class="ri-nut"><div class="ri-nut-body"></div><div class="ri-nut-cap"></div></div>',
+  rat: '<div class="ri-rat"><div class="ri-rat-body"></div><div class="ri-rat-head"></div><div class="ri-rat-ear"></div><div class="ri-rat-eye"></div><div class="ri-rat-tail"></div></div>'
+};
+
+let readIndex = 0, readTimers = [];
+
+function clearReadTimers() {
+  readTimers.forEach(t => clearTimeout(t));
+  readTimers = [];
+}
+
+function startLetsRead() {
+  readIndex = 0;
+  clearReadTimers();
+  document.getElementById('read-total').textContent = READ_WORDS.length;
+  renderReadWord();
+}
+
+function renderReadWord() {
+  clearReadTimers();
+  if (readIndex >= READ_WORDS.length) {
+    celebrate("Amazing reading!\nYou read " + READ_WORDS.length + " words!", 3);
+    return;
   }
+  const w = READ_WORDS[readIndex];
+  document.getElementById('read-progress').textContent = readIndex + 1;
+  document.getElementById('read-next-btn').style.display = 'none';
+  document.getElementById('read-feedback').textContent = '';
+
+  // Phase 1: Show illustration + word
+  const illust = document.getElementById('read-illust');
+  illust.innerHTML = READ_ILLUST[w.word] || '';
+  illust.style.display = 'flex';
+
+  const wordEl = document.getElementById('read-word');
+  wordEl.innerHTML = '';
+  w.word.split('').forEach(ch => {
+    const span = document.createElement('span');
+    span.className = 'read-letter';
+    span.textContent = ch;
+    wordEl.appendChild(span);
+  });
+
+  speakQuick('Can you read this word?');
+
+  // Phase 2: After 15s, hide illustration
+  readTimers.push(setTimeout(() => {
+    illust.style.display = 'none';
+    speakQuick(w.word);
+
+    // Phase 3: After 3s, sound out letters
+    readTimers.push(setTimeout(() => {
+      const letters = wordEl.querySelectorAll('.read-letter');
+      letters.forEach((el, i) => {
+        readTimers.push(setTimeout(() => {
+          letters.forEach(l => l.classList.remove('active'));
+          el.classList.add('active');
+          speakQuick(el.textContent);
+        }, i * 1000));
+      });
+      // After all letters, say the full word and show Next button
+      readTimers.push(setTimeout(() => {
+        letters.forEach(l => l.classList.add('active'));
+        speakQuick(w.word);
+        document.getElementById('read-next-btn').style.display = 'inline-block';
+      }, letters.length * 1000));
+    }, 3000));
+  }, 15000));
+}
+
+function nextReadWord() {
+  readIndex++;
+  renderReadWord();
+}
+
+// ============ POINT TO IT ============
+const PTI_ROUNDS = [
+  { animal: 'dog', action: 'sleeping', settings: ['car', 'house', 'tree'], correct: 0 },
+  { animal: 'cat', action: 'sitting', settings: ['window', 'chair', 'table'], correct: 0 },
+  { animal: 'bird', action: 'flying', settings: ['mountain', 'house', 'tree'], correct: 0 },
+  { animal: 'rabbit', action: 'hiding', settings: ['bush', 'rock', 'fence'], correct: 0 },
+  { animal: 'dog', action: 'playing', settings: ['beach', 'park', 'garden'], correct: 0 },
+  { animal: 'cat', action: 'eating', settings: ['kitchen', 'bedroom', 'garden'], correct: 0 },
+  { animal: 'bird', action: 'sitting', settings: ['fence', 'roof', 'tree'], correct: 0 },
+  { animal: 'rabbit', action: 'jumping', settings: ['field', 'pond', 'road'], correct: 0 },
+  { animal: 'dog', action: 'running', settings: ['park', 'street', 'yard'], correct: 0 },
+  { animal: 'cat', action: 'sleeping', settings: ['bed', 'couch', 'rug'], correct: 0 }
+];
+let ptiIndex = 0, ptiScore = 0, ptiAnswered = false;
+
+function buildPTIAnimal(animal, action) {
+  const poses = {
+    sleeping: 'pti-pose-sleep', sitting: 'pti-pose-sit', flying: 'pti-pose-fly',
+    hiding: 'pti-pose-hide', playing: 'pti-pose-play', eating: 'pti-pose-eat',
+    jumping: 'pti-pose-jump', running: 'pti-pose-run'
+  };
+  return '<div class="pti-animal pti-' + animal + ' ' + (poses[action]||'') + '"></div>';
+}
+
+function buildPTIObject(setting) {
+  const objs = {
+    car: '<div class="pti-obj pti-car"><div class="pti-car-body"></div><div class="pti-car-top"></div><div class="pti-car-whl pti-cwl"></div><div class="pti-car-whl pti-cwr"></div></div>',
+    house: '<div class="pti-obj pti-house"><div class="pti-house-body"></div><div class="pti-house-roof"></div><div class="pti-house-door"></div></div>',
+    tree: '<div class="pti-obj pti-tree"><div class="pti-tree-trunk"></div><div class="pti-tree-crown"></div></div>',
+    window: '<div class="pti-obj pti-window"><div class="pti-win-frame"></div><div class="pti-win-pane"></div></div>',
+    chair: '<div class="pti-obj pti-chair"><div class="pti-chair-seat"></div><div class="pti-chair-back"></div></div>',
+    table: '<div class="pti-obj pti-table"><div class="pti-tbl-top"></div><div class="pti-tbl-leg"></div></div>',
+    mountain: '<div class="pti-obj pti-mountain"></div>',
+    bush: '<div class="pti-obj pti-bush"></div>',
+    rock: '<div class="pti-obj pti-rock"></div>',
+    fence: '<div class="pti-obj pti-fence"><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-rail"></div></div>',
+    beach: '<div class="pti-obj pti-beach"><div class="pti-beach-wave"></div></div>',
+    park: '<div class="pti-obj pti-park"><div class="pti-park-tree"></div><div class="pti-park-bench"></div></div>',
+    garden: '<div class="pti-obj pti-garden"><div class="pti-gdn-flower"></div><div class="pti-gdn-flower pti-gf2"></div></div>',
+    kitchen: '<div class="pti-obj pti-kitchen"><div class="pti-kitch-counter"></div><div class="pti-kitch-cab"></div></div>',
+    bedroom: '<div class="pti-obj pti-bedroom"><div class="pti-bdrm-bed"></div></div>',
+    roof: '<div class="pti-obj pti-roof"></div>',
+    field: '<div class="pti-obj pti-field"><div class="pti-fld-grass"></div></div>',
+    pond: '<div class="pti-obj pti-pond"></div>',
+    road: '<div class="pti-obj pti-road"><div class="pti-road-line"></div></div>',
+    street: '<div class="pti-obj pti-street"><div class="pti-street-lamp"></div></div>',
+    yard: '<div class="pti-obj pti-yard"><div class="pti-yard-fence"></div></div>',
+    bed: '<div class="pti-obj pti-bed-obj"><div class="pti-bedobj-frame"></div><div class="pti-bedobj-pillow"></div></div>',
+    couch: '<div class="pti-obj pti-couch"><div class="pti-couch-seat"></div><div class="pti-couch-arm"></div></div>',
+    rug: '<div class="pti-obj pti-rug"></div>'
+  };
+  return objs[setting] || '<div class="pti-obj"></div>';
+}
+
+function buildPTIScene(animal, action, setting) {
+  return '<div class="pti-sky"></div><div class="pti-ground"></div>' +
+    buildPTIObject(setting) + buildPTIAnimal(animal, action);
+}
+
+function startPointToIt() {
+  ptiIndex = 0; ptiScore = 0; ptiAnswered = false;
+  document.getElementById('pti-score').textContent = '0';
+  document.getElementById('pti-round').textContent = '1';
+  renderPTIRound();
+}
+
+function renderPTIRound() {
+  if (ptiIndex >= PTI_ROUNDS.length) {
+    const stars = ptiScore >= 9 ? 3 : ptiScore >= 6 ? 2 : 1;
+    celebrate('Point to It!\nScore: ' + ptiScore + '/10', stars);
+    return;
+  }
+  ptiAnswered = false;
+  const r = PTI_ROUNDS[ptiIndex];
+  document.getElementById('pti-round').textContent = ptiIndex + 1;
+  document.getElementById('pti-feedback').textContent = '';
+
+  // Shuffle card order, track which index is correct (index 0 in settings is always the correct one)
+  const indices = [0, 1, 2];
+  for (let i = 2; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [indices[i],indices[j]] = [indices[j],indices[i]]; }
+  const correctCard = indices.indexOf(0);
+
+  const prompt = 'Find the ' + r.animal + ' ' + r.action + ' next to the ' + r.settings[0] + '!';
+  document.getElementById('pti-prompt').textContent = prompt;
+  speakQuick(prompt);
+
+  const container = document.getElementById('pti-cards');
+  container.innerHTML = '';
+  indices.forEach((si, ci) => {
+    const card = document.createElement('div');
+    card.className = 'pti-card';
+    card.innerHTML = buildPTIScene(r.animal, r.action, r.settings[si]);
+    card.onclick = () => pickPTI(ci, correctCard, container);
+    container.appendChild(card);
+  });
+}
+
+function pickPTI(picked, correctCard, container) {
+  if (ptiAnswered) return;
+  ptiAnswered = true;
+  const cards = container.querySelectorAll('.pti-card');
+  cards.forEach(c => c.style.pointerEvents = 'none');
+  cards[correctCard].classList.add('pti-correct');
+
+  if (picked === correctCard) {
+    ptiScore++;
+    document.getElementById('pti-score').textContent = ptiScore;
+    SFX.brainCorrect();
+    document.getElementById('pti-feedback').innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Well done!</span>';
+    speakQuick('Well done!');
+  } else {
+    cards[picked].classList.add('pti-wrong');
+    SFX.brainWrong();
+    document.getElementById('pti-feedback').innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; Not quite! Look at the green one.</span>';
+    speakQuick('Not quite. Look at the green one!');
+  }
+  ptiIndex++;
+  setTimeout(renderPTIRound, 2500);
 }
 
 // ============ KEYBOARD NAV (TV Remote) ============
@@ -4226,134 +4199,25 @@ document.addEventListener('keydown', e => {
 
 // ---- Exercise Data ----
 const EXERCISES = [
-  { name: 'Star Jumps', emoji: '⭐', reps: 10, duration: 15, desc: 'Jump up and spread your arms and legs like a star!' },
-  { name: 'High Knees', emoji: '🦵', reps: 10, duration: 15, desc: 'Run on the spot lifting your knees high!' },
-  { name: 'Arm Circles', emoji: '💪', reps: 10, duration: 12, desc: 'Stretch your arms out and spin them in circles!' },
-  { name: 'Frog Jumps', emoji: '🐸', reps: 8, duration: 15, desc: 'Squat low like a frog and jump forward!' },
-  { name: 'Bunny Hops', emoji: '🐰', reps: 10, duration: 12, desc: 'Hop on both feet like a little bunny!' },
-  { name: 'Toe Touches', emoji: '🦶', reps: 8, duration: 12, desc: 'Bend down and try to touch your toes!' },
-  { name: 'Run On The Spot', emoji: '🏃', reps: null, duration: 15, desc: 'Run as fast as you can without moving!' },
-  { name: 'Bear Walk', emoji: '🐻', reps: null, duration: 15, desc: 'Walk on your hands and feet like a bear!' },
-  { name: 'Crab Walk', emoji: '🦀', reps: null, duration: 15, desc: 'Sit down, put hands behind, lift up and walk!' },
-  { name: 'Windmills', emoji: '🌀', reps: 8, duration: 12, desc: 'Stand wide and touch opposite toes!' },
-  { name: 'Sit and Reach', emoji: '🧘', reps: null, duration: 12, desc: 'Sit on the floor and reach for your toes!' },
-  { name: 'Mountain Climbers', emoji: '⛰️', reps: 10, duration: 15, desc: 'In push-up position, run your knees to your chest!' },
-  { name: 'Superhero Pose', emoji: '🦸', reps: null, duration: 10, desc: 'Stand tall with fists on hips like a superhero!' },
-  { name: 'Tuck Jumps', emoji: '🚀', reps: 6, duration: 12, desc: 'Jump up and pull your knees to your chest!' },
-  { name: 'Side Shuffles', emoji: '↔️', reps: null, duration: 15, desc: 'Shuffle side to side like a basketball player!' },
-  { name: 'Burpees', emoji: '💥', reps: 5, duration: 15, desc: 'Jump up, drop down, push up, jump back!' },
-  { name: 'Squat Jumps', emoji: '🦘', reps: 8, duration: 15, desc: 'Squat down low and jump up high!' },
-  { name: 'Penguin Walk', emoji: '🐧', reps: null, duration: 12, desc: 'Walk with feet together swaying side to side!' },
+  { name: 'Star Jumps', emoji: '\u2605', reps: 10, duration: 15, desc: 'Jump up and spread your arms and legs like a star!' },
+  { name: 'High Knees', emoji: '\u25B2', reps: 10, duration: 15, desc: 'Run on the spot lifting your knees high!' },
+  { name: 'Arm Circles', emoji: '\u25CB', reps: 10, duration: 12, desc: 'Stretch your arms out and spin them in circles!' },
+  { name: 'Frog Jumps', emoji: '\u25C6', reps: 8, duration: 15, desc: 'Squat low like a frog and jump forward!' },
+  { name: 'Bunny Hops', emoji: '\u25C6', reps: 10, duration: 12, desc: 'Hop on both feet like a little bunny!' },
+  { name: 'Toe Touches', emoji: '\u25BC', reps: 8, duration: 12, desc: 'Bend down and try to touch your toes!' },
+  { name: 'Run On The Spot', emoji: '\u25B6', reps: null, duration: 15, desc: 'Run as fast as you can without moving!' },
+  { name: 'Bear Walk', emoji: '\u25CF', reps: null, duration: 15, desc: 'Walk on your hands and feet like a bear!' },
+  { name: 'Crab Walk', emoji: '\u25CF', reps: null, duration: 15, desc: 'Sit down, put hands behind, lift up and walk!' },
+  { name: 'Windmills', emoji: '\u25CB', reps: 8, duration: 12, desc: 'Stand wide and touch opposite toes!' },
+  { name: 'Sit and Reach', emoji: '\u25C7', reps: null, duration: 12, desc: 'Sit on the floor and reach for your toes!' },
+  { name: 'Mountain Climbers', emoji: '\u25B2', reps: 10, duration: 15, desc: 'In push-up position, run your knees to your chest!' },
+  { name: 'Superhero Pose', emoji: '\u2605', reps: null, duration: 10, desc: 'Stand tall with fists on hips like a superhero!' },
+  { name: 'Tuck Jumps', emoji: '\u25B2', reps: 6, duration: 12, desc: 'Jump up and pull your knees to your chest!' },
+  { name: 'Side Shuffles', emoji: '\u25C0\u25B6', reps: null, duration: 15, desc: 'Shuffle side to side like a basketball player!' },
+  { name: 'Burpees', emoji: '\u2605', reps: 5, duration: 15, desc: 'Jump up, drop down, push up, jump back!' },
+  { name: 'Squat Jumps', emoji: '\u25B2', reps: 8, duration: 15, desc: 'Squat down low and jump up high!' },
+  { name: 'Penguin Walk', emoji: '\u25CF', reps: null, duration: 12, desc: 'Walk with feet together swaying side to side!' },
 ];
-
-const SIMON_COMMANDS = [
-  { text: 'JUMP!', emoji: '🦘' },
-  { text: 'CLAP YOUR HANDS!', emoji: '👏' },
-  { text: 'TOUCH YOUR TOES!', emoji: '🦶' },
-  { text: 'SPIN AROUND!', emoji: '🌀' },
-  { text: 'FLAP YOUR ARMS!', emoji: '🐔' },
-  { text: 'WIGGLE YOUR FINGERS!', emoji: '🖐️' },
-  { text: 'STOMP YOUR FEET!', emoji: '🦶' },
-  { text: 'HOP ON ONE FOOT!', emoji: '🦩' },
-  { text: 'TOUCH YOUR NOSE!', emoji: '👃' },
-  { text: 'WAVE HELLO!', emoji: '👋' },
-  { text: 'DO A STAR JUMP!', emoji: '⭐' },
-  { text: 'MARCH ON THE SPOT!', emoji: '🚶' },
-  { text: 'PAT YOUR HEAD!', emoji: '🤚' },
-  { text: 'RUB YOUR TUMMY!', emoji: '😋' },
-  { text: 'REACH FOR THE SKY!', emoji: '🙌' },
-  { text: 'DO A SQUAT!', emoji: '🏋️' },
-  { text: 'SHAKE YOUR BODY!', emoji: '🤸' },
-  { text: 'BALANCE ON ONE FOOT!', emoji: '🧘' },
-  { text: 'DO TINY JUMPS!', emoji: '🐇' },
-  { text: 'RUN ON THE SPOT!', emoji: '🏃' },
-  { text: 'BLOW A KISS!', emoji: '😘' },
-  { text: 'GIVE YOURSELF A HUG!', emoji: '🤗' },
-  { text: 'MAKE A FUNNY FACE!', emoji: '🤪' },
-  { text: 'PRETEND TO FLY!', emoji: '✈️' },
-  { text: 'ROAR LIKE A LION!', emoji: '🦁' },
-];
-
-const ANIMAL_MOVES = [
-  { animal: '🐻', name: 'Bear', move: 'Walk on hands and feet!', duration: 12 },
-  { animal: '🐸', name: 'Frog', move: 'Squat low and leap forward!', duration: 10 },
-  { animal: '🦀', name: 'Crab', move: 'Walk sideways on hands and feet!', duration: 12 },
-  { animal: '🐍', name: 'Snake', move: 'Slither on the floor!', duration: 10 },
-  { animal: '🐧', name: 'Penguin', move: 'Waddle with arms at your sides!', duration: 10 },
-  { animal: '🦁', name: 'Lion', move: 'Crawl and ROAR loudly!', duration: 10 },
-  { animal: '🐇', name: 'Bunny', move: 'Hop hop hop on both feet!', duration: 10 },
-  { animal: '🦅', name: 'Eagle', move: 'Spread your wings and soar!', duration: 12 },
-  { animal: '🐒', name: 'Monkey', move: 'Swing your arms and jump!', duration: 10 },
-  { animal: '🦩', name: 'Flamingo', move: 'Stand on one leg!', duration: 12 },
-  { animal: '🐊', name: 'Crocodile', move: 'Snap your jaws and army crawl!', duration: 10 },
-  { animal: '🐎', name: 'Horse', move: 'Gallop around the room!', duration: 12 },
-];
-
-const BODY_CHALLENGES = [
-  { q: 'Which body part helps you breathe?', a: ['Lungs', 'Knees', 'Ears', 'Elbows'], correct: 0,
-    move: 'Take 5 deep breaths! Breathe in... and out!', emoji: '🫁', duration: 15 },
-  { q: 'What makes your body move?', a: ['Muscles', 'Hair', 'Teeth', 'Eyebrows'], correct: 0,
-    move: 'Flex your muscles! Do 5 arm curls!', emoji: '💪', duration: 12 },
-  { q: 'What pumps blood around your body?', a: ['Heart', 'Stomach', 'Brain', 'Foot'], correct: 0,
-    move: 'Get your heart pumping! 10 jumping jacks!', emoji: '❤️', duration: 15 },
-  { q: 'How many bones do kids have? About...', a: ['300', '10', '50', '1000'], correct: 0,
-    move: 'Stretch those bones! Touch your toes 5 times!', emoji: '🦴', duration: 12 },
-  { q: 'What part of your body controls everything?', a: ['Brain', 'Tummy', 'Toes', 'Nose'], correct: 0,
-    move: 'Brain break! Do 5 star jumps!', emoji: '🧠', duration: 12 },
-  { q: 'What do your legs help you do?', a: ['Walk and run', 'Smell', 'Hear', 'Taste'], correct: 0,
-    move: 'Use those legs! Run on the spot for 10 seconds!', emoji: '🦵', duration: 12 },
-  { q: 'Where does food go after you swallow?', a: ['Stomach', 'Lungs', 'Brain', 'Feet'], correct: 0,
-    move: 'Rub your tummy in circles 5 times!', emoji: '😋', duration: 10 },
-  { q: 'What helps you balance?', a: ['Inner ear', 'Elbows', 'Hair', 'Fingers'], correct: 0,
-    move: 'Test your balance! Stand on one foot for 10 seconds!', emoji: '🧘', duration: 12 },
-  { q: 'What protects your brain?', a: ['Skull', 'Skin', 'Hair', 'Hat'], correct: 0,
-    move: 'Pat your head gently 10 times!', emoji: '💀', duration: 10 },
-  { q: 'What do your hands help you do?', a: ['Grab things', 'Hear', 'Smell', 'Walk'], correct: 0,
-    move: 'Clap your hands 15 times as fast as you can!', emoji: '👏', duration: 10 },
-];
-
-const EXERCISE_VIDEOS = {
-  warmup: {
-    label: 'Warm Up', emoji: '🔥',
-    videos: [
-      { id: 'd3LPrhI0v-w', title: 'PE with Joe - Kids Workout' },
-      { id: 'L_A_HjHZxfI', title: '5 Min Kids Warm Up' },
-      { id: 'lJSgQBBnKtc', title: 'Kids Morning Warm Up' },
-    ]
-  },
-  cardio: {
-    label: 'Cardio', emoji: '❤️',
-    videos: [
-      { id: 'pnKCGY9ZocA', title: 'Kids Cardio Workout' },
-      { id: 'ymigWt5TOV8', title: 'Jump and Move!' },
-      { id: 'oe_HDjEm1oc', title: 'Active Kids Workout' },
-    ]
-  },
-  dance: {
-    label: 'Dance', emoji: '💃',
-    videos: [
-      { id: 'FP0wgVhUC9w', title: 'Kidz Bop Dance Along' },
-      { id: 'gCzgc_RelBA', title: 'Freeze Dance for Kids' },
-      { id: '388Q44ReOWE', title: 'Fun Dance Workout' },
-    ]
-  },
-  superhero: {
-    label: 'Superhero', emoji: '🦸',
-    videos: [
-      { id: '5if4cjO5oxE', title: 'Superhero Workout for Kids' },
-      { id: 'dNL6RwymoNg', title: 'Avengers Kids Workout' },
-      { id: 'Iri_MGeJmvU', title: 'Spider-Man Workout' },
-    ]
-  },
-  cooldown: {
-    label: 'Cool Down', emoji: '🌙',
-    videos: [
-      { id: '4ZpkRAcgws4', title: 'Kids Stretch & Cool Down' },
-      { id: 'cZeM18fPbSk', title: 'Calm Down Stretches' },
-      { id: 'YNGUiSgz03Q', title: 'Bedtime Stretches' },
-    ]
-  }
-};
 
 // ---- Exercise Timer ----
 let etTimers = [];
@@ -4437,7 +4301,7 @@ function showETRest(ms) {
     etTimers.push(setTimeout(finishExerciseTimer, 1500));
     return;
   }
-  document.getElementById('et-emoji').textContent = '😤';
+  document.getElementById('et-emoji').textContent = '●';
   document.getElementById('et-name').textContent = 'Rest!';
   document.getElementById('et-desc').textContent = 'Catch your breath...';
   document.getElementById('et-timer-bar').style.width = '100%';
@@ -4464,186 +4328,6 @@ function finishExerciseTimer() {
   celebrate(`Workout Complete!\n${etExercises.length} exercises done!`, stars);
   document.getElementById('et-level-select').classList.remove('hidden');
   document.getElementById('et-workout').classList.add('hidden');
-}
-
-// ---- YouTube Videos ----
-let currentVideoCategory = 'warmup';
-
-function initExerciseVideos() {
-  currentVideoCategory = 'warmup';
-  renderVideoCategoryTabs();
-  renderVideoGrid('warmup');
-}
-
-function renderVideoCategoryTabs() {
-  const c = document.getElementById('video-cat-tabs');
-  c.innerHTML = '';
-  Object.entries(EXERCISE_VIDEOS).forEach(([key, cat]) => {
-    const btn = document.createElement('button');
-    btn.className = 'video-cat-tab' + (key === currentVideoCategory ? ' active' : '');
-    btn.textContent = cat.emoji + ' ' + cat.label;
-    btn.onclick = () => {
-      currentVideoCategory = key;
-      document.querySelectorAll('.video-cat-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      renderVideoGrid(key);
-    };
-    c.appendChild(btn);
-  });
-}
-
-function renderVideoGrid(category) {
-  const grid = document.getElementById('video-grid');
-  grid.innerHTML = '';
-  document.getElementById('video-player-area').classList.add('hidden');
-  grid.classList.remove('hidden');
-  EXERCISE_VIDEOS[category].videos.forEach(v => {
-    const card = document.createElement('button');
-    card.className = 'video-thumb-card';
-    card.innerHTML = `
-      <div class="video-thumb" style="background-image:url('https://img.youtube.com/vi/${v.id}/hqdefault.jpg')">
-        <div class="video-play-overlay">&#9654;</div>
-      </div>
-      <div class="video-thumb-title">${v.title}</div>
-    `;
-    card.onclick = () => openVideoPlayer(v.id);
-    grid.appendChild(card);
-  });
-}
-
-function openVideoPlayer(videoId) {
-  document.getElementById('video-grid').classList.add('hidden');
-  const area = document.getElementById('video-player-area');
-  area.classList.remove('hidden');
-  document.getElementById('video-player-container').innerHTML =
-    `<iframe class="yt-iframe" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-}
-
-function closeVideoPlayer() {
-  document.getElementById('video-player-container').innerHTML = '';
-  document.getElementById('video-player-area').classList.add('hidden');
-  document.getElementById('video-grid').classList.remove('hidden');
-}
-
-function cleanupVideoIframes() {
-  document.getElementById('video-player-container').innerHTML = '';
-}
-
-// ---- Simon Says ----
-let simonTimers = [], simonRound = 0, simonScore = 0, simonLives = 3;
-let simonIsSimon = true, simonAnswered = false;
-
-function clearSimonTimer() {
-  simonTimers.forEach(t => clearTimeout(t));
-  simonTimers = [];
-}
-
-function initSimonSays() {
-  clearSimonTimer();
-  simonRound = 0; simonScore = 0; simonLives = 3; simonAnswered = false;
-  document.getElementById('ss-ex-score').textContent = '0';
-  document.getElementById('ss-ex-lives').textContent = '3';
-  document.getElementById('simon-speech').textContent = 'Get ready!';
-  document.getElementById('simon-speech').className = 'simon-speech';
-  document.getElementById('simon-go-btn').disabled = true;
-  document.getElementById('simon-stay-btn').disabled = true;
-  document.getElementById('simon-feedback').textContent = '';
-  document.getElementById('simon-timer-bar').style.width = '100%';
-  simonTimers.push(setTimeout(nextSimonRound, 1500));
-}
-
-function nextSimonRound() {
-  if (simonLives <= 0 || simonRound >= 15) { finishSimon(); return; }
-  simonRound++;
-  simonAnswered = false;
-  const cmd = SIMON_COMMANDS[Math.floor(Math.random() * SIMON_COMMANDS.length)];
-  // Trick ratio: 25% early, 50% late
-  const trickChance = simonRound <= 5 ? 0.25 : simonRound <= 10 ? 0.35 : 0.5;
-  simonIsSimon = Math.random() > trickChance;
-  const speech = document.getElementById('simon-speech');
-  const charEl = document.getElementById('simon-char');
-  charEl.textContent = cmd.emoji;
-  if (simonIsSimon) {
-    speech.textContent = `Simon says... ${cmd.text}`;
-    speech.className = 'simon-speech simon-safe';
-    playTTS(`Simon says... ${cmd.text}`);
-  } else {
-    speech.textContent = cmd.text;
-    speech.className = 'simon-speech simon-trick';
-    playTTS(cmd.text);
-  }
-  document.getElementById('simon-go-btn').disabled = false;
-  document.getElementById('simon-stay-btn').disabled = false;
-  document.getElementById('simon-feedback').textContent = '';
-  // Timer
-  const timeLimit = simonRound <= 5 ? 5000 : simonRound <= 10 ? 4000 : 3000;
-  const start = Date.now();
-  const bar = document.getElementById('simon-timer-bar');
-  function tick() {
-    if (simonAnswered) return;
-    const elapsed = Date.now() - start;
-    const pct = Math.max(0, 1 - elapsed / timeLimit);
-    bar.style.width = (pct * 100) + '%';
-    if (elapsed < timeLimit) {
-      simonTimers.push(setTimeout(tick, 50));
-    } else {
-      // Time's up
-      simonAnswered = true;
-      document.getElementById('simon-go-btn').disabled = true;
-      document.getElementById('simon-stay-btn').disabled = true;
-      if (simonIsSimon) {
-        // Should have moved — lose life
-        simonLives--;
-        document.getElementById('ss-ex-lives').textContent = simonLives;
-        document.getElementById('simon-feedback').textContent = '⏰ Too slow! Simon said to move!';
-        SFX.exerciseWrong();
-      } else {
-        // Correctly didn't move
-        simonScore += 15;
-        document.getElementById('ss-ex-score').textContent = simonScore;
-        document.getElementById('simon-feedback').textContent = '✅ Smart! Simon didn\'t say that!';
-        SFX.exerciseCorrect();
-      }
-      simonTimers.push(setTimeout(nextSimonRound, 2000));
-    }
-  }
-  tick();
-}
-
-function simonAction(didMove) {
-  if (simonAnswered) return;
-  simonAnswered = true;
-  document.getElementById('simon-go-btn').disabled = true;
-  document.getElementById('simon-stay-btn').disabled = true;
-  const fb = document.getElementById('simon-feedback');
-  if (didMove && simonIsSimon) {
-    const bonus = 10;
-    simonScore += bonus;
-    fb.textContent = `✅ Great! +${bonus} points!`;
-    SFX.exerciseCorrect();
-  } else if (!didMove && !simonIsSimon) {
-    simonScore += 15;
-    fb.textContent = '✅ Smart! Simon didn\'t say! +15 points!';
-    SFX.exerciseCorrect();
-  } else if (didMove && !simonIsSimon) {
-    simonLives--;
-    document.getElementById('ss-ex-lives').textContent = simonLives;
-    fb.textContent = '❌ Oops! Simon didn\'t say that!';
-    SFX.exerciseWrong();
-  } else {
-    simonLives--;
-    document.getElementById('ss-ex-lives').textContent = simonLives;
-    fb.textContent = '❌ Simon said to move!';
-    SFX.exerciseWrong();
-  }
-  document.getElementById('ss-ex-score').textContent = simonScore;
-  simonTimers.push(setTimeout(nextSimonRound, 2000));
-}
-
-function finishSimon() {
-  clearSimonTimer();
-  const stars = simonScore >= 150 ? 3 : simonScore >= 100 ? 2 : 1;
-  celebrate(`Simon Says Done!\nScore: ${simonScore}`, stars);
 }
 
 // ---- Daily Workout ----
@@ -4690,9 +4374,9 @@ function initDailyWorkout() {
   // Streak display
   const streakEl = document.getElementById('daily-streak');
   if (streak.streak > 0) {
-    streakEl.innerHTML = `🔥 ${streak.streak} Day Streak! (Best: ${streak.bestStreak})`;
+    streakEl.innerHTML = `★ ${streak.streak} Day Streak! (Best: ${streak.bestStreak})`;
   } else {
-    streakEl.innerHTML = '💪 Start your streak today!';
+    streakEl.innerHTML = '★ Start your streak today!';
   }
 
   // Calendar (last 7 days)
@@ -4706,7 +4390,7 @@ function initDailyWorkout() {
     const done = streak.completedDates.includes(ds);
     const div = document.createElement('div');
     div.className = 'daily-day' + (isToday && done ? ' today completed' : isToday ? ' today' : done ? ' completed' : ' missed');
-    div.innerHTML = `<span>${days[d.getDay()]}</span><span>${done ? '✅' : isToday ? '🎯' : '·'}</span>`;
+    div.innerHTML = `<span>${days[d.getDay()]}</span><span>${done ? '<b style="color:#4CAF50">&#10003;</b>' : isToday ? '<b style="color:#FF9800">&#9679;</b>' : '&middot;'}</span>`;
     cal.appendChild(div);
   }
 
@@ -4720,11 +4404,11 @@ function initDailyWorkout() {
 
   const btn = document.getElementById('daily-start-btn');
   if (isCompletedToday) {
-    btn.textContent = '✅ Already Done Today!';
+    btn.textContent = 'Already Done Today!';
     btn.disabled = true;
     btn.style.opacity = '0.5';
   } else {
-    btn.textContent = '💪 Start Today\'s Workout!';
+    btn.textContent = '★ Start Today\'s Workout!';
     btn.disabled = false;
     btn.style.opacity = '1';
   }
@@ -4788,7 +4472,7 @@ function startDailyActive(ex) {
       if (etIndex >= etExercises.length) {
         etTimers.push(setTimeout(finishDailyWorkout, 1500));
       } else {
-        document.getElementById('daily-emoji').textContent = '😤';
+        document.getElementById('daily-emoji').textContent = '●';
         document.getElementById('daily-name').textContent = 'Rest!';
         document.getElementById('daily-desc').textContent = 'Catch your breath...';
         document.getElementById('daily-status').textContent = `Next: ${etExercises[etIndex].emoji} ${etExercises[etIndex].name}`;
@@ -4827,137 +4511,10 @@ function finishDailyWorkout() {
     if (streak.completedDates.length > 30) streak.completedDates = streak.completedDates.slice(-30);
     saveStreakData(streak);
   }
-  celebrate(`Daily Workout Done!\n🔥 ${streak.streak} Day Streak!`, 3);
+  celebrate(`Daily Workout Done!\n★ ${streak.streak} Day Streak!`, 3);
   document.getElementById('daily-intro').classList.remove('hidden');
   document.getElementById('daily-active').classList.add('hidden');
   initDailyWorkout(); // refresh UI
-}
-
-// ---- Freeze Dance ----
-let freezeTimers = [], freezeRound = 0, freezeScore = 0;
-let freezeIsDancing = false, freezeAnswered = false;
-let freezeMusicOsc = null, freezeMusicGain = null;
-
-function clearFreezeTimer() {
-  freezeTimers.forEach(t => clearTimeout(t));
-  freezeTimers = [];
-  stopFreezeMusic();
-}
-
-function startFreezeMusic() {
-  try {
-    const ctx = getAudioCtx();
-    freezeMusicGain = ctx.createGain();
-    freezeMusicGain.gain.value = 0.08;
-    freezeMusicGain.connect(ctx.destination);
-    freezeMusicOsc = ctx.createOscillator();
-    freezeMusicOsc.type = 'sawtooth';
-    // Simple bouncy melody - change frequency periodically
-    freezeMusicOsc.frequency.value = 440;
-    freezeMusicOsc.connect(freezeMusicGain);
-    freezeMusicOsc.start();
-    // Modulate frequency for a fun beat
-    let noteIdx = 0;
-    const notes = [440, 523, 587, 523, 440, 392, 440, 523];
-    function changeNote() {
-      if (!freezeMusicOsc) return;
-      freezeMusicOsc.frequency.value = notes[noteIdx % notes.length];
-      noteIdx++;
-      freezeTimers.push(setTimeout(changeNote, 250));
-    }
-    changeNote();
-  } catch(e) {}
-}
-
-function stopFreezeMusic() {
-  try {
-    if (freezeMusicOsc) { freezeMusicOsc.stop(); freezeMusicOsc = null; }
-    if (freezeMusicGain) { freezeMusicGain.disconnect(); freezeMusicGain = null; }
-  } catch(e) {}
-  freezeMusicOsc = null; freezeMusicGain = null;
-}
-
-function initFreezeDance() {
-  clearFreezeTimer();
-  freezeRound = 0; freezeScore = 0; freezeAnswered = false;
-  document.getElementById('freeze-score').textContent = '0';
-  document.getElementById('freeze-round').textContent = '0';
-  document.getElementById('freeze-char').className = 'freeze-character';
-  document.getElementById('freeze-char').textContent = '💃';
-  document.getElementById('freeze-status').textContent = 'Get Ready to Dance!';
-  document.getElementById('freeze-status').className = 'freeze-status';
-  document.getElementById('freeze-btn').disabled = true;
-  document.getElementById('freeze-feedback').textContent = '';
-  freezeTimers.push(setTimeout(nextFreezeRound, 1500));
-}
-
-function nextFreezeRound() {
-  if (freezeRound >= 10) { finishFreeze(); return; }
-  freezeRound++;
-  freezeAnswered = false;
-  document.getElementById('freeze-round').textContent = freezeRound;
-  document.getElementById('freeze-feedback').textContent = '';
-
-  // Dance phase
-  freezeIsDancing = true;
-  document.getElementById('freeze-char').className = 'freeze-character dancing';
-  document.getElementById('freeze-char').textContent = ['💃', '🕺', '🤸', '🏃', '🧑‍🎤'][Math.floor(Math.random() * 5)];
-  document.getElementById('freeze-status').textContent = '🎵 DANCE! 🎵';
-  document.getElementById('freeze-status').className = 'freeze-status dance';
-  document.getElementById('freeze-btn').disabled = false;
-  document.getElementById('freeze-btn').textContent = '❄️ FREEZE!';
-  startFreezeMusic();
-
-  // Random dance duration 4-10 seconds
-  const danceTime = 4000 + Math.random() * 6000;
-  freezeTimers.push(setTimeout(() => {
-    // FREEZE!
-    stopFreezeMusic();
-    freezeIsDancing = false;
-    document.getElementById('freeze-char').className = 'freeze-character frozen';
-    document.getElementById('freeze-char').textContent = '🧊';
-    document.getElementById('freeze-status').textContent = '🧊 FREEZE! 🧊';
-    document.getElementById('freeze-status').className = 'freeze-status freeze';
-    SFX.whistle();
-
-    // Give 3 seconds to respond
-    freezeTimers.push(setTimeout(() => {
-      if (!freezeAnswered) {
-        // Missed the freeze
-        document.getElementById('freeze-feedback').textContent = '⏰ Too slow to freeze!';
-        SFX.exerciseWrong();
-        freezeTimers.push(setTimeout(nextFreezeRound, 1500));
-      }
-    }, 3000));
-  }, danceTime));
-}
-
-function freezeAction() {
-  if (freezeAnswered) return;
-  freezeAnswered = true;
-  document.getElementById('freeze-btn').disabled = true;
-  const fb = document.getElementById('freeze-feedback');
-
-  if (!freezeIsDancing) {
-    // Correctly froze!
-    freezeScore += 10;
-    fb.textContent = '✅ Perfect freeze! +10!';
-    SFX.exerciseCorrect();
-  } else {
-    // Tapped while dancing — wrong!
-    freezeScore = Math.max(0, freezeScore - 5);
-    fb.textContent = '❌ Keep dancing! Music is still playing! -5';
-    SFX.exerciseWrong();
-  }
-  document.getElementById('freeze-score').textContent = freezeScore;
-  stopFreezeMusic();
-  freezeTimers.push(setTimeout(nextFreezeRound, 1500));
-}
-
-function finishFreeze() {
-  clearFreezeTimer();
-  const stars = freezeScore >= 80 ? 3 : freezeScore >= 50 ? 2 : 1;
-  celebrate(`Freeze Dance Done!\nScore: ${freezeScore}`, stars);
 }
 
 // ---- Animal Moves ----
@@ -5059,11 +4616,11 @@ function bcAnswer(correct) {
   if (correct) {
     bcScore++;
     document.getElementById('bc-score').textContent = bcScore;
-    fb.textContent = '✅ Correct! Now do the exercise!';
+    fb.innerHTML = '<span style="color:#4CAF50;font-weight:bold">&#10003; Correct! Now do the exercise!</span>';
     SFX.exerciseCorrect();
     bcTimers.push(setTimeout(() => startBCExercise(), 1500));
   } else {
-    fb.textContent = '❌ Not quite! The answer is ' + bcData[bcIndex].a[bcData[bcIndex].correct];
+    fb.innerHTML = '<span style="color:#EF5350;font-weight:bold">&#10007; Not quite! The answer is ' + bcData[bcIndex].a[bcData[bcIndex].correct] + '</span>';
     SFX.exerciseWrong();
     bcIndex++;
     bcTimers.push(setTimeout(renderBCQuestion, 2000));
@@ -5090,7 +4647,7 @@ function startBCExercise() {
       bcTimers.push(setTimeout(tick, 50));
     } else {
       SFX.exerciseCorrect();
-      document.getElementById('bc-feedback').textContent = '💪 Awesome!';
+      document.getElementById('bc-feedback').textContent = '★ Awesome!';
       bcIndex++;
       bcTimers.push(setTimeout(renderBCQuestion, 1500));
     }

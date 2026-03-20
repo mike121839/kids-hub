@@ -54,6 +54,14 @@ class TTSHandler(SimpleHTTPRequestHandler):
         else:
             super().do_GET()
 
+    def end_headers(self):
+        # Prevent browser caching for HTML/JS/CSS so updates show immediately
+        if self.path.endswith(('.html', '.js', '.css')) or self.path == '/':
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        super().end_headers()
+
     def log_message(self, format, *args):
         if '/tts' in str(args[0]) or '404' in str(args[1:]) or '500' in str(args[1:]):
             super().log_message(format, *args)

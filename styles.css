@@ -4,6 +4,18 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Safe icon system — cross-browser, no emoji */
+.si { display: inline-block; width: 1.2em; height: 1.2em; border-radius: 50%; vertical-align: middle; flex-shrink: 0; }
+.si-sq { border-radius: 3px; }
+.si-t { font-style: normal; font-weight: bold; vertical-align: middle; }
+.si-n { display: inline-flex; width: 1.4em; height: 1.4em; border-radius: 50%; background: #E3F2FD; border: 2px solid #42A5F5; color: #1565C0; font-weight: bold; font-style: normal; align-items: center; justify-content: center; font-size: 0.7em; vertical-align: middle; }
+.si-l { display: inline-flex; width: 1.3em; height: 1.3em; border-radius: 50%; color: #fff; font-weight: bold; font-style: normal; font-size: 0.65em; align-items: center; justify-content: center; vertical-align: middle; }
+.si-w { display: inline-block; padding: 2px 8px; border-radius: 14px; color: #fff; font-weight: bold; font-size: 0.45em; white-space: nowrap; vertical-align: middle; }
+.si-face { display: inline-flex; width: 1.3em; height: 1.3em; border-radius: 50%; background: #FFD600; color: #333; font-weight: bold; font-style: normal; font-size: 0.5em; align-items: center; justify-content: center; vertical-align: middle; }
+.si-sm { width: 0.8em; height: 0.8em; }
+.si-md { width: 1em; height: 1em; }
+.si-lg { width: 1.4em; height: 1.4em; }
+
 :root {
   --faith-gold: #D4A843;
   --faith-burgundy: #8B2252;
@@ -2686,61 +2698,7 @@ button:active { transform: scale(0.95) !important; }
 .rd-choice.rd-correct { border-color: #4CAF50; background: rgba(76,175,80,0.25); }
 .rd-choice.rd-wrong { border-color: #EF5350; background: rgba(239,83,80,0.2); }
 
-/* --- Spot the Difference --- */
-.std-layout { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.std-instruction { font-size: 1.1rem; opacity: 0.7; }
-.std-pair { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-.std-scene {
-  width: 280px; height: 220px; border-radius: 16px; position: relative; overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.15);
-}
-.std-scene-left { border-color: rgba(0,191,165,0.4); }
-.std-scene-right { border-color: rgba(255,109,0,0.4); cursor: pointer; }
-.std-label {
-  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-  background: rgba(0,0,0,0.5); padding: 4px 12px; border-radius: 8px;
-  font-size: 0.8rem; font-weight: 700; z-index: 5;
-}
-.std-el { position: absolute; transition: all 0.3s; }
-.std-found-marker {
-  position: absolute; width: 36px; height: 36px; border: 3px solid #4CAF50;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; animation: stdFoundPop 0.4s ease; z-index: 10;
-  background: rgba(76,175,80,0.3); transform: translate(-50%,-50%);
-}
-@keyframes stdFoundPop { from { transform: translate(-50%,-50%) scale(0); } to { transform: translate(-50%,-50%) scale(1); } }
-.std-scene-sky { background: linear-gradient(180deg, #64B5F6, #90CAF9); }
-.std-scene-kitchen { background: linear-gradient(180deg, #FFF8E1, #FFE0B2); }
-.std-scene-underwater { background: linear-gradient(180deg, #0277BD, #01579B); }
 
-/* --- Maze Adventure --- */
-.maze-layout { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.maze-info { font-size: 1rem; opacity: 0.7; }
-.maze-container { position: relative; }
-.maze-grid {
-  display: grid; gap: 0; border-radius: 8px; overflow: hidden;
-  border: 3px solid rgba(255,109,0,0.3);
-}
-.maze-cell {
-  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
-}
-.maze-wall { background: #37474F; }
-.maze-path { background: #E0F7FA; }
-.maze-start { background: #C8E6C9; }
-.maze-end { background: #FFECB3; }
-.maze-player {
-  width: 70%; height: 70%; border-radius: 50%;
-  background: radial-gradient(circle, var(--brain-orange), #E65100);
-  box-shadow: 0 0 8px rgba(255,109,0,0.5);
-  animation: mazePlayerBounce 0.8s ease-in-out infinite;
-}
-@keyframes mazePlayerBounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-.maze-star { animation: mazeStar 1s ease-in-out infinite; }
-@keyframes mazeStar { 0%,100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.2) rotate(20deg); } }
-.maze-exit { animation: mazeExit 0.8s ease-in-out infinite; }
-@keyframes mazeExit { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-.maze-collected { animation: mazeCollect 0.3s ease forwards; }
-@keyframes mazeCollect { to { transform: scale(2); opacity: 0; } }
 
 /* ============================================
    EXERCISE SECTION
@@ -2765,59 +2723,7 @@ button:active { transform: scale(0.95) !important; }
 .et-levels { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
 .et-title { font-size: 2rem; font-weight: 800; color: var(--exercise-lime); text-align: center; margin-bottom: 10px; }
 
-/* Simon Says */
-.simon-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
-.simon-character { font-size: 5rem; animation: exerciseBounce 1s ease-in-out infinite; }
-.simon-speech {
-  font-size: 2rem; font-weight: 800; text-align: center; min-height: 80px;
-  display: flex; align-items: center; justify-content: center; padding: 15px;
-  background: rgba(33,150,243,0.15); border-radius: 20px; max-width: 500px; width: 90%;
-}
-.simon-speech.simon-trick { color: #FF5252; }
-.simon-speech.simon-safe { color: var(--exercise-lime); }
-.simon-timer-track { width: 80%; max-width: 400px; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
-.simon-timer-bar { height: 100%; background: var(--exercise-cyan); border-radius: 5px; transition: width 0.1s linear; }
-.simon-buttons { display: flex; gap: 20px; }
-.simon-btn {
-  font-size: 1.4rem; font-weight: 800; padding: 18px 35px; border-radius: 16px;
-  border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
-}
-.simon-go { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: #fff; box-shadow: 0 4px 20px rgba(76,175,80,0.3); }
-.simon-stay { background: linear-gradient(135deg, #F44336, #C62828); color: #fff; box-shadow: 0 4px 20px rgba(244,67,54,0.3); }
-.simon-btn:hover { transform: scale(1.05); }
-.simon-btn:disabled { opacity: 0.4; transform: none; cursor: default; }
-.simon-lives { font-size: 1.4rem; }
 
-/* Video Player */
-.exercise-video-layout { display: flex; flex-direction: column; gap: 0; }
-.video-category-tabs {
-  display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto;
-  -webkit-overflow-scrolling: touch; flex-shrink: 0;
-}
-.video-cat-tab {
-  padding: 10px 20px; border-radius: 20px; font-size: 1rem; font-weight: 600;
-  background: rgba(255,255,255,0.08); color: #fff; white-space: nowrap;
-  border: 2px solid transparent; cursor: pointer; transition: all 0.2s;
-}
-.video-cat-tab.active { background: var(--exercise-blue); border-color: var(--exercise-lime); }
-.video-grid { display: flex; flex-wrap: wrap; gap: 15px; padding: 15px; justify-content: center; overflow-y: auto; }
-.video-thumb-card {
-  width: 280px; border-radius: 16px; overflow: hidden; background: rgba(0,0,0,0.3);
-  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 2px solid transparent;
-}
-.video-thumb-card:hover { transform: scale(1.03); border-color: var(--exercise-blue); box-shadow: 0 4px 20px rgba(33,150,243,0.3); }
-.video-thumb {
-  width: 100%; height: 160px; background-size: cover; background-position: center;
-  position: relative;
-}
-.video-play-overlay {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.35); font-size: 3rem; color: #fff; transition: background 0.2s;
-}
-.video-thumb-card:hover .video-play-overlay { background: rgba(33,150,243,0.4); }
-.video-thumb-title { padding: 10px; font-size: 1rem; font-weight: 600; color: #fff; }
-.video-player-area { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
-.yt-iframe { width: 100%; aspect-ratio: 16/9; max-width: 800px; border-radius: 12px; border: none; }
 
 /* Daily Workout */
 .daily-streak {
@@ -2840,25 +2746,6 @@ button:active { transform: scale(0.95) !important; }
   font-size: 0.95rem; display: flex; align-items: center; gap: 6px;
 }
 
-/* Freeze Dance */
-.freeze-layout { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; }
-.freeze-character { font-size: 6rem; transition: all 0.3s; }
-.freeze-character.dancing { animation: freezeDance 0.4s ease-in-out infinite; }
-@keyframes freezeDance { 0%,100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(10deg) scale(1.1); } }
-.freeze-character.frozen { animation: none; filter: brightness(1.5); }
-.freeze-status {
-  font-size: 2.5rem; font-weight: 900; text-align: center;
-  padding: 15px 30px; border-radius: 20px; min-width: 300px;
-}
-.freeze-status.dance { background: rgba(33,150,243,0.2); color: var(--exercise-cyan); animation: freezeDance 0.5s ease-in-out infinite; }
-.freeze-status.freeze { background: rgba(174,234,0,0.2); color: var(--exercise-lime); }
-.freeze-btn {
-  font-size: 1.6rem; font-weight: 800; padding: 20px 50px; border-radius: 20px;
-  border: none; cursor: pointer; background: linear-gradient(135deg, #00BCD4, #0097A7);
-  color: #fff; box-shadow: 0 4px 20px rgba(0,188,212,0.3); transition: transform 0.15s;
-}
-.freeze-btn:hover { transform: scale(1.05); }
-.freeze-btn:disabled { opacity: 0.4; transform: none; cursor: default; }
 
 /* Animal Moves */
 .animal-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
@@ -2892,3 +2779,342 @@ button:active { transform: scale(0.95) !important; }
   .choices-grid { grid-template-columns: 1fr; }
   .plate-circle { width: 240px; height: 240px; }
 }
+
+/* ============ FIND THAT NUMBER ============ */
+.ftn-layout { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.ftn-prompt { font-size: 1.6rem; font-weight: bold; color: #FF6D00; text-align: center; min-height: 2.2em; }
+.ftn-grid { display: grid; gap: 8px; width: 100%; max-width: 600px; justify-items: center; align-items: center; padding: 10px; }
+.ftn-num { background: #fff; color: #1A0D00; border: 3px solid #FF6D00; border-radius: 12px; font-weight: 900; cursor: pointer; padding: 6px 10px; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, background 0.2s, border-color 0.2s; touch-action: manipulation; user-select: none; }
+.ftn-num:hover { transform: scale(1.1); }
+.ftn-num.ftn-correct { background: #A5D6A7; border-color: #4CAF50; animation: ftnFlash 0.5s; }
+.ftn-num.ftn-wrong { background: #EF9A9A; border-color: #EF5350; animation: ftnShake 0.4s; }
+@keyframes ftnFlash { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
+@keyframes ftnShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+/* ============ LET'S READ ============ */
+.read-layout { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-top: 10px; }
+.read-illust { width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; position: relative; }
+.read-word { font-size: 4rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; text-align: center; color: #fff; }
+.read-letter { display: inline-block; padding: 4px 8px; border-radius: 8px; transition: background 0.3s, color 0.3s, transform 0.3s; }
+.read-letter.active { background: #FF6D00; color: #fff; transform: scale(1.2); }
+.read-next-btn { background: #FF6D00; color: #fff; border: none; border-radius: 12px; padding: 14px 36px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin-top: 10px; touch-action: manipulation; }
+.read-next-btn:hover { background: #E65100; }
+
+/* Read illustrations — CSS art */
+.ri-cat,.ri-dog,.ri-sun,.ri-hat,.ri-cup,.ri-bus,.ri-bed,.ri-egg,.ri-cow,.ri-bee,.ri-bat,.ri-fan,.ri-bag,.ri-bug,.ri-run,.ri-box,.ri-mum,.ri-dad,.ri-nut,.ri-rat { position: relative; width: 160px; height: 160px; }
+
+/* Cat */
+.ri-cat-head { position:absolute; width:90px; height:80px; background:#FF6D00; border-radius:50%; top:50px; left:35px; }
+.ri-cat-ear.ri-cat-ear-l { position:absolute; width:0; height:0; border-left:18px solid transparent; border-right:18px solid transparent; border-bottom:30px solid #FF6D00; top:28px; left:32px; }
+.ri-cat-ear.ri-cat-ear-r { position:absolute; width:0; height:0; border-left:18px solid transparent; border-right:18px solid transparent; border-bottom:30px solid #FF6D00; top:28px; right:32px; }
+.ri-cat-eye { position:absolute; width:12px; height:14px; background:#333; border-radius:50%; top:72px; }
+.ri-cat-eye-l { left:52px; }
+.ri-cat-eye-r { right:52px; }
+.ri-cat-nose { position:absolute; width:10px; height:8px; background:#E64A19; border-radius:50%; top:88px; left:75px; }
+.ri-cat-mouth { position:absolute; width:20px; height:10px; border-bottom:3px solid #333; border-radius:0 0 50% 50%; top:94px; left:70px; }
+
+/* Dog */
+.ri-dog-head { position:absolute; width:100px; height:85px; background:#8D6E63; border-radius:50%; top:45px; left:30px; }
+.ri-dog-ear { position:absolute; width:30px; height:50px; background:#6D4C41; border-radius:0 0 50% 50%; top:55px; }
+.ri-dog-ear-l { left:18px; }
+.ri-dog-ear-r { right:18px; }
+.ri-dog-eye { position:absolute; width:14px; height:14px; background:#333; border-radius:50%; top:68px; }
+.ri-dog-eye-l { left:48px; }
+.ri-dog-eye-r { right:48px; }
+.ri-dog-nose { position:absolute; width:18px; height:14px; background:#333; border-radius:50%; top:85px; left:71px; }
+.ri-dog-tongue { position:absolute; width:14px; height:18px; background:#EF5350; border-radius:0 0 50% 50%; top:98px; left:73px; }
+
+/* Sun */
+.ri-sun-body { position:absolute; width:100px; height:100px; background:#FFD600; border-radius:50%; top:30px; left:30px; }
+.ri-sun-ray { position:absolute; width:8px; height:30px; background:#FFD600; left:76px; }
+.ri-r1 { top:2px; }
+.ri-r2 { top:128px; }
+.ri-r3 { top:55px; left:2px; width:30px; height:8px; }
+.ri-r4 { top:55px; right:2px; left:auto; width:30px; height:8px; }
+.ri-sun-eye { position:absolute; width:10px; height:12px; background:#333; border-radius:50%; top:60px; }
+.ri-sun-eye-l { left:56px; }
+.ri-sun-eye-r { right:56px; }
+.ri-sun-smile { position:absolute; width:30px; height:15px; border-bottom:3px solid #333; border-radius:0 0 50% 50%; top:78px; left:65px; }
+
+/* Hat */
+.ri-hat-top { position:absolute; width:70px; height:80px; background:#E91E63; border-radius:10px 10px 0 0; top:25px; left:45px; }
+.ri-hat-brim { position:absolute; width:120px; height:16px; background:#C2185B; border-radius:8px; top:105px; left:20px; }
+.ri-hat-band { position:absolute; width:70px; height:12px; background:#FFD600; top:93px; left:45px; }
+
+/* Cup */
+.ri-cup-body { position:absolute; width:70px; height:80px; background:#42A5F5; border-radius:0 0 15px 15px; top:50px; left:35px; }
+.ri-cup-handle { position:absolute; width:25px; height:35px; border:5px solid #42A5F5; border-radius:0 50% 50% 0; border-left:none; top:60px; left:105px; }
+.ri-cup-steam { position:absolute; width:6px; height:20px; background:rgba(255,255,255,0.5); border-radius:3px; animation:riSteam 1.5s infinite; }
+.ri-s1 { top:30px; left:55px; }
+.ri-s2 { top:25px; left:75px; animation-delay:0.5s; }
+@keyframes riSteam { 0%{opacity:0.8;transform:translateY(0)} 100%{opacity:0;transform:translateY(-15px)} }
+
+/* Bus */
+.ri-bus-body { position:absolute; width:130px; height:60px; background:#FFC107; border-radius:8px; top:55px; left:15px; }
+.ri-bus-window { position:absolute; width:28px; height:25px; background:#E3F2FD; border-radius:4px; top:60px; }
+.ri-bw1 { left:22px; }
+.ri-bw2 { left:56px; }
+.ri-bw3 { left:90px; }
+.ri-bus-wheel { position:absolute; width:24px; height:24px; background:#333; border-radius:50%; top:108px; }
+.ri-bus-wl { left:30px; }
+.ri-bus-wr { right:22px; }
+
+/* Bed */
+.ri-bed-frame { position:absolute; width:130px; height:50px; background:#7E57C2; border-radius:6px; top:80px; left:15px; }
+.ri-bed-pillow { position:absolute; width:35px; height:25px; background:#fff; border-radius:6px; top:72px; left:20px; }
+.ri-bed-blanket { position:absolute; width:90px; height:30px; background:#B39DDB; border-radius:0 0 6px 6px; top:80px; right:20px; }
+.ri-bed-leg { position:absolute; width:8px; height:15px; background:#5E35B1; top:130px; }
+.ri-bl1 { left:20px; }
+.ri-bl2 { right:20px; }
+
+/* Egg */
+.ri-egg-body { position:absolute; width:90px; height:110px; background:#FFEE58; border-radius:50% 50% 50% 50%/60% 60% 40% 40%; top:25px; left:35px; }
+.ri-egg-yolk { position:absolute; width:45px; height:45px; background:#FF8F00; border-radius:50%; top:65px; left:58px; }
+
+/* Cow */
+.ri-cow-body { position:absolute; width:110px; height:70px; background:#fff; border-radius:12px; top:55px; left:25px; border:3px solid #eee; }
+.ri-cow-head { position:absolute; width:50px; height:45px; background:#fff; border-radius:50%; top:45px; right:15px; border:3px solid #eee; }
+.ri-cow-spot { position:absolute; background:#333; border-radius:50%; }
+.ri-cs1 { width:25px; height:20px; top:65px; left:40px; }
+.ri-cs2 { width:18px; height:16px; top:80px; left:75px; }
+.ri-cow-eye { position:absolute; width:8px; height:8px; background:#333; border-radius:50%; top:58px; right:30px; }
+
+/* Bee */
+.ri-bee-body { position:absolute; width:80px; height:60px; background:#FFD600; border-radius:50%; top:55px; left:40px; }
+.ri-bee-stripe { position:absolute; width:80px; height:10px; background:#333; left:40px; }
+.ri-bs1 { top:70px; }
+.ri-bs2 { top:85px; }
+.ri-bee-wing { position:absolute; width:35px; height:25px; background:rgba(255,255,255,0.7); border-radius:50%; top:38px; }
+.ri-bee-wl { left:42px; transform:rotate(-20deg); }
+.ri-bee-wr { right:42px; transform:rotate(20deg); }
+.ri-bee-eye { position:absolute; width:8px; height:8px; background:#333; border-radius:50%; top:65px; right:48px; }
+
+/* Bat */
+.ri-bat-body { position:absolute; width:40px; height:50px; background:#546E7A; border-radius:50% 50% 40% 40%; top:55px; left:60px; }
+.ri-bat-wing { position:absolute; width:55px; height:35px; background:#37474F; top:55px; clip-path:polygon(50% 0,100% 100%,0 80%); }
+.ri-bat-wl { left:5px; }
+.ri-bat-wr { right:5px; clip-path:polygon(50% 0,0 100%,100% 80%); }
+.ri-bat-eye { position:absolute; width:6px; height:6px; background:#FFD600; border-radius:50%; top:68px; }
+.ri-bat-el { left:66px; }
+.ri-bat-er { right:66px; }
+
+/* Fan */
+.ri-fan-center { position:absolute; width:20px; height:20px; background:#333; border-radius:50%; top:55px; left:70px; }
+.ri-fan-blade { position:absolute; width:20px; height:50px; background:#26A69A; border-radius:50%; }
+.ri-fb1 { top:8px; left:70px; }
+.ri-fb2 { top:55px; left:42px; transform:rotate(60deg); }
+.ri-fb3 { top:55px; left:98px; transform:rotate(-60deg); }
+.ri-fan-pole { position:absolute; width:6px; height:40px; background:#666; top:100px; left:77px; }
+
+/* Bag */
+.ri-bag-body { position:absolute; width:90px; height:80px; background:#FF7043; border-radius:0 0 12px 12px; top:60px; left:35px; }
+.ri-bag-handle { position:absolute; width:50px; height:30px; border:6px solid #E64A19; border-radius:50% 50% 0 0; border-bottom:none; top:32px; left:55px; }
+
+/* Bug (ladybug) */
+.ri-bug-body { position:absolute; width:80px; height:70px; background:#EF5350; border-radius:50%; top:55px; left:40px; }
+.ri-bug-head { position:absolute; width:35px; height:30px; background:#333; border-radius:50%; top:48px; left:62px; }
+.ri-bug-dot { position:absolute; width:14px; height:14px; background:#333; border-radius:50%; }
+.ri-bd1 { top:65px; left:50px; }
+.ri-bd2 { top:80px; left:72px; }
+.ri-bd3 { top:65px; left:95px; }
+.ri-bug-ant { position:absolute; width:3px; height:15px; background:#333; top:35px; }
+.ri-ba1 { left:70px; transform:rotate(-20deg); }
+.ri-ba2 { left:82px; transform:rotate(20deg); }
+
+/* Run (stick figure) */
+.ri-run-head { position:absolute; width:30px; height:30px; background:#42A5F5; border-radius:50%; top:25px; left:65px; }
+.ri-run-body { position:absolute; width:8px; height:50px; background:#42A5F5; top:55px; left:76px; }
+.ri-run-arm { position:absolute; width:50px; height:6px; background:#42A5F5; border-radius:3px; top:65px; left:55px; transform:rotate(-20deg); }
+.ri-run-leg1 { position:absolute; width:6px; height:35px; background:#42A5F5; top:102px; left:68px; transform:rotate(20deg); }
+.ri-run-leg2 { position:absolute; width:6px; height:35px; background:#42A5F5; top:102px; left:84px; transform:rotate(-20deg); }
+
+/* Box */
+.ri-box-body { position:absolute; width:100px; height:70px; background:#8D6E63; border-radius:4px; top:65px; left:30px; }
+.ri-box-lid { position:absolute; width:110px; height:12px; background:#6D4C41; border-radius:4px; top:55px; left:25px; }
+.ri-box-flap { position:absolute; width:50px; height:20px; background:#795548; top:36px; left:55px; transform:rotate(-10deg); border-radius:2px; }
+
+/* Mum */
+.ri-mum-head { position:absolute; width:55px; height:55px; background:#FFCC80; border-radius:50%; top:25px; left:52px; }
+.ri-mum-hair { position:absolute; width:65px; height:35px; background:#5D4037; border-radius:50% 50% 0 0; top:15px; left:47px; }
+.ri-mum-body { position:absolute; width:60px; height:60px; background:#EC407A; border-radius:12px 12px 0 0; top:80px; left:50px; }
+.ri-mum-eye { position:absolute; width:6px; height:7px; background:#333; border-radius:50%; top:42px; }
+.ri-me1 { left:64px; }
+.ri-me2 { right:64px; }
+.ri-mum-smile { position:absolute; width:16px; height:8px; border-bottom:2px solid #333; border-radius:0 0 50% 50%; top:54px; left:72px; }
+
+/* Dad */
+.ri-dad-head { position:absolute; width:55px; height:55px; background:#FFCC80; border-radius:50%; top:25px; left:52px; }
+.ri-dad-hair { position:absolute; width:55px; height:20px; background:#333; border-radius:50% 50% 0 0; top:20px; left:52px; }
+.ri-dad-body { position:absolute; width:65px; height:60px; background:#5C6BC0; border-radius:12px 12px 0 0; top:80px; left:48px; }
+.ri-dad-eye { position:absolute; width:6px; height:7px; background:#333; border-radius:50%; top:42px; }
+.ri-de1 { left:64px; }
+.ri-de2 { right:64px; }
+.ri-dad-smile { position:absolute; width:16px; height:8px; border-bottom:2px solid #333; border-radius:0 0 50% 50%; top:54px; left:72px; }
+
+/* Nut */
+.ri-nut-body { position:absolute; width:70px; height:80px; background:#A1887F; border-radius:50% 50% 45% 45%; top:50px; left:45px; }
+.ri-nut-cap { position:absolute; width:75px; height:25px; background:#795548; border-radius:50%; top:42px; left:42px; }
+
+/* Rat */
+.ri-rat-body { position:absolute; width:80px; height:50px; background:#78909C; border-radius:50%; top:65px; left:30px; }
+.ri-rat-head { position:absolute; width:40px; height:35px; background:#78909C; border-radius:50%; top:60px; right:25px; }
+.ri-rat-ear { position:absolute; width:20px; height:20px; background:#B0BEC5; border-radius:50%; top:50px; right:28px; }
+.ri-rat-eye { position:absolute; width:6px; height:6px; background:#333; border-radius:50%; top:70px; right:35px; }
+.ri-rat-tail { position:absolute; width:50px; height:6px; background:#607D8B; border-radius:3px; top:88px; left:15px; transform:rotate(15deg); }
+
+/* ============ POINT TO IT ============ */
+.pti-layout { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.pti-prompt { font-size: 1.3rem; font-weight: bold; color: #FF6D00; text-align: center; min-height: 2em; padding: 0 10px; }
+.pti-cards { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.pti-card { width: 170px; height: 220px; border-radius: 14px; overflow: hidden; position: relative; cursor: pointer; border: 4px solid rgba(255,109,0,0.3); background: #e3f2fd; transition: transform 0.15s, border-color 0.3s, box-shadow 0.3s; touch-action: manipulation; }
+.pti-card:hover { transform: scale(1.04); }
+.pti-card.pti-correct { border-color: #4CAF50; box-shadow: 0 0 16px rgba(76,175,80,0.5); }
+.pti-card.pti-wrong { border-color: #EF5350; }
+
+/* Scene backgrounds */
+.pti-sky { position:absolute; top:0; left:0; width:100%; height:55%; background:linear-gradient(180deg,#64B5F6,#BBDEFB); }
+.pti-ground { position:absolute; bottom:0; left:0; width:100%; height:45%; background:#81C784; }
+
+/* Animals */
+.pti-animal { position:absolute; bottom:30%; left:50%; transform:translateX(-50%); z-index:5; }
+.pti-dog { width:40px; height:30px; background:#8D6E63; border-radius:10px 10px 4px 4px; }
+.pti-dog::before { content:''; position:absolute; width:20px; height:18px; background:#8D6E63; border-radius:50%; top:-12px; right:0; }
+.pti-dog::after { content:''; position:absolute; width:8px; height:12px; background:#6D4C41; border-radius:0 0 4px 4px; top:-8px; right:0; }
+.pti-cat { width:28px; height:25px; background:#FF8A65; border-radius:50%; }
+.pti-cat::before { content:''; position:absolute; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #FF8A65; top:-8px; left:2px; }
+.pti-cat::after { content:''; position:absolute; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #FF8A65; top:-8px; right:2px; }
+.pti-bird { width:22px; height:18px; background:#42A5F5; border-radius:50% 70% 50% 50%; }
+.pti-bird::before { content:''; position:absolute; width:10px; height:5px; background:#FF8F00; border-radius:0 50% 50% 0; top:6px; right:-8px; }
+.pti-rabbit { width:26px; height:24px; background:#BDBDBD; border-radius:50%; }
+.pti-rabbit::before { content:''; position:absolute; width:8px; height:18px; background:#BDBDBD; border-radius:50%; top:-14px; left:4px; }
+.pti-rabbit::after { content:''; position:absolute; width:8px; height:18px; background:#BDBDBD; border-radius:50%; top:-14px; right:4px; }
+
+/* Animal poses */
+.pti-pose-sleep { transform:translateX(-50%) scaleY(0.6) translateY(8px); opacity:0.85; }
+.pti-pose-sit { transform:translateX(-50%) scaleY(0.85); }
+.pti-pose-fly { bottom:55%; }
+.pti-pose-hide { opacity:0.6; bottom:25%; }
+.pti-pose-play { animation:ptiPlay 0.6s infinite alternate; }
+.pti-pose-eat { transform:translateX(-50%) rotate(-10deg); }
+.pti-pose-jump { bottom:45%; animation:ptiJump 0.5s infinite alternate; }
+.pti-pose-run { animation:ptiRun 0.3s infinite alternate; }
+@keyframes ptiPlay { 0%{transform:translateX(-50%) rotate(-5deg)} 100%{transform:translateX(-50%) rotate(5deg)} }
+@keyframes ptiJump { 0%{bottom:35%} 100%{bottom:50%} }
+@keyframes ptiRun { 0%{transform:translateX(-55%)} 100%{transform:translateX(-45%)} }
+
+/* Setting objects */
+.pti-obj { position:absolute; z-index:3; }
+
+/* Car */
+.pti-car { bottom:22%; right:10%; }
+.pti-car-body { width:50px; height:20px; background:#EF5350; border-radius:4px; }
+.pti-car-top { width:30px; height:14px; background:#E53935; border-radius:4px 4px 0 0; position:absolute; top:-14px; left:10px; }
+.pti-car-whl { width:10px; height:10px; background:#333; border-radius:50%; position:absolute; bottom:-5px; }
+.pti-cwl { left:5px; }
+.pti-cwr { right:5px; }
+
+/* House */
+.pti-house { bottom:22%; right:8%; }
+.pti-house-body { width:45px; height:35px; background:#FFCC80; }
+.pti-house-roof { width:0; height:0; border-left:28px solid transparent; border-right:28px solid transparent; border-bottom:20px solid #E53935; position:absolute; top:-20px; left:-5px; }
+.pti-house-door { width:12px; height:18px; background:#795548; position:absolute; bottom:0; left:16px; }
+
+/* Tree */
+.pti-tree { bottom:22%; right:12%; }
+.pti-tree-trunk { width:10px; height:25px; background:#795548; margin:0 auto; }
+.pti-tree-crown { width:40px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:-28px; left:-15px; }
+
+/* Window */
+.pti-window { bottom:40%; right:10%; }
+.pti-win-frame { width:35px; height:30px; border:3px solid #795548; background:#BBDEFB; }
+.pti-win-pane { position:absolute; width:1px; height:30px; background:#795548; left:17px; top:0; }
+
+/* Chair */
+.pti-chair { bottom:22%; right:12%; }
+.pti-chair-seat { width:30px; height:6px; background:#8D6E63; }
+.pti-chair-back { width:6px; height:25px; background:#8D6E63; position:absolute; top:-20px; left:0; }
+
+/* Table */
+.pti-table { bottom:22%; right:10%; }
+.pti-tbl-top { width:45px; height:6px; background:#A1887F; }
+.pti-tbl-leg { width:6px; height:20px; background:#8D6E63; margin:0 auto; }
+
+/* Mountain */
+.pti-mountain { bottom:22%; right:5%; width:0; height:0; border-left:35px solid transparent; border-right:35px solid transparent; border-bottom:50px solid #78909C; }
+
+/* Bush */
+.pti-bush { bottom:22%; right:10%; width:40px; height:25px; background:#388E3C; border-radius:50% 50% 10% 10%; }
+
+/* Rock */
+.pti-rock { bottom:22%; right:12%; width:35px; height:20px; background:#9E9E9E; border-radius:50% 50% 40% 40%; }
+
+/* Fence */
+.pti-fence { bottom:22%; right:8%; display:flex; gap:6px; align-items:flex-end; }
+.pti-fnc-p { width:6px; height:25px; background:#A1887F; border-radius:2px 2px 0 0; }
+.pti-fnc-rail { position:absolute; width:35px; height:4px; background:#8D6E63; bottom:10px; left:0; }
+
+/* Beach */
+.pti-beach { bottom:0; left:0; width:100%; height:45%; }
+.pti-beach .pti-ground { display:none; }
+.pti-beach-wave { position:absolute; bottom:0; left:0; width:100%; height:100%; background:linear-gradient(180deg,#FFD54F 0%,#FFE082 40%,#42A5F5 40%,#1E88E5 100%); }
+
+/* Park */
+.pti-park { bottom:22%; right:5%; }
+.pti-park-tree { width:8px; height:20px; background:#795548; position:relative; }
+.pti-park-tree::before { content:''; position:absolute; width:30px; height:25px; background:#66BB6A; border-radius:50%; top:-20px; left:-11px; }
+.pti-park-bench { width:30px; height:4px; background:#8D6E63; margin-top:2px; }
+
+/* Garden */
+.pti-garden { bottom:22%; right:8%; }
+.pti-gdn-flower { width:14px; height:14px; background:#E91E63; border-radius:50%; position:relative; }
+.pti-gdn-flower::after { content:''; position:absolute; width:3px; height:18px; background:#4CAF50; bottom:-18px; left:5px; }
+.pti-gf2 { position:absolute; left:22px; top:4px; background:#FF9800; }
+
+/* Kitchen */
+.pti-kitchen { bottom:22%; right:5%; }
+.pti-kitch-counter { width:50px; height:20px; background:#A1887F; border-radius:2px; }
+.pti-kitch-cab { width:50px; height:25px; background:#8D6E63; position:absolute; top:-28px; }
+
+/* Bedroom */
+.pti-bedroom { bottom:22%; right:8%; }
+.pti-bdrm-bed { width:40px; height:18px; background:#7E57C2; border-radius:4px; }
+
+/* Roof */
+.pti-roof { top:15%; right:10%; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:20px solid #E53935; }
+
+/* Field */
+.pti-field { bottom:22%; right:5%; }
+.pti-fld-grass { width:50px; height:3px; background:#2E7D32; box-shadow:0 -6px 0 #4CAF50, 0 -12px 0 #388E3C; }
+
+/* Pond */
+.pti-pond { bottom:22%; right:10%; width:45px; height:20px; background:#42A5F5; border-radius:50%; }
+
+/* Road */
+.pti-road { bottom:0; left:0; width:100%; height:45%; }
+.pti-road .pti-ground { display:none; }
+.pti-road-line { position:absolute; bottom:0; left:0; width:100%; height:100%; background:#757575; }
+.pti-road-line::before { content:''; position:absolute; width:4px; height:100%; background:#FFD600; left:50%; }
+
+/* Street */
+.pti-street { bottom:22%; right:10%; }
+.pti-street-lamp { width:4px; height:35px; background:#666; position:relative; }
+.pti-street-lamp::before { content:''; position:absolute; width:16px; height:6px; background:#FFD600; top:0; left:-6px; border-radius:3px; }
+
+/* Yard */
+.pti-yard { bottom:22%; right:5%; }
+.pti-yard-fence { width:40px; height:4px; background:#A1887F; position:relative; }
+.pti-yard-fence::before { content:''; width:4px; height:16px; background:#A1887F; position:absolute; top:-12px; left:0; }
+.pti-yard-fence::after { content:''; width:4px; height:16px; background:#A1887F; position:absolute; top:-12px; right:0; }
+
+/* Bed object */
+.pti-bed-obj { bottom:22%; right:8%; }
+.pti-bedobj-frame { width:45px; height:16px; background:#7E57C2; border-radius:4px; }
+.pti-bedobj-pillow { width:14px; height:10px; background:#fff; border-radius:3px; position:absolute; top:0; left:2px; }
+
+/* Couch */
+.pti-couch { bottom:22%; right:8%; }
+.pti-couch-seat { width:45px; height:16px; background:#5C6BC0; border-radius:4px; }
+.pti-couch-arm { width:8px; height:22px; background:#3F51B5; border-radius:4px 4px 0 0; position:absolute; top:-6px; left:0; }
+
+/* Rug */
+.pti-rug { bottom:22%; right:8%; width:50px; height:12px; background:#E91E63; border-radius:3px; }

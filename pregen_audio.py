@@ -18,8 +18,13 @@ async def gen_tts(text, output_path):
     communicate = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
     await communicate.save(output_path)
 
+import re as _re
+def _tts_clean(t):
+    """Match the JS ttsCleanText: St. -> Saint for pronunciation."""
+    return _re.sub(r'\bSt\.\s', 'Saint ', t)
+
 def gen(text, filename=None):
-    text = text.strip()
+    text = _tts_clean(text.strip())
     if not text:
         return
     h = hashlib.md5(text.encode('utf-8')).hexdigest()
