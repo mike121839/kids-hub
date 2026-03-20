@@ -417,6 +417,42 @@ for move in [
 ]:
     gen(move)
 
+print('\n=== Brain: Find That Number ===')
+# "Find the number {word}" for 0-100
+def number_to_words(n):
+    ones = ['','one','two','three','four','five','six','seven','eight','nine',
+            'ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen']
+    tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety']
+    if n == 0: return 'zero'
+    if n < 20: return ones[n]
+    if n < 100: return tens[n//10] + (' ' + ones[n%10] if n%10 else '')
+    return 'one hundred'
+
+for i in range(101):
+    gen('Find the number ' + number_to_words(i))
+
+print('\n=== Brain: Let\'s Read ===')
+gen('Can you read this word?')
+read_words = ['cat','dog','sun','hat','cup','bus','bed','egg','cow','bee',
+              'bat','fan','bag','bug','run','box','mum','dad','nut','rat']
+for w in read_words:
+    gen(w)
+# Individual letters used in sounding out
+for ch in 'abcdefghijklmnopqrstuvwxyz':
+    gen(ch)
+
+print('\n=== Brain: Point to It ===')
+pti_rounds = [
+    ('dog','sleeping','car'), ('cat','sitting','window'), ('bird','flying','mountain'),
+    ('rabbit','hiding','bush'), ('dog','playing','beach'), ('cat','eating','kitchen'),
+    ('bird','sitting','fence'), ('rabbit','jumping','field'), ('dog','running','park'),
+    ('cat','sleeping','bed'),
+]
+for animal, action, setting in pti_rounds:
+    gen(f'Find the {animal} {action} next to the {setting}!')
+gen('Well done!')
+gen('Not quite. Look at the green one!')
+
 print('\n=== Done! ===')
 cache_count = len([f for f in os.listdir(CACHE_DIR) if f.endswith('.mp3')])
 named_count = len([f for f in os.listdir(AUDIO_DIR) if f.endswith('.mp3')])

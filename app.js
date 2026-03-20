@@ -4084,47 +4084,82 @@ const PTI_ROUNDS = [
 let ptiIndex = 0, ptiScore = 0, ptiAnswered = false;
 
 function buildPTIAnimal(animal, action) {
-  const poses = {
-    sleeping: 'pti-pose-sleep', sitting: 'pti-pose-sit', flying: 'pti-pose-fly',
-    hiding: 'pti-pose-hide', playing: 'pti-pose-play', eating: 'pti-pose-eat',
-    jumping: 'pti-pose-jump', running: 'pti-pose-run'
+  var poses = {
+    sleeping:'pti-pose-sleep', sitting:'pti-pose-sit', flying:'pti-pose-fly',
+    hiding:'pti-pose-hide', playing:'pti-pose-play', eating:'pti-pose-eat',
+    jumping:'pti-pose-jump', running:'pti-pose-run'
   };
-  return '<div class="pti-animal pti-' + animal + ' ' + (poses[action]||'') + '"></div>';
+  var pose = poses[action] || '';
+  var animals = {
+    dog: '<div class="pti-animal pti-dog '+pose+'">'+
+      '<div class="pti-a-body"></div><div class="pti-a-head"></div>'+
+      '<div class="pti-a-ear pti-a-ear-l"></div><div class="pti-a-ear pti-a-ear-r"></div>'+
+      '<div class="pti-a-eye pti-a-eye-l"></div><div class="pti-a-eye pti-a-eye-r"></div>'+
+      '<div class="pti-a-nose"></div><div class="pti-a-tail pti-dog-tail"></div>'+
+      '<div class="pti-a-leg pti-a-leg-fl"></div><div class="pti-a-leg pti-a-leg-fr"></div>'+
+      '<div class="pti-a-leg pti-a-leg-bl"></div><div class="pti-a-leg pti-a-leg-br"></div>'+
+      '</div>',
+    cat: '<div class="pti-animal pti-cat '+pose+'">'+
+      '<div class="pti-a-body"></div><div class="pti-a-head"></div>'+
+      '<div class="pti-a-ear pti-cat-ear-l"></div><div class="pti-a-ear pti-cat-ear-r"></div>'+
+      '<div class="pti-a-eye pti-a-eye-l"></div><div class="pti-a-eye pti-a-eye-r"></div>'+
+      '<div class="pti-a-nose"></div><div class="pti-a-whisker pti-wh-l"></div><div class="pti-a-whisker pti-wh-r"></div>'+
+      '<div class="pti-a-tail pti-cat-tail"></div>'+
+      '<div class="pti-a-leg pti-a-leg-fl"></div><div class="pti-a-leg pti-a-leg-fr"></div>'+
+      '<div class="pti-a-leg pti-a-leg-bl"></div><div class="pti-a-leg pti-a-leg-br"></div>'+
+      '</div>',
+    bird: '<div class="pti-animal pti-bird '+pose+'">'+
+      '<div class="pti-a-body"></div><div class="pti-a-head"></div>'+
+      '<div class="pti-a-eye pti-bird-eye"></div><div class="pti-a-beak"></div>'+
+      '<div class="pti-a-wing"></div><div class="pti-a-tail pti-bird-tail"></div>'+
+      '<div class="pti-a-foot pti-a-foot-l"></div><div class="pti-a-foot pti-a-foot-r"></div>'+
+      '</div>',
+    rabbit: '<div class="pti-animal pti-rabbit '+pose+'">'+
+      '<div class="pti-a-body"></div><div class="pti-a-head"></div>'+
+      '<div class="pti-a-ear pti-rab-ear-l"></div><div class="pti-a-ear pti-rab-ear-r"></div>'+
+      '<div class="pti-a-eye pti-a-eye-l"></div><div class="pti-a-eye pti-a-eye-r"></div>'+
+      '<div class="pti-a-nose"></div><div class="pti-a-tail pti-rab-tail"></div>'+
+      '<div class="pti-a-leg pti-a-leg-fl"></div><div class="pti-a-leg pti-a-leg-fr"></div>'+
+      '<div class="pti-a-leg pti-rab-hind-l"></div><div class="pti-a-leg pti-rab-hind-r"></div>'+
+      '</div>'
+  };
+  return animals[animal] || '';
 }
 
 function buildPTIObject(setting) {
-  const objs = {
-    car: '<div class="pti-obj pti-car"><div class="pti-car-body"></div><div class="pti-car-top"></div><div class="pti-car-whl pti-cwl"></div><div class="pti-car-whl pti-cwr"></div></div>',
-    house: '<div class="pti-obj pti-house"><div class="pti-house-body"></div><div class="pti-house-roof"></div><div class="pti-house-door"></div></div>',
-    tree: '<div class="pti-obj pti-tree"><div class="pti-tree-trunk"></div><div class="pti-tree-crown"></div></div>',
-    window: '<div class="pti-obj pti-window"><div class="pti-win-frame"></div><div class="pti-win-pane"></div></div>',
-    chair: '<div class="pti-obj pti-chair"><div class="pti-chair-seat"></div><div class="pti-chair-back"></div></div>',
-    table: '<div class="pti-obj pti-table"><div class="pti-tbl-top"></div><div class="pti-tbl-leg"></div></div>',
-    mountain: '<div class="pti-obj pti-mountain"></div>',
-    bush: '<div class="pti-obj pti-bush"></div>',
-    rock: '<div class="pti-obj pti-rock"></div>',
-    fence: '<div class="pti-obj pti-fence"><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-rail"></div></div>',
-    beach: '<div class="pti-obj pti-beach"><div class="pti-beach-wave"></div></div>',
-    park: '<div class="pti-obj pti-park"><div class="pti-park-tree"></div><div class="pti-park-bench"></div></div>',
-    garden: '<div class="pti-obj pti-garden"><div class="pti-gdn-flower"></div><div class="pti-gdn-flower pti-gf2"></div></div>',
-    kitchen: '<div class="pti-obj pti-kitchen"><div class="pti-kitch-counter"></div><div class="pti-kitch-cab"></div></div>',
-    bedroom: '<div class="pti-obj pti-bedroom"><div class="pti-bdrm-bed"></div></div>',
-    roof: '<div class="pti-obj pti-roof"></div>',
-    field: '<div class="pti-obj pti-field"><div class="pti-fld-grass"></div></div>',
-    pond: '<div class="pti-obj pti-pond"></div>',
-    road: '<div class="pti-obj pti-road"><div class="pti-road-line"></div></div>',
-    street: '<div class="pti-obj pti-street"><div class="pti-street-lamp"></div></div>',
-    yard: '<div class="pti-obj pti-yard"><div class="pti-yard-fence"></div></div>',
-    bed: '<div class="pti-obj pti-bed-obj"><div class="pti-bedobj-frame"></div><div class="pti-bedobj-pillow"></div></div>',
-    couch: '<div class="pti-obj pti-couch"><div class="pti-couch-seat"></div><div class="pti-couch-arm"></div></div>',
-    rug: '<div class="pti-obj pti-rug"></div>'
+  var objs = {
+    car: '<div class="pti-obj pti-car"><div class="pti-car-body"></div><div class="pti-car-top"></div><div class="pti-car-whl pti-cwl"></div><div class="pti-car-whl pti-cwr"></div><div class="pti-car-light"></div><div class="pti-car-win"></div></div>',
+    house: '<div class="pti-obj pti-house"><div class="pti-house-body"></div><div class="pti-house-roof"></div><div class="pti-house-door"></div><div class="pti-house-win pti-hw-l"></div><div class="pti-house-win pti-hw-r"></div><div class="pti-house-chimney"></div></div>',
+    tree: '<div class="pti-obj pti-tree"><div class="pti-tree-trunk"></div><div class="pti-tree-crown"></div><div class="pti-tree-crown pti-tc2"></div></div>',
+    window: '<div class="pti-obj pti-window"><div class="pti-win-frame"></div><div class="pti-win-h"></div><div class="pti-win-v"></div><div class="pti-win-curt pti-wc-l"></div><div class="pti-win-curt pti-wc-r"></div></div>',
+    mountain: '<div class="pti-obj pti-mountain"><div class="pti-mtn-body"></div><div class="pti-mtn-snow"></div></div>',
+    bush: '<div class="pti-obj pti-bush"><div class="pti-bush-c pti-bc1"></div><div class="pti-bush-c pti-bc2"></div><div class="pti-bush-c pti-bc3"></div></div>',
+    fence: '<div class="pti-obj pti-fence"><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-p"></div><div class="pti-fnc-rail pti-fr1"></div><div class="pti-fnc-rail pti-fr2"></div></div>',
+    beach: '<div class="pti-obj pti-beach"><div class="pti-beach-sand"></div><div class="pti-beach-wave"></div><div class="pti-beach-umb"></div><div class="pti-beach-umb-pole"></div></div>',
+    park: '<div class="pti-obj pti-park"><div class="pti-park-tree-trunk"></div><div class="pti-park-tree-crown"></div><div class="pti-park-bench"></div><div class="pti-park-path"></div></div>',
+    garden: '<div class="pti-obj pti-garden"><div class="pti-gdn-flower"></div><div class="pti-gdn-flower pti-gf2"></div><div class="pti-gdn-flower pti-gf3"></div></div>',
+    kitchen: '<div class="pti-obj pti-kitchen"><div class="pti-kitch-counter"></div><div class="pti-kitch-cab"></div><div class="pti-kitch-pot"></div></div>',
+    bedroom: '<div class="pti-obj pti-bedroom"><div class="pti-bdrm-bed"></div><div class="pti-bdrm-pillow"></div></div>',
+    roof: '<div class="pti-obj pti-roof"><div class="pti-roof-body"></div><div class="pti-roof-tiles"></div></div>',
+    field: '<div class="pti-obj pti-field"><div class="pti-fld-grass"></div><div class="pti-fld-flower"></div></div>',
+    pond: '<div class="pti-obj pti-pond"><div class="pti-pond-water"></div><div class="pti-pond-lily"></div></div>',
+    road: '<div class="pti-obj pti-road"><div class="pti-road-surface"></div><div class="pti-road-line"></div></div>',
+    street: '<div class="pti-obj pti-street"><div class="pti-street-lamp"></div><div class="pti-street-light"></div></div>',
+    yard: '<div class="pti-obj pti-yard"><div class="pti-yard-fence"></div><div class="pti-yard-grass"></div></div>',
+    bed: '<div class="pti-obj pti-bed-obj"><div class="pti-bedobj-frame"></div><div class="pti-bedobj-pillow"></div><div class="pti-bedobj-blanket"></div></div>',
+    couch: '<div class="pti-obj pti-couch"><div class="pti-couch-seat"></div><div class="pti-couch-arm pti-ca-l"></div><div class="pti-couch-arm pti-ca-r"></div><div class="pti-couch-back"></div></div>',
+    rug: '<div class="pti-obj pti-rug"><div class="pti-rug-body"></div><div class="pti-rug-border"></div></div>',
+    chair: '<div class="pti-obj pti-chair"><div class="pti-chair-seat"></div><div class="pti-chair-back"></div><div class="pti-chair-leg-l"></div><div class="pti-chair-leg-r"></div></div>',
+    table: '<div class="pti-obj pti-table"><div class="pti-tbl-top"></div><div class="pti-tbl-leg pti-tl-l"></div><div class="pti-tbl-leg pti-tl-r"></div></div>',
+    rock: '<div class="pti-obj pti-rock"><div class="pti-rock-body"></div><div class="pti-rock-spot"></div></div>'
   };
   return objs[setting] || '<div class="pti-obj"></div>';
 }
 
 function buildPTIScene(animal, action, setting) {
+  var label = '<div class="pti-scene-label">' + setting + '</div>';
   return '<div class="pti-sky"></div><div class="pti-ground"></div>' +
-    buildPTIObject(setting) + buildPTIAnimal(animal, action);
+    buildPTIObject(setting) + buildPTIAnimal(animal, action) + label;
 }
 
 function startPointToIt() {

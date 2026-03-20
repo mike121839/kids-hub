@@ -2963,158 +2963,271 @@ button:active { transform: scale(0.95) !important; }
 .ri-rat-tail { position:absolute; width:50px; height:6px; background:#607D8B; border-radius:3px; top:88px; left:15px; transform:rotate(15deg); }
 
 /* ============ POINT TO IT ============ */
-.pti-layout { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.pti-prompt { font-size: 1.3rem; font-weight: bold; color: #FF6D00; text-align: center; min-height: 2em; padding: 0 10px; }
-.pti-cards { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.pti-card { width: 170px; height: 220px; border-radius: 14px; overflow: hidden; position: relative; cursor: pointer; border: 4px solid rgba(255,109,0,0.3); background: #e3f2fd; transition: transform 0.15s, border-color 0.3s, box-shadow 0.3s; touch-action: manipulation; }
-.pti-card:hover { transform: scale(1.04); }
-.pti-card.pti-correct { border-color: #4CAF50; box-shadow: 0 0 16px rgba(76,175,80,0.5); }
-.pti-card.pti-wrong { border-color: #EF5350; }
+.pti-layout { display:flex; flex-direction:column; align-items:center; gap:16px; }
+.pti-prompt { font-size:1.3rem; font-weight:bold; color:#FF6D00; text-align:center; min-height:2em; padding:0 10px; }
+.pti-cards { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.pti-card { width:200px; height:260px; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; border:4px solid rgba(255,109,0,0.3); background:#e3f2fd; transition:transform 0.15s, border-color 0.3s, box-shadow 0.3s; touch-action:manipulation; }
+.pti-card:hover { transform:scale(1.04); }
+.pti-card.pti-correct { border-color:#4CAF50; box-shadow:0 0 18px rgba(76,175,80,0.5); }
+.pti-card.pti-wrong { border-color:#EF5350; }
+.pti-scene-label { position:absolute; bottom:4px; left:0; width:100%; text-align:center; font-size:0.85rem; font-weight:700; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.6); z-index:10; text-transform:capitalize; }
 
 /* Scene backgrounds */
-.pti-sky { position:absolute; top:0; left:0; width:100%; height:55%; background:linear-gradient(180deg,#64B5F6,#BBDEFB); }
-.pti-ground { position:absolute; bottom:0; left:0; width:100%; height:45%; background:#81C784; }
+.pti-sky { position:absolute; top:0; left:0; width:100%; height:50%; background:linear-gradient(180deg,#64B5F6 0%,#BBDEFB 100%); }
+.pti-ground { position:absolute; bottom:0; left:0; width:100%; height:50%; background:linear-gradient(180deg,#81C784 0%,#66BB6A 100%); }
 
-/* Animals */
-.pti-animal { position:absolute; bottom:30%; left:50%; transform:translateX(-50%); z-index:5; }
-.pti-dog { width:40px; height:30px; background:#8D6E63; border-radius:10px 10px 4px 4px; }
-.pti-dog::before { content:''; position:absolute; width:20px; height:18px; background:#8D6E63; border-radius:50%; top:-12px; right:0; }
-.pti-dog::after { content:''; position:absolute; width:8px; height:12px; background:#6D4C41; border-radius:0 0 4px 4px; top:-8px; right:0; }
-.pti-cat { width:28px; height:25px; background:#FF8A65; border-radius:50%; }
-.pti-cat::before { content:''; position:absolute; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #FF8A65; top:-8px; left:2px; }
-.pti-cat::after { content:''; position:absolute; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:10px solid #FF8A65; top:-8px; right:2px; }
-.pti-bird { width:22px; height:18px; background:#42A5F5; border-radius:50% 70% 50% 50%; }
-.pti-bird::before { content:''; position:absolute; width:10px; height:5px; background:#FF8F00; border-radius:0 50% 50% 0; top:6px; right:-8px; }
-.pti-rabbit { width:26px; height:24px; background:#BDBDBD; border-radius:50%; }
-.pti-rabbit::before { content:''; position:absolute; width:8px; height:18px; background:#BDBDBD; border-radius:50%; top:-14px; left:4px; }
-.pti-rabbit::after { content:''; position:absolute; width:8px; height:18px; background:#BDBDBD; border-radius:50%; top:-14px; right:4px; }
+/* ---- ANIMALS (multi-div, ~80px wide) ---- */
+.pti-animal { position:absolute; bottom:28%; left:50%; transform:translateX(-50%); z-index:5; }
 
-/* Animal poses */
-.pti-pose-sleep { transform:translateX(-50%) scaleY(0.6) translateY(8px); opacity:0.85; }
+/* Dog */
+.pti-dog { width:80px; height:60px; }
+.pti-dog .pti-a-body { position:absolute; width:50px; height:30px; background:#8D6E63; border-radius:14px; bottom:12px; left:15px; }
+.pti-dog .pti-a-head { position:absolute; width:32px; height:28px; background:#A1887F; border-radius:50%; bottom:30px; right:2px; }
+.pti-dog .pti-a-ear { position:absolute; width:12px; height:18px; background:#6D4C41; border-radius:0 0 8px 8px; }
+.pti-dog .pti-a-ear-l { bottom:42px; right:24px; }
+.pti-dog .pti-a-ear-r { bottom:42px; right:6px; }
+.pti-dog .pti-a-eye { position:absolute; width:6px; height:6px; background:#333; border-radius:50%; }
+.pti-dog .pti-a-eye-l { bottom:38px; right:22px; }
+.pti-dog .pti-a-eye-r { bottom:38px; right:10px; }
+.pti-dog .pti-a-nose { position:absolute; width:8px; height:6px; background:#333; border-radius:50%; bottom:32px; right:12px; }
+.pti-dog .pti-dog-tail { position:absolute; width:16px; height:6px; background:#6D4C41; border-radius:4px; bottom:34px; left:4px; transform:rotate(-25deg); }
+.pti-dog .pti-a-leg { position:absolute; width:8px; height:14px; background:#795548; border-radius:0 0 4px 4px; bottom:0; }
+.pti-dog .pti-a-leg-fl { left:20px; }
+.pti-dog .pti-a-leg-fr { left:32px; }
+.pti-dog .pti-a-leg-bl { left:46px; }
+.pti-dog .pti-a-leg-br { left:56px; }
+
+/* Cat */
+.pti-cat { width:70px; height:58px; }
+.pti-cat .pti-a-body { position:absolute; width:40px; height:26px; background:#FF8A65; border-radius:12px; bottom:12px; left:15px; }
+.pti-cat .pti-a-head { position:absolute; width:28px; height:26px; background:#FFAB91; border-radius:50%; bottom:28px; right:6px; }
+.pti-cat .pti-a-ear.pti-cat-ear-l { position:absolute; width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #FF8A65; bottom:50px; right:26px; }
+.pti-cat .pti-a-ear.pti-cat-ear-r { position:absolute; width:0; height:0; border-left:7px solid transparent; border-right:7px solid transparent; border-bottom:12px solid #FF8A65; bottom:50px; right:8px; }
+.pti-cat .pti-a-eye { position:absolute; width:6px; height:7px; background:#333; border-radius:50%; }
+.pti-cat .pti-a-eye-l { bottom:36px; right:24px; }
+.pti-cat .pti-a-eye-r { bottom:36px; right:12px; }
+.pti-cat .pti-a-nose { position:absolute; width:5px; height:4px; background:#E91E63; border-radius:50%; bottom:31px; right:17px; }
+.pti-cat .pti-a-whisker { position:absolute; width:14px; height:1px; background:#666; bottom:32px; }
+.pti-cat .pti-wh-l { right:30px; transform:rotate(-5deg); }
+.pti-cat .pti-wh-r { right:2px; transform:rotate(5deg); }
+.pti-cat .pti-cat-tail { position:absolute; width:22px; height:5px; background:#FF7043; border-radius:4px; bottom:22px; left:2px; transform:rotate(20deg); }
+.pti-cat .pti-a-leg { position:absolute; width:7px; height:13px; background:#E65100; border-radius:0 0 3px 3px; bottom:0; }
+.pti-cat .pti-a-leg-fl { left:18px; }
+.pti-cat .pti-a-leg-fr { left:28px; }
+.pti-cat .pti-a-leg-bl { left:40px; }
+.pti-cat .pti-a-leg-br { left:48px; }
+
+/* Bird */
+.pti-bird { width:60px; height:48px; }
+.pti-bird .pti-a-body { position:absolute; width:36px; height:24px; background:#42A5F5; border-radius:50%; bottom:12px; left:10px; }
+.pti-bird .pti-a-head { position:absolute; width:20px; height:18px; background:#64B5F6; border-radius:50%; bottom:28px; right:4px; }
+.pti-bird .pti-bird-eye { position:absolute; width:5px; height:5px; background:#333; border-radius:50%; bottom:32px; right:8px; }
+.pti-bird .pti-a-beak { position:absolute; width:0; height:0; border-top:4px solid transparent; border-bottom:4px solid transparent; border-left:10px solid #FF8F00; bottom:28px; right:-4px; }
+.pti-bird .pti-a-wing { position:absolute; width:20px; height:14px; background:#1E88E5; border-radius:50% 50% 0 50%; bottom:18px; left:8px; }
+.pti-bird .pti-bird-tail { position:absolute; width:14px; height:10px; background:#1565C0; border-radius:0 0 0 50%; bottom:16px; left:2px; }
+.pti-bird .pti-a-foot { position:absolute; width:8px; height:3px; background:#FF8F00; border-radius:2px; bottom:10px; }
+.pti-bird .pti-a-foot-l { left:18px; }
+.pti-bird .pti-a-foot-r { left:30px; }
+
+/* Rabbit */
+.pti-rabbit { width:65px; height:62px; }
+.pti-rabbit .pti-a-body { position:absolute; width:38px; height:28px; background:#BDBDBD; border-radius:50%; bottom:12px; left:14px; }
+.pti-rabbit .pti-a-head { position:absolute; width:26px; height:24px; background:#E0E0E0; border-radius:50%; bottom:30px; right:6px; }
+.pti-rabbit .pti-a-ear.pti-rab-ear-l { position:absolute; width:9px; height:24px; background:#E0E0E0; border-radius:50%; bottom:50px; right:24px; }
+.pti-rabbit .pti-a-ear.pti-rab-ear-r { position:absolute; width:9px; height:24px; background:#E0E0E0; border-radius:50%; bottom:50px; right:10px; }
+.pti-rabbit .pti-a-eye { position:absolute; width:5px; height:5px; background:#333; border-radius:50%; }
+.pti-rabbit .pti-a-eye-l { bottom:38px; right:22px; }
+.pti-rabbit .pti-a-eye-r { bottom:38px; right:12px; }
+.pti-rabbit .pti-a-nose { position:absolute; width:5px; height:4px; background:#F48FB1; border-radius:50%; bottom:33px; right:16px; }
+.pti-rabbit .pti-rab-tail { position:absolute; width:12px; height:12px; background:#fff; border-radius:50%; bottom:22px; left:8px; }
+.pti-rabbit .pti-a-leg { position:absolute; width:7px; height:12px; background:#9E9E9E; border-radius:0 0 4px 4px; bottom:0; }
+.pti-rabbit .pti-a-leg-fl { left:18px; }
+.pti-rabbit .pti-a-leg-fr { left:28px; }
+.pti-rabbit .pti-rab-hind-l { position:absolute; width:12px; height:10px; background:#9E9E9E; border-radius:50%; bottom:2px; left:38px; }
+.pti-rabbit .pti-rab-hind-r { position:absolute; width:12px; height:10px; background:#9E9E9E; border-radius:50%; bottom:2px; left:48px; }
+
+/* ---- ANIMAL POSES ---- */
+.pti-pose-sleep { transform:translateX(-50%) scaleY(0.55) translateY(12px); opacity:0.85; }
 .pti-pose-sit { transform:translateX(-50%) scaleY(0.85); }
-.pti-pose-fly { bottom:55%; }
-.pti-pose-hide { opacity:0.6; bottom:25%; }
+.pti-pose-fly { bottom:52%; }
+.pti-pose-hide { opacity:0.65; bottom:24%; }
 .pti-pose-play { animation:ptiPlay 0.6s infinite alternate; }
 .pti-pose-eat { transform:translateX(-50%) rotate(-10deg); }
-.pti-pose-jump { bottom:45%; animation:ptiJump 0.5s infinite alternate; }
+.pti-pose-jump { bottom:42%; animation:ptiJump 0.5s infinite alternate; }
 .pti-pose-run { animation:ptiRun 0.3s infinite alternate; }
 @keyframes ptiPlay { 0%{transform:translateX(-50%) rotate(-5deg)} 100%{transform:translateX(-50%) rotate(5deg)} }
-@keyframes ptiJump { 0%{bottom:35%} 100%{bottom:50%} }
+@keyframes ptiJump { 0%{bottom:34%} 100%{bottom:48%} }
 @keyframes ptiRun { 0%{transform:translateX(-55%)} 100%{transform:translateX(-45%)} }
 
-/* Setting objects */
+/* ---- SETTING OBJECTS (bigger, more detail) ---- */
 .pti-obj { position:absolute; z-index:3; }
 
 /* Car */
-.pti-car { bottom:22%; right:10%; }
-.pti-car-body { width:50px; height:20px; background:#EF5350; border-radius:4px; }
-.pti-car-top { width:30px; height:14px; background:#E53935; border-radius:4px 4px 0 0; position:absolute; top:-14px; left:10px; }
-.pti-car-whl { width:10px; height:10px; background:#333; border-radius:50%; position:absolute; bottom:-5px; }
-.pti-cwl { left:5px; }
-.pti-cwr { right:5px; }
+.pti-car { bottom:18%; right:6%; }
+.pti-car-body { width:70px; height:24px; background:#EF5350; border-radius:5px; position:relative; }
+.pti-car-top { width:38px; height:18px; background:#E53935; border-radius:6px 6px 0 0; position:absolute; top:-18px; left:16px; }
+.pti-car-win { position:absolute; width:30px; height:12px; background:#BBDEFB; border-radius:3px 3px 0 0; top:-15px; left:20px; }
+.pti-car-whl { width:14px; height:14px; background:#333; border-radius:50%; position:absolute; bottom:-7px; border:2px solid #666; }
+.pti-cwl { left:8px; }
+.pti-cwr { right:8px; }
+.pti-car-light { position:absolute; width:5px; height:5px; background:#FFD600; border-radius:50%; top:6px; right:-1px; }
 
 /* House */
-.pti-house { bottom:22%; right:8%; }
-.pti-house-body { width:45px; height:35px; background:#FFCC80; }
-.pti-house-roof { width:0; height:0; border-left:28px solid transparent; border-right:28px solid transparent; border-bottom:20px solid #E53935; position:absolute; top:-20px; left:-5px; }
-.pti-house-door { width:12px; height:18px; background:#795548; position:absolute; bottom:0; left:16px; }
+.pti-house { bottom:18%; right:4%; }
+.pti-house-body { width:60px; height:45px; background:#FFCC80; position:relative; }
+.pti-house-roof { width:0; height:0; border-left:36px solid transparent; border-right:36px solid transparent; border-bottom:24px solid #D32F2F; position:absolute; top:-24px; left:-6px; }
+.pti-house-door { width:14px; height:22px; background:#795548; border-radius:2px 2px 0 0; position:absolute; bottom:0; left:23px; }
+.pti-house-win { position:absolute; width:12px; height:12px; background:#BBDEFB; border:2px solid #795548; }
+.pti-hw-l { top:8px; left:4px; }
+.pti-hw-r { top:8px; right:4px; }
+.pti-house-chimney { position:absolute; width:8px; height:16px; background:#795548; top:-36px; right:10px; }
 
 /* Tree */
-.pti-tree { bottom:22%; right:12%; }
-.pti-tree-trunk { width:10px; height:25px; background:#795548; margin:0 auto; }
-.pti-tree-crown { width:40px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:-28px; left:-15px; }
+.pti-tree { bottom:18%; right:8%; }
+.pti-tree-trunk { width:12px; height:32px; background:#795548; margin:0 auto; position:relative; }
+.pti-tree-crown { width:50px; height:40px; background:#4CAF50; border-radius:50%; position:absolute; top:-34px; left:-19px; }
+.pti-tree-crown.pti-tc2 { width:40px; height:32px; background:#66BB6A; top:-40px; left:-14px; }
 
 /* Window */
-.pti-window { bottom:40%; right:10%; }
-.pti-win-frame { width:35px; height:30px; border:3px solid #795548; background:#BBDEFB; }
-.pti-win-pane { position:absolute; width:1px; height:30px; background:#795548; left:17px; top:0; }
-
-/* Chair */
-.pti-chair { bottom:22%; right:12%; }
-.pti-chair-seat { width:30px; height:6px; background:#8D6E63; }
-.pti-chair-back { width:6px; height:25px; background:#8D6E63; position:absolute; top:-20px; left:0; }
-
-/* Table */
-.pti-table { bottom:22%; right:10%; }
-.pti-tbl-top { width:45px; height:6px; background:#A1887F; }
-.pti-tbl-leg { width:6px; height:20px; background:#8D6E63; margin:0 auto; }
+.pti-window { bottom:36%; right:6%; }
+.pti-win-frame { width:45px; height:38px; border:4px solid #795548; background:#BBDEFB; position:relative; }
+.pti-win-h { position:absolute; width:45px; height:2px; background:#795548; top:18px; left:0; }
+.pti-win-v { position:absolute; width:2px; height:38px; background:#795548; left:21px; top:0; }
+.pti-win-curt { position:absolute; width:10px; height:36px; top:1px; }
+.pti-wc-l { left:1px; background:linear-gradient(180deg,#EF9A9A,transparent); border-radius:0 0 8px 0; }
+.pti-wc-r { right:1px; background:linear-gradient(180deg,#EF9A9A,transparent); border-radius:0 0 0 8px; }
 
 /* Mountain */
-.pti-mountain { bottom:22%; right:5%; width:0; height:0; border-left:35px solid transparent; border-right:35px solid transparent; border-bottom:50px solid #78909C; }
+.pti-mountain { bottom:18%; right:3%; }
+.pti-mtn-body { width:0; height:0; border-left:45px solid transparent; border-right:45px solid transparent; border-bottom:65px solid #78909C; }
+.pti-mtn-snow { width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-bottom:20px solid #fff; position:absolute; top:0; left:30px; }
 
 /* Bush */
-.pti-bush { bottom:22%; right:10%; width:40px; height:25px; background:#388E3C; border-radius:50% 50% 10% 10%; }
+.pti-bush { bottom:18%; right:6%; position:relative; width:60px; height:35px; }
+.pti-bush-c { position:absolute; background:#388E3C; border-radius:50%; }
+.pti-bc1 { width:30px; height:28px; bottom:0; left:0; }
+.pti-bc2 { width:34px; height:30px; bottom:2px; left:14px; background:#2E7D32; }
+.pti-bc3 { width:28px; height:26px; bottom:0; right:0; background:#43A047; }
 
 /* Rock */
-.pti-rock { bottom:22%; right:12%; width:35px; height:20px; background:#9E9E9E; border-radius:50% 50% 40% 40%; }
+.pti-rock { bottom:18%; right:8%; }
+.pti-rock-body { width:45px; height:26px; background:#9E9E9E; border-radius:50% 60% 40% 50%; }
+.pti-rock-spot { position:absolute; width:8px; height:6px; background:#BDBDBD; border-radius:50%; top:6px; left:10px; }
 
 /* Fence */
-.pti-fence { bottom:22%; right:8%; display:flex; gap:6px; align-items:flex-end; }
-.pti-fnc-p { width:6px; height:25px; background:#A1887F; border-radius:2px 2px 0 0; }
-.pti-fnc-rail { position:absolute; width:35px; height:4px; background:#8D6E63; bottom:10px; left:0; }
+.pti-fence { bottom:18%; right:5%; display:flex; gap:7px; align-items:flex-end; position:relative; }
+.pti-fnc-p { width:7px; height:32px; background:#A1887F; border-radius:3px 3px 0 0; }
+.pti-fnc-rail { position:absolute; width:50px; height:4px; background:#8D6E63; left:0; }
+.pti-fnc-rail.pti-fr1 { bottom:22px; }
+.pti-fnc-rail.pti-fr2 { bottom:10px; }
 
-/* Beach */
-.pti-beach { bottom:0; left:0; width:100%; height:45%; }
-.pti-beach .pti-ground { display:none; }
-.pti-beach-wave { position:absolute; bottom:0; left:0; width:100%; height:100%; background:linear-gradient(180deg,#FFD54F 0%,#FFE082 40%,#42A5F5 40%,#1E88E5 100%); }
+/* Beach — replaces ground */
+.pti-beach { bottom:0; left:0; width:100%; height:50%; z-index:2; }
+.pti-beach-sand { position:absolute; top:0; left:0; width:100%; height:45%; background:linear-gradient(180deg,#FFD54F,#FFE082); }
+.pti-beach-wave { position:absolute; bottom:0; left:0; width:100%; height:55%; background:linear-gradient(180deg,#42A5F5 0%,#1E88E5 100%); }
+.pti-beach-umb { position:absolute; width:30px; height:16px; background:#E91E63; border-radius:50% 50% 0 0; top:6px; right:20px; }
+.pti-beach-umb-pole { position:absolute; width:3px; height:24px; background:#795548; top:14px; right:33px; }
 
 /* Park */
-.pti-park { bottom:22%; right:5%; }
-.pti-park-tree { width:8px; height:20px; background:#795548; position:relative; }
-.pti-park-tree::before { content:''; position:absolute; width:30px; height:25px; background:#66BB6A; border-radius:50%; top:-20px; left:-11px; }
-.pti-park-bench { width:30px; height:4px; background:#8D6E63; margin-top:2px; }
+.pti-park { bottom:18%; right:3%; }
+.pti-park-tree-trunk { width:10px; height:24px; background:#795548; margin:0 auto; position:relative; }
+.pti-park-tree-crown { position:absolute; width:36px; height:30px; background:#66BB6A; border-radius:50%; top:-24px; left:-13px; }
+.pti-park-bench { width:36px; height:6px; background:#8D6E63; border-radius:2px; margin-top:2px; position:relative; }
+.pti-park-bench::before { content:''; position:absolute; width:4px; height:8px; background:#795548; bottom:-8px; left:4px; }
+.pti-park-bench::after { content:''; position:absolute; width:4px; height:8px; background:#795548; bottom:-8px; right:4px; }
+.pti-park-path { width:20px; height:4px; background:#A1887F; border-radius:2px; margin-top:10px; margin-left:8px; }
 
 /* Garden */
-.pti-garden { bottom:22%; right:8%; }
-.pti-gdn-flower { width:14px; height:14px; background:#E91E63; border-radius:50%; position:relative; }
-.pti-gdn-flower::after { content:''; position:absolute; width:3px; height:18px; background:#4CAF50; bottom:-18px; left:5px; }
-.pti-gf2 { position:absolute; left:22px; top:4px; background:#FF9800; }
+.pti-garden { bottom:18%; right:5%; position:relative; }
+.pti-gdn-flower { width:16px; height:16px; background:#E91E63; border-radius:50%; position:relative; }
+.pti-gdn-flower::after { content:''; position:absolute; width:3px; height:22px; background:#4CAF50; bottom:-22px; left:6px; }
+.pti-gdn-flower.pti-gf2 { position:absolute; left:24px; top:4px; background:#FF9800; }
+.pti-gdn-flower.pti-gf3 { position:absolute; left:12px; top:-6px; background:#AB47BC; width:14px; height:14px; }
 
 /* Kitchen */
-.pti-kitchen { bottom:22%; right:5%; }
-.pti-kitch-counter { width:50px; height:20px; background:#A1887F; border-radius:2px; }
-.pti-kitch-cab { width:50px; height:25px; background:#8D6E63; position:absolute; top:-28px; }
+.pti-kitchen { bottom:18%; right:3%; }
+.pti-kitch-counter { width:60px; height:22px; background:#A1887F; border-radius:2px; position:relative; }
+.pti-kitch-cab { width:60px; height:28px; background:#8D6E63; position:absolute; top:-32px; border-radius:2px; }
+.pti-kitch-cab::after { content:''; position:absolute; width:24px; height:2px; background:#A1887F; bottom:10px; left:18px; }
+.pti-kitch-pot { position:absolute; width:18px; height:12px; background:#546E7A; border-radius:2px 2px 4px 4px; top:-12px; left:10px; }
+.pti-kitch-pot::before { content:''; position:absolute; width:22px; height:3px; background:#607D8B; top:-3px; left:-2px; border-radius:2px; }
 
 /* Bedroom */
-.pti-bedroom { bottom:22%; right:8%; }
-.pti-bdrm-bed { width:40px; height:18px; background:#7E57C2; border-radius:4px; }
+.pti-bedroom { bottom:18%; right:5%; }
+.pti-bdrm-bed { width:50px; height:20px; background:#7E57C2; border-radius:4px; position:relative; }
+.pti-bdrm-pillow { position:absolute; width:16px; height:12px; background:#fff; border-radius:4px; top:2px; left:3px; }
 
 /* Roof */
-.pti-roof { top:15%; right:10%; width:0; height:0; border-left:30px solid transparent; border-right:30px solid transparent; border-bottom:20px solid #E53935; }
+.pti-roof { top:12%; right:6%; }
+.pti-roof-body { width:0; height:0; border-left:38px solid transparent; border-right:38px solid transparent; border-bottom:26px solid #D32F2F; }
+.pti-roof-tiles { position:absolute; width:70px; height:3px; background:#B71C1C; bottom:0; left:3px; }
 
 /* Field */
-.pti-field { bottom:22%; right:5%; }
-.pti-fld-grass { width:50px; height:3px; background:#2E7D32; box-shadow:0 -6px 0 #4CAF50, 0 -12px 0 #388E3C; }
+.pti-field { bottom:18%; right:3%; position:relative; }
+.pti-fld-grass { width:60px; height:4px; background:#2E7D32; box-shadow:0 -8px 0 #4CAF50, 0 -16px 0 #388E3C, 20px -24px 0 #66BB6A; }
+.pti-fld-flower { position:absolute; width:8px; height:8px; background:#FFD600; border-radius:50%; top:-28px; left:8px; }
+.pti-fld-flower::after { content:''; position:absolute; width:2px; height:12px; background:#4CAF50; bottom:-12px; left:3px; }
 
 /* Pond */
-.pti-pond { bottom:22%; right:10%; width:45px; height:20px; background:#42A5F5; border-radius:50%; }
+.pti-pond { bottom:18%; right:6%; position:relative; }
+.pti-pond-water { width:55px; height:24px; background:#42A5F5; border-radius:50%; }
+.pti-pond-lily { position:absolute; width:10px; height:6px; background:#66BB6A; border-radius:50%; top:4px; left:10px; }
 
-/* Road */
-.pti-road { bottom:0; left:0; width:100%; height:45%; }
-.pti-road .pti-ground { display:none; }
-.pti-road-line { position:absolute; bottom:0; left:0; width:100%; height:100%; background:#757575; }
-.pti-road-line::before { content:''; position:absolute; width:4px; height:100%; background:#FFD600; left:50%; }
+/* Road — replaces ground */
+.pti-road { bottom:0; left:0; width:100%; height:50%; z-index:2; }
+.pti-road-surface { position:absolute; bottom:0; left:0; width:100%; height:100%; background:#757575; }
+.pti-road-line { position:absolute; width:6px; height:20px; background:#FFD600; left:50%; bottom:20%; }
+.pti-road-line::before { content:''; position:absolute; width:6px; height:20px; background:#FFD600; top:-30px; }
+.pti-road-line::after { content:''; position:absolute; width:6px; height:20px; background:#FFD600; bottom:-30px; }
 
 /* Street */
-.pti-street { bottom:22%; right:10%; }
-.pti-street-lamp { width:4px; height:35px; background:#666; position:relative; }
-.pti-street-lamp::before { content:''; position:absolute; width:16px; height:6px; background:#FFD600; top:0; left:-6px; border-radius:3px; }
+.pti-street { bottom:18%; right:8%; }
+.pti-street-lamp { width:5px; height:40px; background:#666; position:relative; }
+.pti-street-light { position:absolute; width:18px; height:8px; background:#FFD600; border-radius:4px; top:0; left:-6px; box-shadow:0 4px 10px rgba(255,214,0,0.4); }
 
 /* Yard */
-.pti-yard { bottom:22%; right:5%; }
-.pti-yard-fence { width:40px; height:4px; background:#A1887F; position:relative; }
-.pti-yard-fence::before { content:''; width:4px; height:16px; background:#A1887F; position:absolute; top:-12px; left:0; }
-.pti-yard-fence::after { content:''; width:4px; height:16px; background:#A1887F; position:absolute; top:-12px; right:0; }
+.pti-yard { bottom:18%; right:4%; }
+.pti-yard-fence { width:50px; height:5px; background:#A1887F; position:relative; }
+.pti-yard-fence::before { content:''; width:5px; height:20px; background:#A1887F; position:absolute; top:-16px; left:0; border-radius:2px 2px 0 0; }
+.pti-yard-fence::after { content:''; width:5px; height:20px; background:#A1887F; position:absolute; top:-16px; right:0; border-radius:2px 2px 0 0; }
+.pti-yard-grass { width:14px; height:14px; background:#66BB6A; border-radius:50% 50% 0 0; margin-top:4px; margin-left:20px; }
 
 /* Bed object */
-.pti-bed-obj { bottom:22%; right:8%; }
-.pti-bedobj-frame { width:45px; height:16px; background:#7E57C2; border-radius:4px; }
-.pti-bedobj-pillow { width:14px; height:10px; background:#fff; border-radius:3px; position:absolute; top:0; left:2px; }
+.pti-bed-obj { bottom:18%; right:5%; }
+.pti-bedobj-frame { width:60px; height:20px; background:#7E57C2; border-radius:5px; position:relative; }
+.pti-bedobj-frame::before { content:''; position:absolute; width:6px; height:26px; background:#5E35B1; border-radius:4px; top:-6px; left:0; }
+.pti-bedobj-frame::after { content:''; position:absolute; width:4px; height:22px; background:#5E35B1; border-radius:3px; top:-2px; right:0; }
+.pti-bedobj-pillow { position:absolute; width:16px; height:12px; background:#fff; border-radius:4px; top:2px; left:8px; }
+.pti-bedobj-blanket { position:absolute; width:36px; height:14px; background:#9575CD; border-radius:0 0 4px 4px; bottom:-2px; right:4px; }
 
 /* Couch */
-.pti-couch { bottom:22%; right:8%; }
-.pti-couch-seat { width:45px; height:16px; background:#5C6BC0; border-radius:4px; }
-.pti-couch-arm { width:8px; height:22px; background:#3F51B5; border-radius:4px 4px 0 0; position:absolute; top:-6px; left:0; }
+.pti-couch { bottom:18%; right:5%; }
+.pti-couch-seat { width:56px; height:18px; background:#5C6BC0; border-radius:4px; position:relative; }
+.pti-couch-arm { position:absolute; width:10px; height:26px; background:#3F51B5; border-radius:5px 5px 0 0; top:-8px; }
+.pti-couch-arm.pti-ca-l { left:0; }
+.pti-couch-arm.pti-ca-r { right:0; }
+.pti-couch-back { position:absolute; width:36px; height:8px; background:#3949AB; border-radius:4px; top:-8px; left:10px; }
 
 /* Rug */
-.pti-rug { bottom:22%; right:8%; width:50px; height:12px; background:#E91E63; border-radius:3px; }
+.pti-rug { bottom:18%; right:5%; }
+.pti-rug-body { width:60px; height:16px; background:#E91E63; border-radius:4px; }
+.pti-rug-border { position:absolute; top:2px; left:2px; width:56px; height:12px; border:2px solid #F48FB1; border-radius:3px; }
+
+/* Chair */
+.pti-chair { bottom:18%; right:8%; }
+.pti-chair-seat { width:34px; height:7px; background:#8D6E63; border-radius:2px; position:relative; }
+.pti-chair-back { width:34px; height:20px; background:#A1887F; border-radius:4px 4px 0 0; position:absolute; top:-20px; }
+.pti-chair-leg-l { position:absolute; width:4px; height:14px; background:#795548; bottom:-14px; left:4px; }
+.pti-chair-leg-r { position:absolute; width:4px; height:14px; background:#795548; bottom:-14px; right:4px; }
+
+/* Table */
+.pti-table { bottom:18%; right:6%; }
+.pti-tbl-top { width:55px; height:7px; background:#A1887F; border-radius:2px; position:relative; }
+.pti-tbl-leg { position:absolute; width:5px; height:22px; background:#8D6E63; }
+.pti-tbl-leg.pti-tl-l { bottom:-22px; left:6px; }
+.pti-tbl-leg.pti-tl-r { bottom:-22px; right:6px; }
+
+/* Rock */
+.pti-rock { bottom:18%; right:8%; }
+.pti-rock-body { width:45px; height:26px; background:#9E9E9E; border-radius:50% 60% 40% 50%; }
+.pti-rock-spot { position:absolute; width:10px; height:7px; background:#BDBDBD; border-radius:50%; top:6px; left:12px; }
