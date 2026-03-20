@@ -483,6 +483,20 @@ function ttsCleanText(t) {
   return t.replace(/\bSt\.\s/g, 'Saint ');
 }
 
+function synthSpeak(text, onEnd) {
+  if (window.speechSynthesis) {
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9;
+    u.pitch = 1.1;
+    u.onend = function() { if (onEnd) onEnd(); };
+    u.onerror = function() { if (onEnd) onEnd(); };
+    speechSynthesis.speak(u);
+  } else {
+    if (onEnd) onEnd();
+  }
+}
+
 function playTTS(text, onEnd) {
   stopCurrentTTS();
   if (!text || !text.trim()) { if (onEnd) onEnd(); return; }
@@ -495,9 +509,12 @@ function playTTS(text, onEnd) {
   };
   audio.onerror = () => {
     currentTTSAudio = null;
-    if (onEnd) onEnd();
+    synthSpeak(ttsCleanText(text), onEnd);
   };
-  audio.play().catch(() => { if (onEnd) onEnd(); });
+  audio.play().catch(() => {
+    currentTTSAudio = null;
+    synthSpeak(ttsCleanText(text), onEnd);
+  });
 }
 
 // Alias for backward compat — speakQuick now uses TTS audio
@@ -3894,6 +3911,9 @@ function renderFTNLevel() {
   const prompt = document.getElementById('ftn-prompt');
   prompt.textContent = 'Find the number ' + ftnTarget + '!';
   speakQuick('Find the number ' + numberToWords(ftnTarget));
+  document.getElementById('ftn-repeat').onclick = function() {
+    speakQuick('Find the number ' + numberToWords(ftnTarget));
+  };
 
   // Render grid — use cell-based layout to prevent overlap
   const grid = document.getElementById('ftn-grid');
