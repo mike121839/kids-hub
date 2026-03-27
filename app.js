@@ -1413,21 +1413,21 @@ function updatePageDots() {
 
 // ============ A2: FAITH MEMORY MATCH (5 Levels) ============
 const faithSymbols = [
-  { emoji: '\u2720', name: 'Cross' },
-  { emoji: '\u2663', name: 'Cedar' },
-  { emoji: '\u2302', name: 'Church' },
-  { emoji: '\u2666', name: 'Candle' },
-  { emoji: '\u2666', name: 'Dove' },
-  { emoji: '\u25CB', name: 'Rosary' },
-  { emoji: '\u271D', name: 'Prayer' },
-  { emoji: '\u2605', name: 'Star' },
-  { emoji: '\u25A1', name: 'Bible' },
-  { emoji: '\u266A', name: 'Bell' },
-  { emoji: '\u2665', name: 'Heart' },
-  { emoji: '\u273F', name: 'Rose' },
-  { emoji: '\u25B2', name: 'Mountain' },
-  { emoji: '\u25CF', name: 'Sheep' },
-  { emoji: '\u263D', name: 'Moon' },
+  { emoji: '✝️', name: 'Cross' },
+  { emoji: '🌲', name: 'Cedar' },
+  { emoji: '⛪', name: 'Church' },
+  { emoji: '🕯️', name: 'Candle' },
+  { emoji: '🕊️', name: 'Dove' },
+  { emoji: '📿', name: 'Rosary' },
+  { emoji: '🙏', name: 'Prayer' },
+  { emoji: '⭐', name: 'Star' },
+  { emoji: '📖', name: 'Bible' },
+  { emoji: '🔔', name: 'Bell' },
+  { emoji: '❤️', name: 'Heart' },
+  { emoji: '🌹', name: 'Rose' },
+  { emoji: '🏔️', name: 'Mountain' },
+  { emoji: '🐑', name: 'Sheep' },
+  { emoji: '🌙', name: 'Moon' },
 ];
 
 const fmLevels = [
