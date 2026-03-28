@@ -1413,22 +1413,43 @@ function updatePageDots() {
 
 // ============ A2: FAITH MEMORY MATCH (5 Levels) ============
 const faithSymbols = [
-  { emoji: '✝️', name: 'Cross' },
-  { emoji: '🌲', name: 'Cedar' },
-  { emoji: '⛪', name: 'Church' },
-  { emoji: '🕯️', name: 'Candle' },
-  { emoji: '🕊️', name: 'Dove' },
-  { emoji: '📿', name: 'Rosary' },
-  { emoji: '🙏', name: 'Prayer' },
-  { emoji: '⭐', name: 'Star' },
-  { emoji: '📖', name: 'Bible' },
-  { emoji: '🔔', name: 'Bell' },
-  { emoji: '❤️', name: 'Heart' },
-  { emoji: '🌹', name: 'Rose' },
-  { emoji: '🏔️', name: 'Mountain' },
-  { emoji: '🐑', name: 'Sheep' },
-  { emoji: '🌙', name: 'Moon' },
+  { id: 'cross', name: 'Cross' },
+  { id: 'cedar', name: 'Cedar' },
+  { id: 'church', name: 'Church' },
+  { id: 'candle', name: 'Candle' },
+  { id: 'dove', name: 'Dove' },
+  { id: 'rosary', name: 'Rosary' },
+  { id: 'prayer', name: 'Prayer' },
+  { id: 'star', name: 'Star' },
+  { id: 'bible', name: 'Bible' },
+  { id: 'bell', name: 'Bell' },
+  { id: 'heart', name: 'Heart' },
+  { id: 'rose', name: 'Rose' },
+  { id: 'mountain', name: 'Mountain' },
+  { id: 'sheep', name: 'Sheep' },
+  { id: 'moon', name: 'Moon' },
 ];
+
+function buildFaithIcon(id) {
+  const icons = {
+    cross: '<div class="fm-icon fm-icon-cross"><div class="fm-cross-v"></div><div class="fm-cross-h"></div></div>',
+    cedar: '<div class="fm-icon fm-icon-cedar"><div class="fm-cedar-top"></div><div class="fm-cedar-mid"></div><div class="fm-cedar-bot"></div><div class="fm-cedar-trunk"></div></div>',
+    church: '<div class="fm-icon fm-icon-church"><div class="fm-church-steeple"></div><div class="fm-church-body"></div><div class="fm-church-door"></div></div>',
+    candle: '<div class="fm-icon fm-icon-candle"><div class="fm-candle-flame"></div><div class="fm-candle-body"></div><div class="fm-candle-base"></div></div>',
+    dove: '<div class="fm-icon fm-icon-dove"><div class="fm-dove-body"></div><div class="fm-dove-wing"></div></div>',
+    rosary: '<div class="fm-icon fm-icon-rosary"><div class="fm-rosary-ring"></div><div class="fm-rosary-cross"></div></div>',
+    prayer: '<div class="fm-icon fm-icon-prayer"><div class="fm-prayer-left"></div><div class="fm-prayer-right"></div></div>',
+    star: '<div class="fm-icon fm-icon-star"></div>',
+    bible: '<div class="fm-icon fm-icon-bible"><div class="fm-bible-spine"></div><div class="fm-bible-cross"></div></div>',
+    bell: '<div class="fm-icon fm-icon-bell"><div class="fm-bell-top"></div><div class="fm-bell-body"></div><div class="fm-bell-clapper"></div></div>',
+    heart: '<div class="fm-icon fm-icon-heart"></div>',
+    rose: '<div class="fm-icon fm-icon-rose"><div class="fm-rose-bloom"></div><div class="fm-rose-stem"></div></div>',
+    mountain: '<div class="fm-icon fm-icon-mountain"><div class="fm-mtn-back"></div><div class="fm-mtn-front"></div><div class="fm-mtn-snow"></div></div>',
+    sheep: '<div class="fm-icon fm-icon-sheep"><div class="fm-sheep-body"></div><div class="fm-sheep-head"></div><div class="fm-sheep-legs"></div></div>',
+    moon: '<div class="fm-icon fm-icon-moon"></div>',
+  };
+  return icons[id] || '';
+}
 
 const fmLevels = [
   { pairs: 6,  cols: 4, rows: 3, label: 'Level 1', maxW: '700px' },
@@ -1497,7 +1518,7 @@ function renderMemoryGrid() {
     const card = document.createElement('button');
     card.className = 'memory-card';
     if (lvl.pairs > 10) card.classList.add('memory-card-sm');
-    card.innerHTML = `<div class="card-front"></div><div class="card-back">${sym.emoji}</div>`;
+    card.innerHTML = `<div class="card-front"><div class="fm-icon fm-icon-question"></div></div><div class="card-back">${buildFaithIcon(sym.id)}</div>`;
     card.onclick = () => flipFaithCard(i, card);
     card.dataset.index = i;
     grid.appendChild(card);
@@ -1517,7 +1538,7 @@ function flipFaithCard(index, card) {
     const [a, b] = fmFlipped;
     const lvl = fmLevels[fmCurrentLevel];
 
-    if (fmCards[a.index].emoji === fmCards[b.index].emoji) {
+    if (fmCards[a.index].id === fmCards[b.index].id) {
       a.card.classList.add('matched');
       b.card.classList.add('matched');
       a.card.style.boxShadow = '0 0 25px rgba(76,175,80,0.6)';
